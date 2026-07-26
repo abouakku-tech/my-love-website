@@ -203,32 +203,6 @@
       </div>
     </div>
 
-    <!-- WHY I CHOOSE YOU PHOTO CARD -->
-    <div class="card">
-      <h2>Why I Choose You ❤️</h2>
-      <div class="photo-frame" style="height: auto;">
-        <img src="./why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
-      </div>
-      <p class="quote">"And I will keep choosing you, again and again."</p>
-    </div>
-
-    <!-- REASONS WHY I LOVE YOU GENERATOR -->
-    <div class="card">
-      <h2>💌 Reasons Why I Love You</h2>
-      <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Tap below whenever you need a reminder!</p>
-      <div id="reason-box" style="background: rgba(255, 240, 243, 0.9); padding: 18px; border-radius: 18px; border: 1px dashed #ff4d6d; font-weight: 600; color: #800f2f; min-height: 70px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; line-height: 1.5;">
-        Click the button below! ❤️
-      </div>
-      <button class="btn-unlock" onclick="getReason()" style="margin-top: 14px;">Give Me A Reason 💖</button>
-    </div>
-
-    <!-- VIRTUAL HUG BUTTON -->
-    <div class="card">
-      <h2>🤗 Need a Hug?</h2>
-      <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Missing me right now? Tap for a warm virtual squeeze!</p>
-      <button class="btn-heart" onclick="sendVirtualHug()" style="margin-top: 0;">🤗 Send a Virtual Hug 🤗</button>
-    </div>
-
     <!-- Milestones Section -->
     <div class="card">
       <h2>✨ Our Special Dates ✨</h2>
@@ -335,7 +309,7 @@
     calculateDays();
 
     // 1-Year Anniversary Live Countdown
-    const targetAnniversary = new Date(2026, 8, 21, 0, 0, 0).getTime();
+    const targetAnniversary = new Date('September 21, 2026 00:00:00').getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -381,7 +355,7 @@
 
     function toggleMusic() {
       if (music.paused) {
-        music.play().catch(e => console.log("Audio play blocked until user interaction"));
+        music.play();
         musicBtn.innerHTML = "⏸️ Pause Song";
       } else {
         music.pause();
@@ -392,45 +366,6 @@
     function showMessage() {
       if (music.paused) { music.play(); musicBtn.innerHTML = "⏸️ Pause Song"; }
       alert("💖 Izu, you are my favorite person forever and always! 💖");
-    }
-
-    // Reasons Generator
-    const loveReasons = [
-      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
-      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
-      "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
-      "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
-      "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
-      "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
-      "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
-      "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
-      "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
-      "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
-    ];
-
-    function getReason() {
-      const randomIndex = Math.floor(Math.random() * loveReasons.length);
-      document.getElementById("reason-box").innerText = loveReasons[randomIndex];
-    }
-
-    // Virtual Hug
-    function createSingleHeart() {
-      const container = document.getElementById('hearts-bg');
-      if (!container) return;
-      const heart = document.createElement('div');
-      heart.className = 'heart-float';
-      heart.innerText = '💖';
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.animationDuration = '4s';
-      container.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    }
-
-    function sendVirtualHug() {
-      for(let i = 0; i < 20; i++) {
-        setTimeout(createSingleHeart, i * 100);
-      }
-      alert("🤗 *WARM SQUEEZY HUG SENT!* 🤗\n\nWhenever you miss me, remember I'm always thinking of you! ❤️");
     }
 
     function sendEmailNote(event) {
@@ -452,3 +387,31 @@
         },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
+          subject: "💌 New Message on Akku & Izu Website!",
+          from_name: name,
+          message: message
+        })
+      })
+      .then(async (response) => {
+        if (response.status === 200) {
+          statusMsg.innerText = "Message sent! Thank you ❤️";
+          statusMsg.style.display = "block";
+          document.getElementById('secret-form').reset();
+        } else {
+          statusMsg.innerText = "Something went wrong. Please check your setup.";
+          statusMsg.style.display = "block";
+        }
+      })
+      .catch(error => {
+        statusMsg.innerText = "Error sending message. Try again!";
+        statusMsg.style.display = "block";
+      })
+      .finally(() => {
+        submitBtn.innerText = "Send Message 💖";
+        submitBtn.disabled = false;
+      });
+    }
+  </script>
+
+</body>
+</html>
