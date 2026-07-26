@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abou & Izu</title>
 
-  <!-- Google Fonts for typography -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -16,60 +17,87 @@
     }
 
     body {
-      background: linear-gradient(180deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
-      font-family: 'Poppins', sans-serif;
-      color: #590d22;
+      background: #fcf6f5;
+      font-family: 'Montserrat', sans-serif;
+      color: #4a0e17;
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 20px 15px;
-      overflow-x: hidden;
+      padding: 30px 16px;
       position: relative;
+      overflow-x: hidden;
     }
 
-    /* Floating background hearts */
-    .bg-heart {
+    /* Ambient Soft Background Lighting */
+    .glow-1 {
       position: fixed;
-      color: rgba(255, 77, 109, 0.35);
-      font-size: 22px;
-      animation: floatUp 8s linear infinite;
-      z-index: 1;
-      user-select: none;
-      pointer-events: none;
+      top: -10%;
+      left: -10%;
+      width: 350px;
+      height: 350px;
+      background: rgba(255, 182, 193, 0.45);
+      filter: blur(90px);
+      border-radius: 50%;
+      z-index: 0;
     }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) scale(0.8);
-        opacity: 0;
-      }
-      50% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1.2);
-        opacity: 0;
-      }
+    .glow-2 {
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 350px;
+      height: 350px;
+      background: rgba(255, 105, 180, 0.35);
+      filter: blur(90px);
+      border-radius: 50%;
+      z-index: 0;
     }
 
-    /* Container */
+    /* Floating Music Toggle Button */
+    .music-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201, 24, 74, 0.3);
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #800f2f;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s ease;
+    }
+
+    .music-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Layout Wrapper */
     .container {
       width: 100%;
       max-width: 420px;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
+      margin-top: 25px;
     }
 
-    /* Glassmorphism Frosted Cards */
+    /* Frosted Glass Cards */
     .card {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 30px rgba(164, 19, 60, 0.12);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 28px 22px;
+      box-shadow: 0 15px 35px rgba(139, 30, 63, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.9);
       text-align: center;
     }
@@ -77,127 +105,245 @@
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
-      color: #800f2f;
+      font-weight: 700;
+      color: #7a1c2b;
       margin-top: 10px;
+      letter-spacing: 0.5px;
     }
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: #a4133c;
+      font-size: 1.35rem;
+      color: #8b1e3f;
       margin-bottom: 12px;
     }
 
     p {
       font-size: 0.95rem;
-      line-height: 1.6;
-      color: #590d22;
+      line-height: 1.65;
+      color: #4a0e17;
+      font-weight: 400;
     }
 
     .quote {
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 1.05rem;
-      color: #800f2f;
+      color: #7a1c2b;
       margin-top: 12px;
     }
 
-    /* Photo Containers */
+    /* Date Counter Box */
+    .counter-box {
+      background: linear-gradient(135deg, rgba(255,240,243,0.9), rgba(255,204,213,0.6));
+      border-radius: 20px;
+      padding: 18px 16px;
+      margin: 15px 0;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .counter-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #a4133c;
+      line-height: 1;
+      margin: 8px 0;
+    }
+
+    .counter-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #800f2f;
+      font-weight: 600;
+    }
+
+    /* Special Milestones Badge List */
+    .milestone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+      text-align: left;
+    }
+
+    .milestone-item {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(201, 24, 74, 0.15);
+      color: #590d22;
+      font-weight: 500;
+    }
+
+    /* Photo Frames */
     .photo-frame {
       width: 100%;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       margin-bottom: 14px;
       border: 4px solid #ffffff;
     }
 
     .photo-frame img {
       width: 100%;
-      height: 280px;
+      height: 290px;
       display: block;
       object-fit: cover;
     }
 
-    /* Interactive Glow Button */
+    /* Glowing Action Button */
     .btn-heart {
-      display: inline-block;
       width: 100%;
       padding: 16px;
       background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
+      letter-spacing: 0.5px;
       border: none;
       border-radius: 50px;
-      box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35);
+      box-shadow: 0 8px 25px rgba(201, 24, 74, 0.3);
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease;
       margin-top: 15px;
     }
 
     .btn-heart:active {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
   </style>
 </head>
 <body>
 
-  <!-- Animated Background Hearts -->
-  <div class="bg-heart" style="left: 10%; animation-duration: 7s;">❤️</div>
-  <div class="bg-heart" style="left: 25%; animation-duration: 10s; animation-delay: 2s;">💖</div>
-  <div class="bg-heart" style="left: 60%; animation-duration: 8s; animation-delay: 1s;">❤️</div>
-  <div class="bg-heart" style="left: 85%; animation-duration: 9s; animation-delay: 3s;">💕</div>
+  <!-- Hidden Audio Player -->
+  <!-- REPLACE 'music.mp3' WITH YOUR AUDIO FILE OR MP3 DIRECT LINK -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Floating Music Toggle Button -->
+  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
+
+  <!-- Ambient Light Blurs -->
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
 
   <div class="container">
     
-    <!-- Hero Card -->
+    <!-- Hero Section -->
     <div class="card">
       <div class="photo-frame">
-        <!-- REPLACE THE URL BELOW WITH YOUR TOP PHOTO FILE OR LINK -->
-        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&auto=format&fit=crop&q=80" alt="Abou & Izu">
+        <img src="photo1.jpg" alt="Abou & Izu">
       </div>
-      <h1>❤️ Abou & Izu ❤️</h1>
-      <p style="margin-top: 12px;">
-        Every love story is beautiful, but ours is my favorite. Thank you for making my life brighter every single day.
+      <h1>Abou & Izu</h1>
+      
+      <!-- Special Date Counter -->
+      <div class="counter-box">
+        <div class="counter-label">Days Together</div>
+        <div class="counter-number" id="days-count">0</div>
+        <div class="counter-label">Since She Said YES! 💍</div>
+      </div>
+
+      <p>
+        Every love story is beautiful, but ours is my favourite. Thank you for making my life brighter every single day.
       </p>
+    </div>
+
+    <!-- Milestones Section -->
+    <div class="card">
+      <h2>✨ Our Special Dates ✨</h2>
+      <div class="milestone-list">
+        <div class="milestone-item">
+          <span>💍</span>
+          <div><strong>September 21, 2025</strong> — She Said Yes!</div>
+        </div>
+        <div class="milestone-item">
+          <span>🎂</span>
+          <div><strong>October 21, 2001</strong> — Abou Born</div>
+        </div>
+        <div class="milestone-item">
+          <span>🎂</span>
+          <div><strong>July 3, 2007</strong> — Izu Born</div>
+        </div>
+      </div>
     </div>
 
     <!-- Journey Section -->
     <div class="card">
-      <h2>💖 Our Beautiful Journey 💖</h2>
+      <h2>Our Beautiful Journey</h2>
       <div class="photo-frame">
-        <!-- REPLACE THE URL BELOW WITH YOUR SECOND PHOTO FILE OR LINK -->
-        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&auto=format&fit=crop&q=80" alt="Holding hands">
+        <img src="photo2.jpg" alt="Our Journey">
       </div>
-      <p class="quote">
-        "The right person will show you how beautiful love can be."
-      </p>
+      <p class="quote">"The right person will show you how beautiful love can be."</p>
     </div>
 
     <!-- Letter Section -->
     <div class="card">
-      <h2>💌 A Letter For You 💌</h2>
+      <h2>A Letter For You</h2>
       <p style="font-weight: 600; color: #a4133c; margin-bottom: 8px;">My Dearest Izu ❤️</p>
+      
       <p>
         You are the most beautiful part of my life. Every smile of yours gives me happiness. Every moment with you becomes a memory I never want to lose.
       </p>
-      <p style="margin-top: 10px;">
-        No matter what happens, I promise to stand beside you, respect you, care for you, and love you forever.
+      <p style="margin-top: 12px;">
+        No matter what happens, I promise to stand beside you, respect you, care for you and love you forever.
       </p>
-      <p style="margin-top: 10px; font-weight: 600;">
-        You are my favorite person, my happiness, my peace, and my forever.
+      <p style="margin-top: 12px; font-weight: 600;">
+        You are my favourite person, my happiness, my peace and my forever.
       </p>
-      <p style="margin-top: 12px; font-weight: 600; color: #c9184a;">❤️ I Love You ❤️</p>
-      
+
+      <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
+
       <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
     </div>
 
   </div>
 
   <script>
+    // ==========================================
+    // DAYS TOGETHER CALCULATOR (Sept 21, 2025)
+    // ==========================================
+    const startDate = new Date(2025, 8, 21); // 8 = September
+
+    function calculateDays() {
+      const today = new Date();
+      const difference = today - startDate;
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').innerText = days > 0 ? days : 0;
+    }
+
+    calculateDays();
+
+    // ==========================================
+    // MUSIC CONTROL LOGIC
+    // ==========================================
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle-btn');
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "⏸️ Pause Song";
+      } else {
+        music.pause();
+        musicBtn.innerHTML = "🎵 Play Song";
+      }
+    }
+
     function showMessage() {
-      alert("💖 Izu, you are the best thing that ever happened to me! I love you forever! 💖");
+      // Plays music if not already playing
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "⏸️ Pause Song";
+      }
+      alert("💖 Izu, you are my favorite person forever and always! 💖");
     }
   </script>
 
