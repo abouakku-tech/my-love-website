@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-
   <title>Akku & Izu</title>
 
   <!-- Google Fonts -->
@@ -50,12 +48,11 @@
       100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
     }
 
-    /* PASSCODE LOCK SCREEN STYLES */
+    /* PASSCODE LOCK SCREEN */
     #lock-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(253, 248, 249, 0.96); backdrop-filter: blur(20px);
+      background: rgba(253, 248, 249, 0.98); backdrop-filter: blur(20px);
       z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px;
-      transition: opacity 0.4s ease;
     }
     .lock-box {
       background: #ffffff; padding: 38px 26px; border-radius: 28px;
@@ -91,6 +88,7 @@
     h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #8b1e3f; margin-bottom: 14px; }
     p { font-size: 0.95rem; line-height: 1.65; color: #4a0e17; }
     .quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: #7a1c2b; margin-top: 12px; }
+    
     .counter-box {
       background: linear-gradient(135deg, rgba(255,240,243,0.95), rgba(255,204,213,0.7));
       border-radius: 22px; padding: 20px 16px; margin: 18px 0; border: 1px solid rgba(255, 255, 255, 0.9);
@@ -98,40 +96,6 @@
     .counter-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #a4133c; line-height: 1; }
     .counter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #800f2f; font-weight: 600; }
     
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .countdown-box {
-      background: linear-gradient(135deg, rgba(255, 240, 243, 0.95), rgba(255, 204, 213, 0.7));
-      padding: 12px 6px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-    }
-    .countdown-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #a4133c;
-    }
-    .countdown-unit {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #800f2f;
-      font-weight: 600;
-    }
-
-    .game-container { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; text-align: left; }
-    .game-item { background: rgba(255, 255, 255, 0.8); padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(201, 24, 74, 0.15); }
-    .game-q { font-weight: 600; color: #590d22; font-size: 0.9rem; margin-bottom: 10px; }
-    .game-options { display: flex; gap: 10px; }
-    .game-btn { flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #ffccd5; background: #fffdfd; color: #800f2f; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
-    .game-btn.selected { background: linear-gradient(135deg, #ff4d6d, #c9184a); color: #fff; border-color: transparent; }
-    .game-result { margin-top: 8px; font-size: 0.82rem; font-weight: 600; color: #a4133c; display: none; text-align: center; }
-
     .milestone-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; text-align: left; }
     .milestone-item {
       background: rgba(255, 255, 255, 0.8); padding: 13px 16px; border-radius: 16px; font-size: 0.88rem;
@@ -140,20 +104,11 @@
     .photo-frame { width: 100%; border-radius: 22px; overflow: hidden; margin-bottom: 14px; border: 4px solid #ffffff; background-color: #fff0f3; }
     .photo-frame img { width: 100%; height: 290px; object-fit: cover; display: block; }
     .video-frame video { width: 100%; max-height: 380px; display: block; border-radius: 18px; background-color: #000; }
-    .msg-input {
-      width: 100%; padding: 12px 14px; border-radius: 14px; border: 2px solid #ffccd5;
-      font-family: inherit; font-size: 0.95rem; outline: none; margin-bottom: 10px; color: #800f2f; background: #fffdfd;
-    }
+    
     .btn-heart {
       width: 100%; padding: 16px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
-    }
-
-    @media (max-width: 360px) {
-      .countdown-grid { gap: 6px; }
-      .countdown-num { font-size: 1.3rem; }
-      .countdown-unit { font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -166,8 +121,8 @@
     <div class="lock-box">
       <h2>🔒 Akku & Izu Only</h2>
       <p>Please enter our secret passcode to enter</p>
-      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
-      <button class="btn-unlock" onclick="unlockPage()">Unlock Heart 💖</button>
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6" inputmode="numeric">
+      <button class="btn-unlock" id="unlock-btn">Unlock Heart 💖</button>
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
   </div>
@@ -176,7 +131,7 @@
     <source src="./music.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
+  <button class="music-btn" id="music-toggle-btn">🎵 Play Song</button>
 
   <div class="glow-1"></div>
   <div class="glow-2"></div>
@@ -193,66 +148,6 @@
         <div class="counter-label">Since She Said YES! 💍</div>
       </div>
       <p>Every love story is beautiful, but ours is my favourite. Thank you for making my life brighter every single day.</p>
-    </div>
-
-    <!-- 1 YEAR ANNIVERSARY COUNTDOWN -->
-    <div class="card">
-      <h2>⏳ Countdown to Our 1st Anniversary ⏳</h2>
-      <p style="font-size: 0.88rem; color: #800f2f; font-weight: 600;">September 21, 2026 ❤️</p>
-      
-      <div class="countdown-grid">
-        <div class="countdown-box">
-          <div class="countdown-num" id="cd-days">00</div>
-          <div class="countdown-unit">Days</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-num" id="cd-hours">00</div>
-          <div class="countdown-unit">Hours</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-num" id="cd-mins">00</div>
-          <div class="countdown-unit">Mins</div>
-        </div>
-        <div class="countdown-box">
-          <div class="countdown-num" id="cd-secs">00</div>
-          <div class="countdown-unit">Secs</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GAME SECTION -->
-    <div class="card">
-      <h2>🎮 Who Is Most Likely To...?</h2>
-      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 14px;">Tap a name for each question to vote! 😄</p>
-      
-      <div class="game-container">
-        <div class="game-item">
-          <p class="game-q">🎬 Falls asleep first during a movie?</p>
-          <div class="game-options">
-            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Definitely Akku! Snoozing in 10 mins! 😴')">Akku</button>
-            <button class="game-btn" onclick="answerGame(this, 'Izu', '100% Izu! Out like a light! 😴')">Izu</button>
-          </div>
-          <div class="game-result"></div>
-        </div>
-
-        <div class="game-item">
-          <p class="game-q">👗 Takes longer to get ready?</p>
-          <div class="game-options">
-            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Akku making sure hair is 10/10! 😎')">Akku</button>
-            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu picking the perfect outfit! ✨')">Izu</button>
-          </div>
-          <div class="game-result"></div>
-        </div>
-
-        <div class="game-item">
-          <p class="game-q">🍕 Takes forever to decide what to eat?</p>
-          <div class="game-options">
-            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Akku scrolling the menu forever! 🍕')">Akku</button>
-            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu saying: I don&#39;t know, you decide! 😂')">Izu</button>
-          </div>
-          <div class="game-result"></div>
-        </div>
-      </div>
     </div>
 
     <!-- Milestones Section -->
@@ -297,21 +192,6 @@
       </div>
     </div>
 
-    <!-- Secret Message Board -->
-    <div class="card">
-      <h2>💌 Leave a Secret Message</h2>
-      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 15px;">A space for friends & loved ones to write something special!</p>
-      
-      <form id="secret-form" onsubmit="sendEmailNote(event)">
-        <input type="text" id="guest-name" placeholder="Your Name" class="msg-input" required>
-        <textarea id="guest-message" placeholder="Write your message here..." rows="4" class="msg-input" style="resize: vertical;" required></textarea>
-        
-        <button type="submit" class="btn-unlock" id="submit-btn">Send Message 💖</button>
-      </form>
-
-      <p id="status-msg" style="margin-top: 15px; font-weight: 600; color: #c9184a; display: none;"></p>
-    </div>
-
     <!-- Letter Section -->
     <div class="card">
       <h2>A Letter For You</h2>
@@ -321,43 +201,34 @@
       <p style="margin-top: 12px; font-weight: 600;">You are my favourite person, my happiness, my peace and my forever.</p>
 
       <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
-      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
-
-      <div style="text-align: center; margin-top: 25px;">
-        <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
-      </div>
+      <button class="btn-heart" id="heart-btn">💖 Open My Heart 💖</button>
     </div>
 
   </div>
 
   <script>
-    const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
     const SECRET_PASSCODE = "2103"; 
 
     function unlockPage() {
-      const inputField = document.getElementById('passcode-field');
-      const input = inputField.value.trim();
+      const input = document.getElementById('passcode-field').value.trim();
       const errorText = document.getElementById('error-text');
       const lockScreen = document.getElementById('lock-screen');
 
       if (input === SECRET_PASSCODE) {
-        lockScreen.style.opacity = '0';
-        setTimeout(() => {
-          lockScreen.style.display = "none";
-        }, 400);
+        lockScreen.style.display = "none";
         toggleMusic();
       } else {
         errorText.style.display = "block";
-        inputField.value = "";
+        document.getElementById('passcode-field').value = "";
       }
     }
 
-    document.getElementById("passcode-field").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        unlockPage();
-      }
+    document.getElementById("unlock-btn").addEventListener("click", unlockPage);
+    document.getElementById("passcode-field").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") unlockPage();
     });
 
+    // Calculate Days Together
     const startDate = new Date(2025, 8, 21);
     function calculateDays() {
       const today = new Date();
@@ -367,44 +238,7 @@
     }
     calculateDays();
 
-    const targetAnniversary = new Date(2026, 8, 21, 0, 0, 0).getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const difference = targetAnniversary - now;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
-        document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
-        document.getElementById('cd-mins').innerText = String(minutes).padStart(2, '0');
-        document.getElementById('cd-secs').innerText = String(seconds).padStart(2, '0');
-      } else {
-        document.getElementById('cd-days').innerText = '00';
-        document.getElementById('cd-hours').innerText = '00';
-        document.getElementById('cd-mins').innerText = '00';
-        document.getElementById('cd-secs').innerText = '00';
-      }
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    function answerGame(btn, person, message) {
-      const parent = btn.closest('.game-item');
-      const buttons = parent.querySelectorAll('.game-btn');
-      const resultBox = parent.querySelector('.game-result');
-      
-      buttons.forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      
-      resultBox.innerText = message;
-      resultBox.style.display = 'block';
-    }
-
+    // Floating Hearts
     function createFloatingHearts() {
       const container = document.getElementById('hearts-bg');
       const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
@@ -420,6 +254,7 @@
     }
     createFloatingHearts();
 
+    // Audio Controls
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle-btn');
 
@@ -428,7 +263,7 @@
         music.play().then(() => {
           musicBtn.innerHTML = "⏸️ Pause Song";
         }).catch(err => {
-          console.log("Audio play deferred:", err);
+          console.log("Audio deferred:", err);
         });
       } else {
         music.pause();
@@ -436,29 +271,16 @@
       }
     }
 
-    function showMessage() {
+    musicBtn.addEventListener("click", toggleMusic);
+
+    document.getElementById("heart-btn").addEventListener("click", function() {
       if (music.paused) { 
         music.play().catch(e => console.log(e)); 
         musicBtn.innerHTML = "⏸️ Pause Song"; 
       }
       alert("💖 Izu, you are my favorite person forever and always! 💖");
-    }
+    });
+  </script>
 
-    function sendEmailNote(event) {
-      event.preventDefault();
-
-      const submitBtn = document.getElementById('submit-btn');
-      const statusMsg = document.getElementById('status-msg');
-      const name = document.getElementById('guest-name').value;
-      const message = document.getElementById('guest-message').value;
-
-      submitBtn.innerText = "Sending... 💌";
-      submitBtn.disabled = true;
-
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
+</body>
+</html>
