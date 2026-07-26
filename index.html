@@ -147,6 +147,12 @@
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
     }
+
+    @media (max-width: 360px) {
+      .countdown-grid { gap: 6px; }
+      .countdown-num { font-size: 1.3rem; }
+      .countdown-unit { font-size: 0.65rem; }
+    }
   </style>
 </head>
 <body>
@@ -243,7 +249,7 @@
           <p class="game-q">🍕 Takes forever to decide what to eat?</p>
           <div class="game-options">
             <button class="game-btn" onclick="answerGame(this, 'Akku', 'Akku scrolling the menu forever! 🍕')">Akku</button>
-            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu saying: I don\'t know, you decide! 😂')">Izu</button>
+            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu saying: I don&#39;t know, you decide! 😂')">Izu</button>
           </div>
           <div class="game-result"></div>
         </div>
@@ -266,7 +272,7 @@
     <div class="card">
       <h2>🎁 Our First Meet 🎁</h2>
       <div class="photo-frame">
-        <img src="./meet up pic.jpeg" alt="Our First Meet">
+        <img src="./meet%20up%20pic.jpeg" alt="Our First Meet">
       </div>
       <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">
         July 15, 2026 ❤️
@@ -355,8 +361,8 @@
     }
     calculateDays();
 
-    // 1-Year Anniversary Live Countdown
-    const targetAnniversary = new Date('September 21, 2026 00:00:00').getTime();
+    // 1-Year Anniversary Live Countdown (Cross-browser safe Date parsing)
+    const targetAnniversary = new Date(2026, 8, 21, 0, 0, 0).getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -415,8 +421,11 @@
 
     function toggleMusic() {
       if (music.paused) {
-        music.play();
-        musicBtn.innerHTML = "⏸️ Pause Song";
+        music.play().then(() => {
+          musicBtn.innerHTML = "⏸️ Pause Song";
+        }).catch(err => {
+          console.log("Audio play deferred until user interaction:", err);
+        });
       } else {
         music.pause();
         musicBtn.innerHTML = "🎵 Play Song";
@@ -424,7 +433,10 @@
     }
 
     function showMessage() {
-      if (music.paused) { music.play(); musicBtn.innerHTML = "⏸️ Pause Song"; }
+      if (music.paused) { 
+        music.play().catch(e => console.log(e)); 
+        musicBtn.innerHTML = "⏸️ Pause Song"; 
+      }
       alert("💖 Izu, you are my favorite person forever and always! 💖");
     }
 
@@ -447,15 +459,4 @@
         },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: "💌 New Message on Akku & Izu Website!",
-          from_name: name,
-          message: message
-        })
-      })
-      .then(async (response) => {
-        if (response.status === 200) {
-          statusMsg.innerText = "Message sent! Thank you ❤️";
-          statusMsg.style.display = "block";
-          document.getElementById('secret-form').reset();
-        } else {
-          statusM
+          subject: "💌 New Mes
