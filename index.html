@@ -119,6 +119,11 @@
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
     }
+    .bucket-item {
+      background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px;
+      border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex;
+      align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;
+    }
   </style>
 </head>
 <body>
@@ -204,19 +209,19 @@
       <h2>✨ Our Couple Bucket List</h2>
       <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 14px;">Goals we are going to achieve together! Tap to mark complete ✨</p>
       <div style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
-        <div onclick="toggleBucket(this)" style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;">
+        <div class="bucket-item">
           <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Watch a sunset together on the beach 🌅</span>
         </div>
-        <div onclick="toggleBucket(this)" style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;">
+        <div class="bucket-item">
           <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Go on a spontaneous road trip 🚗💨</span>
         </div>
-        <div onclick="toggleBucket(this)" style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;">
+        <div class="bucket-item">
           <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Cook a delicious dinner together from scratch 🍝</span>
         </div>
-        <div onclick="toggleBucket(this)" style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;">
+        <div class="bucket-item">
           <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Binge-watch an entire movie series in one day 🍿</span>
         </div>
-        <div onclick="toggleBucket(this)" style="background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;">
+        <div class="bucket-item">
           <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Travel to a new place we've never been ✈️</span>
         </div>
       </div>
@@ -269,7 +274,7 @@
       <h2>💌 Leave a Secret Message</h2>
       <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 15px;">A space for friends & loved ones to write something special!</p>
       
-      <form id="secret-form" onsubmit="sendEmailNote(event)">
+      <form id="secret-form">
         <input type="text" id="guest-name" placeholder="Your Name" class="msg-input" required>
         <textarea id="guest-message" placeholder="Write your message here..." rows="4" class="msg-input" style="resize: vertical;" required></textarea>
         
@@ -298,127 +303,151 @@
   </div>
 
   <script>
-    const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
-    const music = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-toggle-btn');
-
     document.addEventListener("DOMContentLoaded", function() {
-      const musicBtnEl = document.getElementById('music-toggle-btn');
-      if (musicBtnEl) musicBtnEl.addEventListener('click', toggleMusic);
 
-      const letterBtnEl = document.getElementById('letter-btn');
-      if (letterBtnEl) {
-        letterBtnEl.addEventListener('click', function() {
-          toggleMusic();
-          alert("💖 Izu, you are my favorite person forever and always! 💖");
-        });
-      }
-    });
+      // 1. MUSIC CONTROL
+      try {
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle-btn');
+        const letterBtn = document.getElementById('letter-btn');
 
-    const startDate = new Date(2025, 8, 21);
-    function calculateDays() {
-      const today = new Date();
-      const timeDifference = today - startDate;
-      const daysTogether = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      const el = document.getElementById('days-count');
-      if (el) el.innerText = daysTogether > 0 ? daysTogether : 0;
-    }
-    calculateDays();
-
-    const targetAnniversary = new Date('September 21, 2026 00:00:00').getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const difference = targetAnniversary - now;
-
-      const dEl = document.getElementById('cd-days');
-      const hEl = document.getElementById('cd-hours');
-      const mEl = document.getElementById('cd-mins');
-      const sEl = document.getElementById('cd-secs');
-
-      if (!dEl) return;
-
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        dEl.innerText = String(days).padStart(2, '0');
-        hEl.innerText = String(hours).padStart(2, '0');
-        mEl.innerText = String(minutes).padStart(2, '0');
-        sEl.innerText = String(seconds).padStart(2, '0');
-      } else {
-        dEl.innerText = '00';
-        hEl.innerText = '00';
-        mEl.innerText = '00';
-        sEl.innerText = '00';
-      }
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    const loveReasons = [
-      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
-      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
-      "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
-      "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
-      "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
-      "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
-      "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
-      "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
-      "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
-      "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
-    ];
-
-    const reasonBtn = document.getElementById("reason-btn");
-    if (reasonBtn) {
-      reasonBtn.addEventListener("click", function() {
-        const randomIndex = Math.floor(Math.random() * loveReasons.length);
-        document.getElementById("reason-box").innerText = loveReasons[randomIndex];
-      });
-    }
-
-    const hugBtn = document.getElementById("hug-btn");
-    if (hugBtn) {
-      hugBtn.addEventListener("click", function() {
-        for(let i = 0; i < 20; i++) {
-          setTimeout(createSingleHeart, i * 100);
+        function toggleMusic() {
+          if (!music) return;
+          if (music.paused) {
+            let p = music.play();
+            if (p !== undefined) {
+              p.then(() => { if (musicBtn) musicBtn.innerText = "⏸️ Pause Song"; })
+               .catch(() => { if (musicBtn) musicBtn.innerText = "🎵 Play Song"; });
+            }
+          } else {
+            music.pause();
+            if (musicBtn) musicBtn.innerText = "🎵 Play Song";
+          }
         }
-        alert("🤗 *WARM SQUEEZY HUG SENT!* 🤗\n\nWhenever you miss me, remember I'm always thinking of you! ❤️");
-      });
-    }
 
-    function createSingleHeart() {
-      const container = document.getElementById('hearts-bg');
-      if (!container) return;
-      const heart = document.createElement('div');
-      heart.className = 'heart-float';
-      heart.innerText = '💖';
-      heart.style.left = Math.random() * 100 + '%';
-      heart.style.animationDuration = '4s';
-      container.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    }
+        if (musicBtn) musicBtn.addEventListener('click', toggleMusic);
+        if (letterBtn) {
+          letterBtn.addEventListener('click', function() {
+            toggleMusic();
+            alert("💖 Izu, you are my favorite person forever and always! 💖");
+          });
+        }
+      } catch(e) { console.error(e); }
 
-    function toggleBucket(element) {
-      const check = element.querySelector('.bucket-check');
-      if (check.innerText === '⬜') {
-        check.innerText = '✅';
-        element.style.opacity = '0.7';
-        element.style.textDecoration = 'line-through';
-      } else {
-        check.innerText = '⬜';
-        element.style.opacity = '1';
-        element.style.textDecoration = 'none';
-      }
-    }
+      // 2. DAYS TOGETHER COUNTER (Sept 21, 2025)
+      try {
+        const startDate = new Date(2025, 8, 21).getTime();
+        const now = new Date().getTime();
+        const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+        const daysEl = document.getElementById('days-count');
+        if (daysEl) daysEl.innerText = days > 0 ? days : 0;
+      } catch(e) { console.error(e); }
 
-    function createFloatingHearts() {
-      const container = document.getElementById('hearts-bg');
-      if (!container) return;
-      const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
-      for (let i = 0; i < 15; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-float';
-        heart.innerText = heartIcons[Math.floor(Math.random() * heartIc
+      // 3. COUNTDOWN TO 1ST ANNIVERSARY (Sept 21, 2026)
+      try {
+        const anniversaryTarget = new Date(2026, 8, 21, 0, 0, 0).getTime();
+        function updateCountdown() {
+          const currentTime = new Date().getTime();
+          const diff = anniversaryTarget - currentTime;
+
+          const dEl = document.getElementById('cd-days');
+          const hEl = document.getElementById('cd-hours');
+          const mEl = document.getElementById('cd-mins');
+          const sEl = document.getElementById('cd-secs');
+
+          if (!dEl) return;
+
+          if (diff > 0) {
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            dEl.innerText = String(d).padStart(2, '0');
+            hEl.innerText = String(h).padStart(2, '0');
+            mEl.innerText = String(m).padStart(2, '0');
+            sEl.innerText = String(s).padStart(2, '0');
+          } else {
+            dEl.innerText = '00';
+            hEl.innerText = '00';
+            mEl.innerText = '00';
+            sEl.innerText = '00';
+          }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+      } catch(e) { console.error(e); }
+
+      // 4. REASONS GENERATOR
+      try {
+        const loveReasons = [
+          "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
+          "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
+          "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
+          "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
+          "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
+          "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
+          "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
+          "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
+          "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
+          "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
+        ];
+        const reasonBtn = document.getElementById("reason-btn");
+        const reasonBox = document.getElementById("reason-box");
+        if (reasonBtn && reasonBox) {
+          reasonBtn.addEventListener("click", function() {
+            const randomIndex = Math.floor(Math.random() * loveReasons.length);
+            reasonBox.innerText = loveReasons[randomIndex];
+          });
+        }
+      } catch(e) { console.error(e); }
+
+      // 5. BUCKET LIST TOGGLE
+      try {
+        const items = document.querySelectorAll('.bucket-item');
+        items.forEach(function(item) {
+          item.addEventListener('click', function() {
+            const check = this.querySelector('.bucket-check');
+            if (check.innerText === '⬜') {
+              check.innerText = '✅';
+              this.style.opacity = '0.7';
+              this.style.textDecoration = 'line-through';
+            } else {
+              check.innerText = '⬜';
+              this.style.opacity = '1';
+              this.style.textDecoration = 'none';
+            }
+          });
+        });
+      } catch(e) { console.error(e); }
+
+      // 6. VIRTUAL HUG BUTTON
+      try {
+        const hugBtn = document.getElementById("hug-btn");
+        function spawnHeart() {
+          const container = document.getElementById('hearts-bg');
+          if (!container) return;
+          const heart = document.createElement('div');
+          heart.className = 'heart-float';
+          heart.innerText = '💖';
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.animationDuration = '4s';
+          container.appendChild(heart);
+          setTimeout(() => heart.remove(), 4000);
+        }
+        if (hugBtn) {
+          hugBtn.addEventListener("click", function() {
+            for(let i = 0; i < 20; i++) {
+              setTimeout(spawnHeart, i * 100);
+            }
+            alert("🤗 *WARM SQUEEZY HUG SENT!* 🤗\n\nWhenever you miss me, remember I'm always thinking of you! ❤️");
+          });
+        }
+      } catch(e) { console.error(e); }
+
+      // 7. BACKGROUND FLOATING HEARTS
+      try {
+        const container = document.getElementById('hearts-bg');
+        if (container) {
+          const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
+          for (let i = 0; i < 15
