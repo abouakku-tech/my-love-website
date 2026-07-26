@@ -63,7 +63,7 @@
     .lock-box p { font-size: 0.88rem; color: #666; margin-bottom: 22px; }
     .passcode-input {
       width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #ffccd5;
-      text-align: center; font-size: 1.3rem; letter-spacing: 6px; outline: none; margin-bottom: 16px;
+      text-align: center; font-size: 1.1rem; outline: none; margin-bottom: 16px;
       color: #800f2f; font-weight: 700; background: #fffdfd;
     }
     .btn-unlock {
@@ -94,7 +94,6 @@
     .counter-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #a4133c; line-height: 1; }
     .counter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #800f2f; font-weight: 600; }
     
-    /* Countdown Styles */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -149,8 +148,8 @@
     <div class="lock-box">
       <h2>🔒 Akku & Izu Only</h2>
       <p>Please enter our secret passcode to enter</p>
-      <input type="tel" inputmode="numeric" pattern="[0-9]*" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
-      <button class="btn-unlock" type="button" onclick="unlockPage()">Unlock Heart 💖</button>
+      <input type="tel" inputmode="numeric" id="passcode-field" class="passcode-input" placeholder="Enter Passcode..." maxlength="6">
+      <button class="btn-unlock" type="button" id="unlock-btn">Unlock Heart 💖</button>
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
   </div>
@@ -159,7 +158,7 @@
     <source src="./music.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
+  <button class="music-btn" id="music-toggle-btn">🎵 Play Song</button>
 
   <div class="glow-1"></div>
   <div class="glow-2"></div>
@@ -318,7 +317,7 @@
       <p style="margin-top: 12px; font-weight: 600;">You are my favourite person, my happiness, my peace and my forever.</p>
 
       <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
-      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
+      <button class="btn-heart" id="letter-btn">💖 Open My Heart 💖</button>
 
       <div style="text-align: center; margin-top: 25px;">
         <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
@@ -334,49 +333,49 @@
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle-btn');
 
-    // BULLETPROOF UNLOCK FUNCTION
-    function unlockPage() {
-      try {
-        const inputField = document.getElementById('passcode-field');
-        const errorText = document.getElementById('error-text');
-        const lockScreen = document.getElementById('lock-screen');
-
-        if (!inputField) return;
-
-        // Clean input: remove non-digit characters and spaces
-        const rawInput = inputField.value;
-        const cleanInput = rawInput.replace(/\D/g, '').trim();
-
-        if (cleanInput === SECRET_PASSCODE || rawInput.trim() === SECRET_PASSCODE) {
-          // Force hide AND physically destroy lock screen element from the DOM
-          if (lockScreen) {
-            lockScreen.style.setProperty("display", "none", "important");
-            lockScreen.remove(); 
-          }
-          
-          // Try playing music safely in background
-          setTimeout(() => {
-            try { toggleMusic(); } catch(e) { console.error(e); }
-          }, 100);
-        } else {
-          if (errorText) errorText.style.display = "block";
-        }
-      } catch (err) {
-        // Fallback: If anything fails, force remove lock screen anyway
-        const lockScreen = document.getElementById('lock-screen');
-        if (lockScreen) lockScreen.remove();
-      }
-    }
-
-    // Modern Enter Key Listener
+    // UNLOCK SCRIPT WITH DIRECT EVENT LISTENERS
     document.addEventListener("DOMContentLoaded", function() {
-      const pField = document.getElementById("passcode-field");
-      if (pField) {
-        pField.addEventListener("keyup", function(event) {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            unlockPage();
+      const unlockBtn = document.getElementById('unlock-btn');
+      const passcodeField = document.getElementById('passcode-field');
+
+      function executeUnlock(e) {
+        if (e) e.preventDefault();
+        
+        const rawValue = passcodeField.value;
+        const cleanValue = rawValue.replace(/\D/g, '').trim();
+
+        if (cleanValue === SECRET_PASSCODE || rawValue.trim() === SECRET_PASSCODE) {
+          const lockScreen = document.getElementById('lock-screen');
+          if (lockScreen) {
+            lockScreen.style.display = "none";
+            lockScreen.remove();
           }
+          setTimeout(() => { toggleMusic(); }, 100);
+        } else {
+          document.getElementById('error-text').style.display = "block";
+        }
+      }
+
+      if (unlockBtn) {
+        unlockBtn.addEventListener('click', executeUnlock);
+      }
+
+      if (passcodeField) {
+        passcodeField.addEventListener('keyup', function(e) {
+          if (e.key === "Enter") {
+            executeUnlock(e);
+          }
+        });
+      }
+
+      const musicBtnEl = document.getElementById('music-toggle-btn');
+      if (musicBtnEl) musicBtnEl.addEventListener('click', toggleMusic);
+
+      const letterBtnEl = document.getElementById('letter-btn');
+      if (letterBtnEl) {
+        letterBtnEl.addEventListener('click', function() {
+          toggleMusic();
+          alert("💖 Izu, you are my favorite person forever and always! 💖");
         });
       }
     });
@@ -425,4 +424,6 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Expanded Reasons Generator Scrip
+    const loveReasons = [
+      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
+      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole w
