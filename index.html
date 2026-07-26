@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,9 +221,8 @@
 </head>
 <body>
 
-  <!-- Hidden Audio Player -->
-  <!-- REPLACE 'music.mp3' WITH YOUR AUDIO FILE OR MP3 DIRECT LINK -->
-  <audio id="bg-music" loop>
+  <!-- Audio Player linked to music.mp3 -->
+  <audio id="bg-music" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
@@ -240,7 +238,7 @@
     <!-- Hero Section -->
     <div class="card">
       <div class="photo-frame">
-        <img src="photo1.jpg" alt="Abou & Izu">
+        <img src="couple1.jpeg" alt="Abou & Izu">
       </div>
       <h1>Abou & Izu</h1>
       
@@ -279,7 +277,7 @@
     <div class="card">
       <h2>Our Beautiful Journey</h2>
       <div class="photo-frame">
-        <img src="photo2.jpg" alt="Our Journey">
+        <img src="couple2.jpeg" alt="Our Journey">
       </div>
       <p class="quote">"The right person will show you how beautiful love can be."</p>
     </div>
@@ -338,7 +336,6 @@
     }
 
     function showMessage() {
-      // Plays music if not already playing
       if (music.paused) {
         music.play();
         musicBtn.innerHTML = "⏸️ Pause Song";
