@@ -51,8 +51,8 @@
     }
     #lock-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(253, 248, 249, 0.96); backdrop-filter: blur(20px);
-      z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px;
+      background: rgba(253, 248, 249, 0.98); backdrop-filter: blur(20px);
+      z-index: 999999; display: flex; justify-content: center; align-items: center; padding: 20px;
     }
     .lock-box {
       background: #ffffff; padding: 38px 26px; border-radius: 28px;
@@ -149,8 +149,8 @@
     <div class="lock-box">
       <h2>🔒 Akku & Izu Only</h2>
       <p>Please enter our secret passcode to enter</p>
-      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
-      <button class="btn-unlock" onclick="unlockPage()">Unlock Heart 💖</button>
+      <input type="tel" inputmode="numeric" pattern="[0-9]*" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
+      <button class="btn-unlock" type="button" onclick="unlockPage()">Unlock Heart 💖</button>
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
   </div>
@@ -334,28 +334,50 @@
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle-btn');
 
-    // SAFE UNLOCK FUNCTION (Ensures lock screen hides no matter what)
+    // BULLETPROOF UNLOCK FUNCTION
     function unlockPage() {
-      const input = document.getElementById('passcode-field').value.trim();
-      const errorText = document.getElementById('error-text');
-      const lockScreen = document.getElementById('lock-screen');
+      try {
+        const inputField = document.getElementById('passcode-field');
+        const errorText = document.getElementById('error-text');
+        const lockScreen = document.getElementById('lock-screen');
 
-      if (input === SECRET_PASSCODE) {
-        // Hide lock screen FIRST
-        lockScreen.style.display = "none";
-        
-        // Try playing music safely without blocking the UI
-        toggleMusic();
-      } else {
-        errorText.style.display = "block";
+        if (!inputField) return;
+
+        // Clean input: remove non-digit characters and spaces
+        const rawInput = inputField.value;
+        const cleanInput = rawInput.replace(/\D/g, '').trim();
+
+        if (cleanInput === SECRET_PASSCODE || rawInput.trim() === SECRET_PASSCODE) {
+          // Force hide AND physically destroy lock screen element from the DOM
+          if (lockScreen) {
+            lockScreen.style.setProperty("display", "none", "important");
+            lockScreen.remove(); 
+          }
+          
+          // Try playing music safely in background
+          setTimeout(() => {
+            try { toggleMusic(); } catch(e) { console.error(e); }
+          }, 100);
+        } else {
+          if (errorText) errorText.style.display = "block";
+        }
+      } catch (err) {
+        // Fallback: If anything fails, force remove lock screen anyway
+        const lockScreen = document.getElementById('lock-screen');
+        if (lockScreen) lockScreen.remove();
       }
     }
 
     // Modern Enter Key Listener
-    document.getElementById("passcode-field").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        unlockPage();
+    document.addEventListener("DOMContentLoaded", function() {
+      const pField = document.getElementById("passcode-field");
+      if (pField) {
+        pField.addEventListener("keyup", function(event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            unlockPage();
+          }
+        });
       }
     });
 
@@ -364,7 +386,8 @@
       const today = new Date();
       const timeDifference = today - startDate;
       const daysTogether = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      document.getElementById('days-count').innerText = daysTogether > 0 ? daysTogether : 0;
+      const el = document.getElementById('days-count');
+      if (el) el.innerText = daysTogether > 0 ? daysTogether : 0;
     }
     calculateDays();
 
@@ -375,34 +398,31 @@
       const now = new Date().getTime();
       const difference = targetAnniversary - now;
 
+      const dEl = document.getElementById('cd-days');
+      const hEl = document.getElementById('cd-hours');
+      const mEl = document.getElementById('cd-mins');
+      const sEl = document.getElementById('cd-secs');
+
+      if (!dEl) return;
+
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
-        document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
-        document.getElementById('cd-mins').innerText = String(minutes).padStart(2, '0');
-        document.getElementById('cd-secs').innerText = String(seconds).padStart(2, '0');
+        dEl.innerText = String(days).padStart(2, '0');
+        hEl.innerText = String(hours).padStart(2, '0');
+        mEl.innerText = String(minutes).padStart(2, '0');
+        sEl.innerText = String(seconds).padStart(2, '0');
       } else {
-        document.getElementById('cd-days').innerText = '00';
-        document.getElementById('cd-hours').innerText = '00';
-        document.getElementById('cd-mins').innerText = '00';
-        document.getElementById('cd-secs').innerText = '00';
+        dEl.innerText = '00';
+        hEl.innerText = '00';
+        mEl.innerText = '00';
+        sEl.innerText = '00';
       }
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Expanded Reasons Generator Script
-    const loveReasons = [
-      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
-      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
-      "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
-      "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
-      "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
-      "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
-      "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
-      "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
-      "Your Comforting Hugs — How a single squeeze from you can make all my
+    // Expanded Reasons Generator Scrip
