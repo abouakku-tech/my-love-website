@@ -1,1 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Prevents Google and Search Engines from showing your site -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Akku & Izu</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fdf8f9;
+      font-family: 'Montserrat', sans-serif;
+      color: #4a0e17;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 30px 16px 50px 16px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Soft Background Lighting */
+    .glow-1 {
+      position: fixed;
+      top: -10%;
+      left: -10%;
+      width: 380px;
+      height: 380px;
+      background: rgba(255, 182, 193, 0.5);
+      filter: blur(100px);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .glow-2 {
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 380px;
+      height: 380px;
+      background: rgba(255, 105, 180, 0.4);
+      filter: blur(100px);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Floating Hearts Container */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .heart-float {
+      position: absolute;
+      bottom: -50px;
+      color: rgba(201, 24, 74, 0.25);
+      font-size: 1.5rem;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-115vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Secret Passcode Screen */
+    #lock-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 248, 249, 0.96);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .lock-box {
+      background: #ffffff;
+      padding: 38px 26px;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(201, 24, 74, 0.18);
+      border: 2px solid rgba(255, 182, 193, 0.5);
+      text-align: center;
+      max-width: 340px;
+      width: 100%;
+      animation: pulseBox 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseBox {
+      0%, 100% { box-shadow: 0 15px 35px rgba(201, 24, 74, 0.15); }
+      50% { box-shadow: 0 20px 45px rgba(201, 24, 74, 0.3); }
+    }
+
+    .lock-box h2 {
+      font-family: 'Playfair Display', serif;
+      color: #8b1e3f;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .lock-box p {
+      font-size: 0.88rem;
+      color: #666;
+      margin-bottom: 22px;
+    }
+
+    .passcode-input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 2px solid #ffccd5;
+      text-align: center;
+      font-size: 1.3rem;
+      letter-spacing: 6px;
+      outline: none;
+      margin-bottom: 16px;
+      color: #800f2f;
+      font-weight: 700;
+      background: #fffdfd;
+      transition: all 0.3s ease;
+    }
+
+    .passcode-input:focus {
+      border-color: #c9184a;
+      box-shadow: 0 0 12px rgba(201, 24, 74, 0.25);
+    }
+
+    .btn-unlock {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(201, 24, 74, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .btn-unlock:active {
+      transform: scale(0.97);
+    }
+
+    .error-msg {
+      color: #c9184a;
+      font-size: 0.82rem;
+      margin-top: 12px;
+      display: none;
+      font-weight: 600;
+    }
+
+    /* Floating Music Toggle Button */
+    .music-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(201, 24, 74, 0.3);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #800f2f;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .music-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Layout Wrapper */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 25px;
+    }
+
+    /* Frosted Glass Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 28px 22px;
+      box-shadow: 0 15px 35px rgba(139, 30, 63, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #7a1c2b;
+      margin-top: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #8b1e3f;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #4a0e17;
+      font-weight: 400;
+    }
+
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #7a1c2b;
+      margin-top: 12px;
+    }
+
+    /* Date Counter Box */
+    .counter-box {
+      background: linear-gradient(135deg, rgba(255,240,243,0.95), rgba(255,204,213,0.7));
+      border-radius: 22px;
+      padding: 20px 16px;
+      margin: 18px 0;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 2px 10px rgba(201, 24, 74, 0.05);
+    }
+
+    .counter-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #a4133c;
+      line-height: 1;
+      margin: 8px 0;
+      text-shadow: 0 2px 10px rgba(201, 24, 74, 0.15);
+    }
+
+    .counter-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #800f2f;
+      font-weight: 600;
+    }
+
+    /* Special Milestones Badge List */
+    .milestone-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+      text-align: left;
+    }
+
+    .milestone-item {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 13px 16px;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(201, 24, 74, 0.15);
+      color: #590d22;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .milestone-item span {
+      font-size: 1.2rem;
+    }
+
+    /* Photo/Video Frames */
+    .photo-frame {
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(139, 30, 63, 0.12);
+      margin-bottom: 14px;
+      border: 4px solid #ffffff;
+      background-color: #fff0f3;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 290px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .video-frame video {
+      width: 100%;
+      max-height: 380px;
+      display: block;
+      border-radius: 18px;
+      outline: none;
+      background-color: #000;
+    }
+
+    /* Glowing Action Button */
+    .btn-heart {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      margin-top: 15px;
+    }
+
+    .btn-heart:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Background Hearts -->
+  <div class="hearts-container" id="hearts-bg"></div>
+
+  <!-- PASSCODE LOCK OVERLAY SCREEN -->
+  <div id="lock-screen">
+    <div class="lock-box">
+      <h2>🔒 Akku & Izu Only</h2>
+      <p>Please enter our secret passcode to enter</p>
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
+      <button class="btn-unlock" onclick="unlockPage()">Unlock Heart 💖</button>
+      <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
+    </div>
+  </div>
+
+  <!-- Audio Player linked to music.mp3 -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="./music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Floating Music Toggle Button -->
+  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
+
+  <!-- Ambient Light Blurs -->
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="container">
+    
+    <!-- Hero Section -->
+    <div class="card">
+      <div class="photo-frame">
+        <img src="./couple1.jpeg" alt="Akku & Izu">
+      </div>
+      <h1>Akku & Izu</h1>
+      
+      <!-- Special Automatic Date Counter -->
+      <div class="counter-box">
+        <div class="counter-label">Days Together</div>
+        <div class="counter-number" id="days-count">0</div>
+        <div class="counter-label">Since She Said YES! 💍</div>
+      </div>
+
+      <p>
+        Every love story is beautiful, but ours is my favourite. Thank you for making my life brighter every single day.
+      </p>
+    </div>
+
+    <!-- Milestones Section -->
+    <div class="card">
+      <h2>✨ Our Special Dates ✨</h2>
+      <div class="milestone-list">
+        <div class="milestone-item">
+          <span>🎁</span>
+          <div><strong>July 15, 2026</strong> — Our First Surprise Meet ❤️</div>
+        </div>
+        <div class="milestone-item">
+          <span>🌹</span>
+          <div><strong>July 18, 2026</strong> — Our Official Meeting 💍</div>
+        </div>
+        <div class="milestone-item">
+          <span>💍</span>
+          <div><strong>September 21, 2025</strong> — She Said Yes!</div>
+        </div>
+        <div class="milestone-item">
+          <span>🎂</span>
+          <div><strong>October 21, 2001</strong> — Akku Born</div>
+        </div>
+        <div class="milestone-item">
+          <span>🎂</span>
+          <div><strong>July 3, 2007</strong> — Izu Born</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journey Section -->
+    <div class="card">
+      <h2>Our Beautiful Journey</h2>
+      <div class="photo-frame">
+        <img src="./couple2.jpeg" alt="Our Journey">
+      </div>
+      <p class="quote">"The right person will show you how beautiful love can be."</p>
+    </div>
+
+    <!-- VIDEO MEMORIES SECTION -->
+    <div class="card">
+      <h2>✨ Video Memories ✨</h2>
+      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 12px;">A special moment captured in video ❤️</p>
+      
+      <div class="photo-frame video-frame">
+        <video controls loop muted autoplay playsinline>
+          <source src="./video1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- NEW: FOR HER FRIENDS SECTION -->
+    <div class="card">
+      <h2>✨ To Her Friends ✨</h2>
+      <p style="font-weight: 600; color: #a4133c; margin-bottom: 10px;">A Special Note for Izu's Besties 🌸</p>
+      
+      <p>
+        Thank you for always being by her side, sharing laughter, and bringing so much happiness into her life!
+      </p>
+      <p style="margin-top: 12px; font-weight: 500; color: #7a1c2b;">
+        <!-- YOU CAN CHANGE THIS TEXT TO WHATEVER YOU WANT TO WRITE -->
+        "Friends like you make every moment sweeter and every memory brighter."
+      </p>
+    </div>
+
+    <!-- Letter Section -->
+    <div class="card">
+      <h2>A Letter For You</h2>
+      <p style="font-weight: 600; color: #a4133c; margin-bottom: 8px;">My Dearest Izu ❤️</p>
+      
+      <p>
+        You are the most beautiful part of my life. Every smile of yours gives me happiness. Every moment with you becomes a memory I never want to lose.
+      </p>
+      <p style="margin-top: 12px;">
+        No matter what happens, I promise to stand beside you, respect you, care for you and love you forever.
+      </p>
+      <p style="margin-top: 12px; font-weight: 600;">
+        You are my favourite person, my happiness, my peace and my forever.
+      </p>
+
+      <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
+
+      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
+
+      <!-- Live Visitor Badge Counter -->
+      <div style="text-align: center; margin-top: 25px;">
+        <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // ==========================================
+    // SECRET PASSCODE LOGIC (Set to 2103)
+    // ==========================================
+    const SECRET_PASSCODE = "2103"; 
+
+    function unlockPage() {
+      const input = document.getElementById('passcode-field').value;
+      const errorText = document.getElementById('error-text');
+      const lockScreen = document.getElementById('lock-screen');
+
+      if (input === SECRET_PASSCODE) {
+        lockScreen.style.display = "none";
+        toggleMusic();
+      } else {
+        errorText.style.display = "block";
+      }
+    }
+
+    document.getElementById("passcode-field").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        unlockPage();
+      }
+    });
+
+    // ==========================================
+    // AUTOMATIC DAYS TOGETHER CALCULATOR
+    // ==========================================
+    const startDate = new Date(2025, 8, 21); // Month 8 = September
+
+    function calculateDays() {
+      const today = new Date();
+      const timeDifference = today - startDate;
+      const daysTogether = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').innerText = daysTogether > 0 ? daysTogether : 0;
+    }
+
+    calculateDays();
+
+    // ==========================================
+    // FLOATING HEARTS ANIMATION GENERATOR
+    // ==========================================
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-bg');
+      const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
+      
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-float';
+        heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+        heart.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(heart);
+      }
+    }
+
+    createFloatingHearts();
+
+    // ==========================================
+    // MUSIC CONTROL LOGIC
+    // ==========================================
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle-btn');
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "⏸️ Pause Song";
+      } else {
+        music.pause();
+        musicBtn.innerHTML = "🎵 Play Song";
+      }
+    }
+
+    function showMessage() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "⏸️ Pause Song";
+      }
+      alert("💖 Izu, you are my favorite person forever and always! 💖");
+    }
+  </script>
+
+</body>
+</html>
 
