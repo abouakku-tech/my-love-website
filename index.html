@@ -49,10 +49,28 @@
       0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
       100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
     }
+    #lock-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(253, 248, 249, 0.96); backdrop-filter: blur(20px);
+      z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px;
+    }
+    .lock-box {
+      background: #ffffff; padding: 38px 26px; border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(201, 24, 74, 0.18);
+      border: 2px solid rgba(255, 182, 193, 0.5); text-align: center; max-width: 340px; width: 100%;
+    }
+    .lock-box h2 { font-family: 'Playfair Display', serif; color: #8b1e3f; font-size: 1.6rem; margin-bottom: 8px; }
+    .lock-box p { font-size: 0.88rem; color: #666; margin-bottom: 22px; }
+    .passcode-input {
+      width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #ffccd5;
+      text-align: center; font-size: 1.3rem; letter-spacing: 6px; outline: none; margin-bottom: 16px;
+      color: #800f2f; font-weight: 700; background: #fffdfd;
+    }
     .btn-unlock {
       width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; border: none; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer;
     }
+    .error-msg { color: #c9184a; font-size: 0.82rem; margin-top: 12px; display: none; font-weight: 600; }
     .music-btn {
       position: fixed; top: 18px; right: 18px; z-index: 10;
       background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px);
@@ -76,6 +94,7 @@
     .counter-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #a4133c; line-height: 1; }
     .counter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #800f2f; font-weight: 600; }
     
+    /* Countdown Styles */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -119,22 +138,28 @@
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
     }
-    .bucket-item {
-      background: rgba(255, 255, 255, 0.8); padding: 12px 16px; border-radius: 14px;
-      border: 1px solid rgba(201, 24, 74, 0.15); cursor: pointer; display: flex;
-      align-items: center; gap: 10px; font-size: 0.9rem; color: #590d22; transition: all 0.2s;
-    }
   </style>
 </head>
 <body>
 
   <div class="hearts-container" id="hearts-bg"></div>
 
+  <!-- PASSCODE SCREEN -->
+  <div id="lock-screen">
+    <div class="lock-box">
+      <h2>🔒 Akku & Izu Only</h2>
+      <p>Please enter our secret passcode to enter</p>
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
+      <button class="btn-unlock" onclick="unlockPage()">Unlock Heart 💖</button>
+      <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
+    </div>
+  </div>
+
   <audio id="bg-music" loop preload="auto">
     <source src="./music.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" id="music-toggle-btn">🎵 Play Song</button>
+  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
 
   <div class="glow-1"></div>
   <div class="glow-2"></div>
@@ -174,55 +199,6 @@
         <div class="countdown-box">
           <div class="countdown-num" id="cd-secs">00</div>
           <div class="countdown-unit">Secs</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- WHY I CHOOSE YOU PHOTO CARD -->
-    <div class="card">
-      <h2>Why I Choose You ❤️</h2>
-      <div class="photo-frame" style="height: auto;">
-        <img src="./why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
-      </div>
-      <p class="quote">"And I will keep choosing you, again and again."</p>
-    </div>
-
-    <!-- REASONS WHY I LOVE YOU GENERATOR -->
-    <div class="card">
-      <h2>💌 Reasons Why I Love You</h2>
-      <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Tap below whenever you need a reminder!</p>
-      <div id="reason-box" style="background: rgba(255, 240, 243, 0.9); padding: 18px; border-radius: 18px; border: 1px dashed #ff4d6d; font-weight: 600; color: #800f2f; min-height: 70px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; line-height: 1.5;">
-        Click the button below! ❤️
-      </div>
-      <button class="btn-unlock" id="reason-btn" style="margin-top: 14px;">Give Me A Reason 💖</button>
-    </div>
-
-    <!-- VIRTUAL HUG BUTTON -->
-    <div class="card">
-      <h2>🤗 Need a Hug?</h2>
-      <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Missing me right now? Tap for a warm virtual squeeze!</p>
-      <button class="btn-heart" id="hug-btn" style="margin-top: 0;">🤗 Send a Virtual Hug 🤗</button>
-    </div>
-
-    <!-- COUPLE BUCKET LIST -->
-    <div class="card">
-      <h2>✨ Our Couple Bucket List</h2>
-      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 14px;">Goals we are going to achieve together! Tap to mark complete ✨</p>
-      <div style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
-        <div class="bucket-item">
-          <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Watch a sunset together on the beach 🌅</span>
-        </div>
-        <div class="bucket-item">
-          <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Go on a spontaneous road trip 🚗💨</span>
-        </div>
-        <div class="bucket-item">
-          <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Cook a delicious dinner together from scratch 🍝</span>
-        </div>
-        <div class="bucket-item">
-          <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Binge-watch an entire movie series in one day 🍿</span>
-        </div>
-        <div class="bucket-item">
-          <span class="bucket-check" style="font-size: 1.1rem;">⬜</span> <span>Travel to a new place we've never been ✈️</span>
         </div>
       </div>
     </div>
@@ -274,7 +250,7 @@
       <h2>💌 Leave a Secret Message</h2>
       <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 15px;">A space for friends & loved ones to write something special!</p>
       
-      <form id="secret-form">
+      <form id="secret-form" onsubmit="sendEmailNote(event)">
         <input type="text" id="guest-name" placeholder="Your Name" class="msg-input" required>
         <textarea id="guest-message" placeholder="Write your message here..." rows="4" class="msg-input" style="resize: vertical;" required></textarea>
         
@@ -293,7 +269,7 @@
       <p style="margin-top: 12px; font-weight: 600;">You are my favourite person, my happiness, my peace and my forever.</p>
 
       <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
-      <button class="btn-heart" id="letter-btn">💖 Open My Heart 💖</button>
+      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
 
       <div style="text-align: center; margin-top: 25px;">
         <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
@@ -303,151 +279,139 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
+    const SECRET_PASSCODE = "2103"; 
 
-      // 1. MUSIC CONTROL
-      try {
-        const music = document.getElementById('bg-music');
-        const musicBtn = document.getElementById('music-toggle-btn');
-        const letterBtn = document.getElementById('letter-btn');
+    function unlockPage() {
+      const input = document.getElementById('passcode-field').value;
+      const errorText = document.getElementById('error-text');
+      const lockScreen = document.getElementById('lock-screen');
 
-        function toggleMusic() {
-          if (!music) return;
-          if (music.paused) {
-            let p = music.play();
-            if (p !== undefined) {
-              p.then(() => { if (musicBtn) musicBtn.innerText = "⏸️ Pause Song"; })
-               .catch(() => { if (musicBtn) musicBtn.innerText = "🎵 Play Song"; });
-            }
-          } else {
-            music.pause();
-            if (musicBtn) musicBtn.innerText = "🎵 Play Song";
-          }
+      if (input === SECRET_PASSCODE) {
+        lockScreen.style.display = "none";
+        toggleMusic();
+      } else {
+        errorText.style.display = "block";
+      }
+    }
+
+    document.getElementById("passcode-field").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") unlockPage();
+    });
+
+    const startDate = new Date(2025, 8, 21);
+    function calculateDays() {
+      const today = new Date();
+      const timeDifference = today - startDate;
+      const daysTogether = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').innerText = daysTogether > 0 ? daysTogether : 0;
+    }
+    calculateDays();
+
+    // 1-Year Anniversary Live Countdown
+    const targetAnniversary = new Date('September 21, 2026 00:00:00').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetAnniversary - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('cd-days').innerText = String(days).padStart(2, '0');
+        document.getElementById('cd-hours').innerText = String(hours).padStart(2, '0');
+        document.getElementById('cd-mins').innerText = String(minutes).padStart(2, '0');
+        document.getElementById('cd-secs').innerText = String(seconds).padStart(2, '0');
+      } else {
+        document.getElementById('cd-days').innerText = '00';
+        document.getElementById('cd-hours').innerText = '00';
+        document.getElementById('cd-mins').innerText = '00';
+        document.getElementById('cd-secs').innerText = '00';
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-bg');
+      const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-float';
+        heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (6 + Math.random() * 6) + 's';
+        heart.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle-btn');
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = "⏸️ Pause Song";
+      } else {
+        music.pause();
+        musicBtn.innerHTML = "🎵 Play Song";
+      }
+    }
+
+    function showMessage() {
+      if (music.paused) { music.play(); musicBtn.innerHTML = "⏸️ Pause Song"; }
+      alert("💖 Izu, you are my favorite person forever and always! 💖");
+    }
+
+    function sendEmailNote(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const statusMsg = document.getElementById('status-msg');
+      const name = document.getElementById('guest-name').value;
+      const message = document.getElementById('guest-message').value;
+
+      submitBtn.innerText = "Sending... 💌";
+      submitBtn.disabled = true;
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: "💌 New Message on Akku & Izu Website!",
+          from_name: name,
+          message: message
+        })
+      })
+      .then(async (response) => {
+        if (response.status === 200) {
+          statusMsg.innerText = "Message sent! Thank you ❤️";
+          statusMsg.style.display = "block";
+          document.getElementById('secret-form').reset();
+        } else {
+          statusMsg.innerText = "Something went wrong. Please check your setup.";
+          statusMsg.style.display = "block";
         }
+      })
+      .catch(error => {
+        statusMsg.innerText = "Error sending message. Try again!";
+        statusMsg.style.display = "block";
+      })
+      .finally(() => {
+        submitBtn.innerText = "Send Message 💖";
+        submitBtn.disabled = false;
+      });
+    }
+  </script>
 
-        if (musicBtn) musicBtn.addEventListener('click', toggleMusic);
-        if (letterBtn) {
-          letterBtn.addEventListener('click', function() {
-            toggleMusic();
-            alert("💖 Izu, you are my favorite person forever and always! 💖");
-          });
-        }
-      } catch(e) { console.error(e); }
-
-      // 2. DAYS TOGETHER COUNTER (Sept 21, 2025)
-      try {
-        const startDate = new Date(2025, 8, 21).getTime();
-        const now = new Date().getTime();
-        const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-        const daysEl = document.getElementById('days-count');
-        if (daysEl) daysEl.innerText = days > 0 ? days : 0;
-      } catch(e) { console.error(e); }
-
-      // 3. COUNTDOWN TO 1ST ANNIVERSARY (Sept 21, 2026)
-      try {
-        const anniversaryTarget = new Date(2026, 8, 21, 0, 0, 0).getTime();
-        function updateCountdown() {
-          const currentTime = new Date().getTime();
-          const diff = anniversaryTarget - currentTime;
-
-          const dEl = document.getElementById('cd-days');
-          const hEl = document.getElementById('cd-hours');
-          const mEl = document.getElementById('cd-mins');
-          const sEl = document.getElementById('cd-secs');
-
-          if (!dEl) return;
-
-          if (diff > 0) {
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-            dEl.innerText = String(d).padStart(2, '0');
-            hEl.innerText = String(h).padStart(2, '0');
-            mEl.innerText = String(m).padStart(2, '0');
-            sEl.innerText = String(s).padStart(2, '0');
-          } else {
-            dEl.innerText = '00';
-            hEl.innerText = '00';
-            mEl.innerText = '00';
-            sEl.innerText = '00';
-          }
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-      } catch(e) { console.error(e); }
-
-      // 4. REASONS GENERATOR
-      try {
-        const loveReasons = [
-          "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
-          "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
-          "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
-          "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
-          "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
-          "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
-          "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
-          "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
-          "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
-          "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
-        ];
-        const reasonBtn = document.getElementById("reason-btn");
-        const reasonBox = document.getElementById("reason-box");
-        if (reasonBtn && reasonBox) {
-          reasonBtn.addEventListener("click", function() {
-            const randomIndex = Math.floor(Math.random() * loveReasons.length);
-            reasonBox.innerText = loveReasons[randomIndex];
-          });
-        }
-      } catch(e) { console.error(e); }
-
-      // 5. BUCKET LIST TOGGLE
-      try {
-        const items = document.querySelectorAll('.bucket-item');
-        items.forEach(function(item) {
-          item.addEventListener('click', function() {
-            const check = this.querySelector('.bucket-check');
-            if (check.innerText === '⬜') {
-              check.innerText = '✅';
-              this.style.opacity = '0.7';
-              this.style.textDecoration = 'line-through';
-            } else {
-              check.innerText = '⬜';
-              this.style.opacity = '1';
-              this.style.textDecoration = 'none';
-            }
-          });
-        });
-      } catch(e) { console.error(e); }
-
-      // 6. VIRTUAL HUG BUTTON
-      try {
-        const hugBtn = document.getElementById("hug-btn");
-        function spawnHeart() {
-          const container = document.getElementById('hearts-bg');
-          if (!container) return;
-          const heart = document.createElement('div');
-          heart.className = 'heart-float';
-          heart.innerText = '💖';
-          heart.style.left = Math.random() * 100 + '%';
-          heart.style.animationDuration = '4s';
-          container.appendChild(heart);
-          setTimeout(() => heart.remove(), 4000);
-        }
-        if (hugBtn) {
-          hugBtn.addEventListener("click", function() {
-            for(let i = 0; i < 20; i++) {
-              setTimeout(spawnHeart, i * 100);
-            }
-            alert("🤗 *WARM SQUEEZY HUG SENT!* 🤗\n\nWhenever you miss me, remember I'm always thinking of you! ❤️");
-          });
-        }
-      } catch(e) { console.error(e); }
-
-      // 7. BACKGROUND FLOATING HEARTS
-      try {
-        const container = document.getElementById('hearts-bg');
-        if (container) {
-          const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
-          for (let i = 0; i < 15
+</body>
+</html>
