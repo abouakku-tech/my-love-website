@@ -49,10 +49,13 @@
       0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
       100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
     }
+
+    /* PASSCODE LOCK SCREEN STYLES */
     #lock-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(253, 248, 249, 0.96); backdrop-filter: blur(20px);
       z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px;
+      transition: opacity 0.4s ease;
     }
     .lock-box {
       background: #ffffff; padding: 38px 26px; border-radius: 28px;
@@ -71,6 +74,7 @@
       color: #ffffff; border: none; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer;
     }
     .error-msg { color: #c9184a; font-size: 0.82rem; margin-top: 12px; display: none; font-weight: 600; }
+
     .music-btn {
       position: fixed; top: 18px; right: 18px; z-index: 10;
       background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px);
@@ -94,7 +98,6 @@
     .counter-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #a4133c; line-height: 1; }
     .counter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #800f2f; font-weight: 600; }
     
-    /* Countdown Styles */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -121,7 +124,6 @@
       font-weight: 600;
     }
 
-    /* Game Styles */
     .game-container { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; text-align: left; }
     .game-item { background: rgba(255, 255, 255, 0.8); padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(201, 24, 74, 0.15); }
     .game-q { font-weight: 600; color: #590d22; font-size: 0.9rem; margin-bottom: 10px; }
@@ -159,12 +161,12 @@
 
   <div class="hearts-container" id="hearts-bg"></div>
 
-  <!-- PASSCODE SCREEN -->
+  <!-- PASSCODE LOCK SCREEN -->
   <div id="lock-screen">
     <div class="lock-box">
       <h2>🔒 Akku & Izu Only</h2>
       <p>Please enter our secret passcode to enter</p>
-      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6">
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
       <button class="btn-unlock" onclick="unlockPage()">Unlock Heart 💖</button>
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
@@ -224,7 +226,6 @@
       <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 14px;">Tap a name for each question to vote! 😄</p>
       
       <div class="game-container">
-        <!-- Question 1 -->
         <div class="game-item">
           <p class="game-q">🎬 Falls asleep first during a movie?</p>
           <div class="game-options">
@@ -234,7 +235,6 @@
           <div class="game-result"></div>
         </div>
 
-        <!-- Question 2 -->
         <div class="game-item">
           <p class="game-q">👗 Takes longer to get ready?</p>
           <div class="game-options">
@@ -244,7 +244,6 @@
           <div class="game-result"></div>
         </div>
 
-        <!-- Question 3 -->
         <div class="game-item">
           <p class="game-q">🍕 Takes forever to decide what to eat?</p>
           <div class="game-options">
@@ -336,20 +335,27 @@
     const SECRET_PASSCODE = "2103"; 
 
     function unlockPage() {
-      const input = document.getElementById('passcode-field').value;
+      const inputField = document.getElementById('passcode-field');
+      const input = inputField.value.trim();
       const errorText = document.getElementById('error-text');
       const lockScreen = document.getElementById('lock-screen');
 
       if (input === SECRET_PASSCODE) {
-        lockScreen.style.display = "none";
+        lockScreen.style.opacity = '0';
+        setTimeout(() => {
+          lockScreen.style.display = "none";
+        }, 400);
         toggleMusic();
       } else {
         errorText.style.display = "block";
+        inputField.value = "";
       }
     }
 
-    document.getElementById("passcode-field").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") unlockPage();
+    document.getElementById("passcode-field").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        unlockPage();
+      }
     });
 
     const startDate = new Date(2025, 8, 21);
@@ -361,7 +367,6 @@
     }
     calculateDays();
 
-    // 1-Year Anniversary Live Countdown (Cross-browser safe Date parsing)
     const targetAnniversary = new Date(2026, 8, 21, 0, 0, 0).getTime();
 
     function updateCountdown() {
@@ -388,7 +393,6 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Game Handler
     function answerGame(btn, person, message) {
       const parent = btn.closest('.game-item');
       const buttons = parent.querySelectorAll('.game-btn');
@@ -424,7 +428,7 @@
         music.play().then(() => {
           musicBtn.innerHTML = "⏸️ Pause Song";
         }).catch(err => {
-          console.log("Audio play deferred until user interaction:", err);
+          console.log("Audio play deferred:", err);
         });
       } else {
         music.pause();
@@ -458,5 +462,3 @@
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: "💌 New Mes
