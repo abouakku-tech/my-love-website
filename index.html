@@ -10,132 +10,170 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffd1dc);
-overflow:hidden;
+background:linear-gradient(135deg,#ff5f8f,#ffb6c1,#ffe4e9);
+background-size:400% 400%;
+animation:bgMove 12s infinite alternate;
+overflow-x:hidden;
+color:#fff;
 }
 
-.card{
-background:rgba(255,255,255,0.95);
-padding:40px;
-border-radius:25px;
+@keyframes bgMove{
+0%{background-position:left;}
+100%{background-position:right;}
+}
+
+.container{
+max-width:900px;
+margin:50px auto;
+padding:20px;
 text-align:center;
-width:90%;
-max-width:500px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-animation:fadeIn 2s;
+}
+
+.photo{
+width:280px;
+max-width:90%;
+border-radius:25px;
+border:6px solid white;
+box-shadow:0 0 30px rgba(255,255,255,.5);
+animation:zoom 3s infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1);}
+to{transform:scale(1.05);}
 }
 
 h1{
-font-size:40px;
-color:#ff2d55;
-margin-bottom:15px;
+font-size:50px;
+margin:20px 0;
+text-shadow:0 0 15px white;
 }
 
 p{
-font-size:20px;
-color:#444;
-line-height:1.6;
+font-size:22px;
+line-height:1.8;
+margin-top:20px;
 }
 
 button{
-margin-top:25px;
+margin-top:30px;
 padding:15px 35px;
-font-size:18px;
+font-size:20px;
 border:none;
-border-radius:30px;
-background:#ff2d55;
-color:white;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-background:#ff4d79;
-transform:scale(1.05);
-}
-
-#message{
-margin-top:25px;
-font-size:22px;
+border-radius:50px;
+background:white;
 color:#ff2d55;
+cursor:pointer;
+transition:.3s;
 font-weight:bold;
 }
 
-.heart{
-position:absolute;
-color:red;
-font-size:25px;
-animation:float 6s linear infinite;
+button:hover{
+transform:scale(1.08);
 }
 
-@keyframes float{
+#message{
+margin-top:30px;
+font-size:28px;
+font-weight:bold;
+color:white;
+}
+
+.heart{
+position:fixed;
+bottom:-30px;
+font-size:30px;
+animation:fly 7s linear forwards;
+pointer-events:none;
+}
+
+@keyframes fly{
 0%{
-transform:translateY(100vh);
+transform:translateY(0) rotate(0deg);
 opacity:0;
 }
-100%{
-transform:translateY(-100px);
+20%{
 opacity:1;
 }
+100%{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:scale(0.8);}
-to{opacity:1;transform:scale(1);}
+footer{
+margin:60px 0 20px;
+font-size:18px;
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="card">
-<h1>❤️ I Love You ❤️</h1>
+<div class="container">
+
+<img src="couple.jpg" class="photo">
+
+<h1>❤️ My Dearest Izu ❤️</h1>
 
 <p>
-Dear <b>Izu</b>,<br><br>
+From the day you came into my life,<br>
+everything became brighter.<br><br>
 
-Every day with you is my favourite day.<br>
-Thank you for making my life happier.<br><br>
+Your smile makes my heart happy.<br>
+Your love gives me strength.<br>
+No matter what happens,<br>
+I promise to stand beside you forever. ❤️<br><br>
 
-You are my smile, my happiness and my forever. 💖
+Thank you for being my happiness.
 </p>
 
-<button onclick="love()">Click Here ❤️</button>
+<button onclick="love()">Open My Heart ❤️</button>
 
 <div id="message"></div>
+
+<footer>
+Made with ❤️ by Abu
+</footer>
 
 </div>
 
 <script>
 
 function love(){
+
 document.getElementById("message").innerHTML=
-"💍 I Love You Forever, Izu ❤️🥰";
+"💖 I Love You Forever, Izu 💖<br>You are my today, tomorrow and always.";
+
 }
 
-function hearts(){
+function createHeart(){
+
 let heart=document.createElement("div");
+
 heart.className="heart";
+
 heart.innerHTML="❤️";
+
 heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(20+Math.random()*30)+"px";
+
+heart.style.fontSize=(20+Math.random()*25)+"px";
+
 document.body.appendChild(heart);
 
 setTimeout(()=>{
+
 heart.remove();
-},6000);
+
+},7000);
+
 }
 
-setInterval(hearts,300);
+setInterval(createHeart,250);
 
 </script>
 
