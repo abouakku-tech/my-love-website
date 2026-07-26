@@ -203,7 +203,7 @@
       </div>
     </div>
 
-    <!-- NEW PICTURE CARD: WHY I CHOOSE YOU -->
+    <!-- WHY I CHOOSE YOU PHOTO CARD -->
     <div class="card">
       <h2>Why I Choose You ❤️</h2>
       <div class="photo-frame" style="height: auto;">
@@ -331,21 +331,32 @@
     const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
     const SECRET_PASSCODE = "2103"; 
 
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-toggle-btn');
+
+    // SAFE UNLOCK FUNCTION (Ensures lock screen hides no matter what)
     function unlockPage() {
-      const input = document.getElementById('passcode-field').value;
+      const input = document.getElementById('passcode-field').value.trim();
       const errorText = document.getElementById('error-text');
       const lockScreen = document.getElementById('lock-screen');
 
       if (input === SECRET_PASSCODE) {
+        // Hide lock screen FIRST
         lockScreen.style.display = "none";
+        
+        // Try playing music safely without blocking the UI
         toggleMusic();
       } else {
         errorText.style.display = "block";
       }
     }
 
-    document.getElementById("passcode-field").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") unlockPage();
+    // Modern Enter Key Listener
+    document.getElementById("passcode-field").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        unlockPage();
+      }
     });
 
     const startDate = new Date(2025, 8, 21);
@@ -394,13 +405,4 @@
       "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
       "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
       "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
-      "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
-      "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
-    ];
-
-    document.getElementById("reason-btn").addEventListener("click", function() {
-      const randomIndex = Math.floor(Math.random() * loveReasons.length);
-      document.getElementById("reason-box").innerText = loveReasons[randomIndex];
-    });
-
-    /
+      "Your Comforting Hugs — How a single squeeze from you can make all my
