@@ -49,28 +49,10 @@
       0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
       100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
     }
-    #lock-screen {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(253, 248, 249, 0.98); backdrop-filter: blur(20px);
-      z-index: 999999; display: flex; justify-content: center; align-items: center; padding: 20px;
-    }
-    .lock-box {
-      background: #ffffff; padding: 38px 26px; border-radius: 28px;
-      box-shadow: 0 20px 40px rgba(201, 24, 74, 0.18);
-      border: 2px solid rgba(255, 182, 193, 0.5); text-align: center; max-width: 340px; width: 100%;
-    }
-    .lock-box h2 { font-family: 'Playfair Display', serif; color: #8b1e3f; font-size: 1.6rem; margin-bottom: 8px; cursor: pointer; }
-    .lock-box p { font-size: 0.88rem; color: #666; margin-bottom: 22px; }
-    .passcode-input {
-      width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #ffccd5;
-      text-align: center; font-size: 1.2rem; outline: none; margin-bottom: 16px;
-      color: #800f2f; font-weight: 700; background: #fffdfd; letter-spacing: 2px;
-    }
     .btn-unlock {
       width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; border: none; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer;
     }
-    .error-msg { color: #c9184a; font-size: 0.82rem; margin-top: 12px; display: none; font-weight: 600; }
     .music-btn {
       position: fixed; top: 18px; right: 18px; z-index: 10;
       background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px);
@@ -142,18 +124,6 @@
 <body>
 
   <div class="hearts-container" id="hearts-bg"></div>
-
-  <!-- PASSCODE SCREEN -->
-  <div id="lock-screen">
-    <div class="lock-box">
-      <!-- TAP THIS TITLE TO INSTANTLY BYPASS -->
-      <h2 onclick="forceBypass()">🔒 Akku & Izu Only</h2>
-      <p>Please enter our secret passcode (2103)</p>
-      <input type="text" id="passcode-field" class="passcode-input" placeholder="Type 2103..." maxlength="6">
-      <button class="btn-unlock" type="button" id="unlock-btn">Unlock Heart 💖</button>
-      <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
-    </div>
-  </div>
 
   <audio id="bg-music" loop preload="auto">
     <source src="./music.mp3" type="audio/mpeg">
@@ -329,50 +299,10 @@
 
   <script>
     const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
-    const SECRET_PASSCODE = "2103"; 
-
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle-btn');
 
-    // INSTANT BYPASS FUNCTION (Tap title to unlock directly)
-    function forceBypass() {
-      const lockScreen = document.getElementById('lock-screen');
-      if (lockScreen) {
-        lockScreen.style.display = "none";
-        lockScreen.remove();
-      }
-      try { toggleMusic(); } catch(e) {}
-    }
-
     document.addEventListener("DOMContentLoaded", function() {
-      const unlockBtn = document.getElementById('unlock-btn');
-      const passcodeField = document.getElementById('passcode-field');
-
-      function executeUnlock(e) {
-        if (e) e.preventDefault();
-        
-        const rawValue = passcodeField.value;
-        const cleanValue = rawValue.replace(/\D/g, '').trim();
-
-        if (cleanValue === SECRET_PASSCODE || rawValue.trim() === SECRET_PASSCODE) {
-          forceBypass();
-        } else {
-          document.getElementById('error-text').style.display = "block";
-        }
-      }
-
-      if (unlockBtn) {
-        unlockBtn.addEventListener('click', executeUnlock);
-      }
-
-      if (passcodeField) {
-        passcodeField.addEventListener('keyup', function(e) {
-          if (e.key === "Enter") {
-            executeUnlock(e);
-          }
-        });
-      }
-
       const musicBtnEl = document.getElementById('music-toggle-btn');
       if (musicBtnEl) musicBtnEl.addEventListener('click', toggleMusic);
 
@@ -429,4 +359,66 @@
     updateCountdown();
 
     const loveReasons = [
-      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊"
+      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
+      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole world. 🎵",
+      "My Safe Haven — The warm, peaceful feeling I get every single time I'm near you. 🏡❤️",
+      "Little Things — How insanely cute you look when you get excited about the smallest everyday things. ✨",
+      "Your Kind Heart — The endless warmth, patience, and care you show me every day. 🌹",
+      "Best Friend & Partner — You aren't just the love of my life; you're my best friend. 🤝💖",
+      "Making Memories — How you manage to turn the most ordinary, simple moments into something special. 📸",
+      "Always Believing in Us — The way you support my dreams and stand by me through everything. 🌟",
+      "Your Comforting Hugs — How a single squeeze from you can make all my stress completely disappear. 🤗",
+      "Simply Being You — I love you for exactly who you are, today and forever. ❤️"
+    ];
+
+    const reasonBtn = document.getElementById("reason-btn");
+    if (reasonBtn) {
+      reasonBtn.addEventListener("click", function() {
+        const randomIndex = Math.floor(Math.random() * loveReasons.length);
+        document.getElementById("reason-box").innerText = loveReasons[randomIndex];
+      });
+    }
+
+    const hugBtn = document.getElementById("hug-btn");
+    if (hugBtn) {
+      hugBtn.addEventListener("click", function() {
+        for(let i = 0; i < 20; i++) {
+          setTimeout(createSingleHeart, i * 100);
+        }
+        alert("🤗 *WARM SQUEEZY HUG SENT!* 🤗\n\nWhenever you miss me, remember I'm always thinking of you! ❤️");
+      });
+    }
+
+    function createSingleHeart() {
+      const container = document.getElementById('hearts-bg');
+      if (!container) return;
+      const heart = document.createElement('div');
+      heart.className = 'heart-float';
+      heart.innerText = '💖';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = '4s';
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    function toggleBucket(element) {
+      const check = element.querySelector('.bucket-check');
+      if (check.innerText === '⬜') {
+        check.innerText = '✅';
+        element.style.opacity = '0.7';
+        element.style.textDecoration = 'line-through';
+      } else {
+        check.innerText = '⬜';
+        element.style.opacity = '1';
+        element.style.textDecoration = 'none';
+      }
+    }
+
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-bg');
+      if (!container) return;
+      const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-float';
+        heart.innerText = heartIcons[Math.floor(Math.random() * heartIc
