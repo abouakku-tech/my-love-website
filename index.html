@@ -121,6 +121,15 @@
       font-weight: 600;
     }
 
+    /* Game Styles */
+    .game-container { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; text-align: left; }
+    .game-item { background: rgba(255, 255, 255, 0.8); padding: 14px 16px; border-radius: 18px; border: 1px solid rgba(201, 24, 74, 0.15); }
+    .game-q { font-weight: 600; color: #590d22; font-size: 0.9rem; margin-bottom: 10px; }
+    .game-options { display: flex; gap: 10px; }
+    .game-btn { flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #ffccd5; background: #fffdfd; color: #800f2f; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+    .game-btn.selected { background: linear-gradient(135deg, #ff4d6d, #c9184a); color: #fff; border-color: transparent; }
+    .game-result { margin-top: 8px; font-size: 0.82rem; font-weight: 600; color: #a4133c; display: none; text-align: center; }
+
     .milestone-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; text-align: left; }
     .milestone-item {
       background: rgba(255, 255, 255, 0.8); padding: 13px 16px; border-radius: 16px; font-size: 0.88rem;
@@ -199,6 +208,44 @@
         <div class="countdown-box">
           <div class="countdown-num" id="cd-secs">00</div>
           <div class="countdown-unit">Secs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME SECTION -->
+    <div class="card">
+      <h2>🎮 Who Is Most Likely To...?</h2>
+      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 14px;">Tap a name for each question to vote! 😄</p>
+      
+      <div class="game-container">
+        <!-- Question 1 -->
+        <div class="game-item">
+          <p class="game-q">🎬 Falls asleep first during a movie?</p>
+          <div class="game-options">
+            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Definitely Akku! Snoozing in 10 mins! 😴')">Akku</button>
+            <button class="game-btn" onclick="answerGame(this, 'Izu', '100% Izu! Out like a light! 😴')">Izu</button>
+          </div>
+          <div class="game-result"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="game-item">
+          <p class="game-q">👗 Takes longer to get ready?</p>
+          <div class="game-options">
+            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Akku making sure hair is 10/10! 😎')">Akku</button>
+            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu picking the perfect outfit! ✨')">Izu</button>
+          </div>
+          <div class="game-result"></div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="game-item">
+          <p class="game-q">🍕 Takes forever to decide what to eat?</p>
+          <div class="game-options">
+            <button class="game-btn" onclick="answerGame(this, 'Akku', 'Akku scrolling the menu forever! 🍕')">Akku</button>
+            <button class="game-btn" onclick="answerGame(this, 'Izu', 'Izu saying: I don\'t know, you decide! 😂')">Izu</button>
+          </div>
+          <div class="game-result"></div>
         </div>
       </div>
     </div>
@@ -335,6 +382,19 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
+    // Game Handler
+    function answerGame(btn, person, message) {
+      const parent = btn.closest('.game-item');
+      const buttons = parent.querySelectorAll('.game-btn');
+      const resultBox = parent.querySelector('.game-result');
+      
+      buttons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      
+      resultBox.innerText = message;
+      resultBox.style.display = 'block';
+    }
+
     function createFloatingHearts() {
       const container = document.getElementById('hearts-bg');
       const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
@@ -398,20 +458,4 @@
           statusMsg.style.display = "block";
           document.getElementById('secret-form').reset();
         } else {
-          statusMsg.innerText = "Something went wrong. Please check your setup.";
-          statusMsg.style.display = "block";
-        }
-      })
-      .catch(error => {
-        statusMsg.innerText = "Error sending message. Try again!";
-        statusMsg.style.display = "block";
-      })
-      .finally(() => {
-        submitBtn.innerText = "Send Message 💖";
-        submitBtn.disabled = false;
-      });
-    }
-  </script>
-
-</body>
-</html>
+          statusM
