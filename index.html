@@ -69,16 +69,13 @@
     .btn-unlock {
       width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; border: none; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer;
-      transition: transform 0.2s;
     }
-    .btn-unlock:hover { transform: scale(1.02); }
     .error-msg { color: #c9184a; font-size: 0.82rem; margin-top: 12px; display: none; font-weight: 600; }
     .music-btn {
       position: fixed; top: 18px; right: 18px; z-index: 10;
       background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px);
       border: 1px solid rgba(201, 24, 74, 0.3); padding: 10px 18px; border-radius: 30px;
       font-size: 0.85rem; font-weight: 600; color: #800f2f; cursor: pointer;
-      box-shadow: 0 4px 15px rgba(201, 24, 74, 0.15);
     }
     .container { width: 100%; max-width: 420px; z-index: 2; display: flex; flex-direction: column; gap: 24px; margin-top: 25px; }
     .card {
@@ -129,30 +126,9 @@
       background: rgba(255, 255, 255, 0.8); padding: 13px 16px; border-radius: 16px; font-size: 0.88rem;
       display: flex; align-items: center; gap: 12px; border: 1px solid rgba(201, 24, 74, 0.15); color: #590d22;
     }
-    .photo-frame { width: 100%; border-radius: 22px; overflow: hidden; margin-bottom: 14px; border: 4px solid #ffffff; background-color: #fff0f3; cursor: pointer; transition: transform 0.3s; }
-    .photo-frame:hover { transform: scale(1.01); }
+    .photo-frame { width: 100%; border-radius: 22px; overflow: hidden; margin-bottom: 14px; border: 4px solid #ffffff; background-color: #fff0f3; }
     .photo-frame img { width: 100%; height: 290px; object-fit: cover; display: block; }
     .video-frame video { width: 100%; max-height: 380px; display: block; border-radius: 18px; background-color: #000; }
-    
-    /* Lightbox Modal */
-    #lightbox {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 20px;
-    }
-    #lightbox img { max-width: 90%; max-height: 85vh; border-radius: 16px; border: 3px solid #fff; }
-    #lightbox-close { position: absolute; top: 25px; right: 25px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
-
-    /* Love Reason Card */
-    .reason-box {
-      background: linear-gradient(135deg, #fff0f3, #ffccd5);
-      padding: 18px; border-radius: 18px; margin-top: 12px;
-      border: 1px solid rgba(201, 24, 74, 0.2);
-    }
-    .btn-reason {
-      background: #800f2f; color: #fff; border: none; padding: 10px 18px;
-      border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; margin-top: 10px;
-    }
-
     .msg-input {
       width: 100%; padding: 12px 14px; border-radius: 14px; border: 2px solid #ffccd5;
       font-family: inherit; font-size: 0.95rem; outline: none; margin-bottom: 10px; color: #800f2f; background: #fffdfd;
@@ -179,12 +155,6 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX MODAL -->
-  <div id="lightbox" onclick="closeLightbox()">
-    <span id="lightbox-close">&times;</span>
-    <img id="lightbox-img" src="" alt="Zoomed Memory">
-  </div>
-
   <audio id="bg-music" loop preload="auto">
     <source src="./music.mp3" type="audio/mpeg">
   </audio>
@@ -198,7 +168,7 @@
     
     <!-- Hero Section -->
     <div class="card">
-      <div class="photo-frame" onclick="openLightbox(this.querySelector('img').src)"><img src="./couple1.jpeg" alt="Akku & Izu"></div>
+      <div class="photo-frame"><img src="./couple1.jpeg" alt="Akku & Izu"></div>
       <h1>Akku & Izu</h1>
       <div class="counter-box">
         <div class="counter-label">Days Together</div>
@@ -248,7 +218,7 @@
     <!-- FIRST MEET SECTION -->
     <div class="card">
       <h2>🎁 Our First Meet 🎁</h2>
-      <div class="photo-frame" onclick="openLightbox(this.querySelector('img').src)">
+      <div class="photo-frame">
         <img src="./meet up pic.jpeg" alt="Our First Meet">
       </div>
       <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">
@@ -260,24 +230,15 @@
     <!-- OUR JOURNEY SECTION -->
     <div class="card">
       <h2>Our Beautiful Journey</h2>
-      <div class="photo-frame" onclick="openLightbox(this.querySelector('img').src)"><img src="./couple2.jpeg" alt="Our Journey"></div>
+      <div class="photo-frame"><img src="./couple2.jpeg" alt="Our Journey"></div>
       <p class="quote">"The right person will show you how beautiful love can be."</p>
-    </div>
-
-    <!-- REASONS WHY I LOVE YOU -->
-    <div class="card">
-      <h2>💖 Why I Love You</h2>
-      <div class="reason-box">
-        <p id="reason-text" style="font-weight: 600; color: #800f2f; font-size: 0.95rem;">Tap the button below for a sweet reminder! ✨</p>
-      </div>
-      <button class="btn-reason" onclick="nextReason()">Give Me Another Reason 💕</button>
     </div>
 
     <!-- Video Section -->
     <div class="card">
       <h2>✨ Video Memories ✨</h2>
       <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 12px;">A special moment captured in video ❤️</p>
-      <div class="photo-frame video-frame" style="cursor: default;">
+      <div class="photo-frame video-frame">
         <video controls loop muted autoplay playsinline>
           <source src="./video1.mp4" type="video/mp4">
         </video>
@@ -337,30 +298,6 @@
     document.getElementById("passcode-field").addEventListener("keypress", function(event) {
       if (event.key === "Enter") unlockPage();
     });
-
-    // Lightbox functions
-    function openLightbox(imgSrc) {
-      document.getElementById('lightbox-img').src = imgSrc;
-      document.getElementById('lightbox').style.display = 'flex';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
-
-    // Reasons Generator
-    const reasons = [
-      "Your smile instantly brightens up my entire day. 😊",
-      "You understand me like no one else ever could. 💖",
-      "Every single moment I spend with you is pure magic. ✨",
-      "You are my peace in a chaotic world. 🕊️",
-      "I love how comfortable and happy I feel when I'm with you. 🥰",
-      "You are my favorite notification and my favorite person. 📱❤️"
-    ];
-    let reasonIdx = 0;
-    function nextReason() {
-      reasonIdx = (reasonIdx + 1) % reasons.length;
-      document.getElementById('reason-text').innerText = reasons[reasonIdx];
-    }
 
     const startDate = new Date(2025, 8, 21);
     function calculateDays() {
@@ -467,4 +404,14 @@
       })
       .catch(error => {
         statusMsg.innerText = "Error sending message. Try again!";
-        stat
+        statusMsg.style.display = "block";
+      })
+      .finally(() => {
+        submitBtn.innerText = "Send Message 💖";
+        submitBtn.disabled = false;
+      });
+    }
+  </script>
+
+</body>
+</html>
