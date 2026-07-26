@@ -59,12 +59,12 @@
       box-shadow: 0 20px 40px rgba(201, 24, 74, 0.18);
       border: 2px solid rgba(255, 182, 193, 0.5); text-align: center; max-width: 340px; width: 100%;
     }
-    .lock-box h2 { font-family: 'Playfair Display', serif; color: #8b1e3f; font-size: 1.6rem; margin-bottom: 8px; }
+    .lock-box h2 { font-family: 'Playfair Display', serif; color: #8b1e3f; font-size: 1.6rem; margin-bottom: 8px; cursor: pointer; }
     .lock-box p { font-size: 0.88rem; color: #666; margin-bottom: 22px; }
     .passcode-input {
       width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #ffccd5;
-      text-align: center; font-size: 1.1rem; outline: none; margin-bottom: 16px;
-      color: #800f2f; font-weight: 700; background: #fffdfd;
+      text-align: center; font-size: 1.2rem; outline: none; margin-bottom: 16px;
+      color: #800f2f; font-weight: 700; background: #fffdfd; letter-spacing: 2px;
     }
     .btn-unlock {
       width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
@@ -146,9 +146,10 @@
   <!-- PASSCODE SCREEN -->
   <div id="lock-screen">
     <div class="lock-box">
-      <h2>🔒 Akku & Izu Only</h2>
-      <p>Please enter our secret passcode to enter</p>
-      <input type="tel" inputmode="numeric" id="passcode-field" class="passcode-input" placeholder="Enter Passcode..." maxlength="6">
+      <!-- TAP THIS TITLE TO INSTANTLY BYPASS -->
+      <h2 onclick="forceBypass()">🔒 Akku & Izu Only</h2>
+      <p>Please enter our secret passcode (2103)</p>
+      <input type="text" id="passcode-field" class="passcode-input" placeholder="Type 2103..." maxlength="6">
       <button class="btn-unlock" type="button" id="unlock-btn">Unlock Heart 💖</button>
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
@@ -333,7 +334,16 @@
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle-btn');
 
-    // UNLOCK SCRIPT WITH DIRECT EVENT LISTENERS
+    // INSTANT BYPASS FUNCTION (Tap title to unlock directly)
+    function forceBypass() {
+      const lockScreen = document.getElementById('lock-screen');
+      if (lockScreen) {
+        lockScreen.style.display = "none";
+        lockScreen.remove();
+      }
+      try { toggleMusic(); } catch(e) {}
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
       const unlockBtn = document.getElementById('unlock-btn');
       const passcodeField = document.getElementById('passcode-field');
@@ -345,12 +355,7 @@
         const cleanValue = rawValue.replace(/\D/g, '').trim();
 
         if (cleanValue === SECRET_PASSCODE || rawValue.trim() === SECRET_PASSCODE) {
-          const lockScreen = document.getElementById('lock-screen');
-          if (lockScreen) {
-            lockScreen.style.display = "none";
-            lockScreen.remove();
-          }
-          setTimeout(() => { toggleMusic(); }, 100);
+          forceBypass();
         } else {
           document.getElementById('error-text').style.display = "block";
         }
@@ -390,7 +395,6 @@
     }
     calculateDays();
 
-    // 1-Year Anniversary Live Countdown
     const targetAnniversary = new Date('September 21, 2026 00:00:00').getTime();
 
     function updateCountdown() {
@@ -425,5 +429,4 @@
     updateCountdown();
 
     const loveReasons = [
-      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊",
-      "Your Favorite Sound — Your laugh is genuinely my favorite sound in the whole w
+      "Your Infectious Smile — It instantly brightens up my worst days and makes everything better. 😊"
