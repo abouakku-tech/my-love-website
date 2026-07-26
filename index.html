@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffd1dc);
+overflow:hidden;
+}
+
+.card{
+background:rgba(255,255,255,0.95);
+padding:40px;
+border-radius:25px;
+text-align:center;
+width:90%;
+max-width:500px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+animation:fadeIn 2s;
+}
+
+h1{
+font-size:40px;
+color:#ff2d55;
+margin-bottom:15px;
+}
+
+p{
+font-size:20px;
+color:#444;
+line-height:1.6;
+}
+
+button{
+margin-top:25px;
+padding:15px 35px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff2d55;
+color:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff4d79;
+transform:scale(1.05);
+}
+
+#message{
+margin-top:25px;
+font-size:22px;
+color:#ff2d55;
+font-weight:bold;
+}
+
+.heart{
+position:absolute;
+color:red;
+font-size:25px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{
+transform:translateY(100vh);
+opacity:0;
+}
+100%{
+transform:translateY(-100px);
+opacity:1;
+}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:scale(0.8);}
+to{opacity:1;transform:scale(1);}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+<h1>❤️ I Love You ❤️</h1>
+
+<p>
+Dear <b>Izu</b>,<br><br>
+
+Every day with you is my favourite day.<br>
+Thank you for making my life happier.<br><br>
+
+You are my smile, my happiness and my forever. 💖
+</p>
+
+<button onclick="love()">Click Here ❤️</button>
+
+<div id="message"></div>
+
+</div>
+
+<script>
+
+function love(){
+document.getElementById("message").innerHTML=
+"💍 I Love You Forever, Izu ❤️🥰";
+}
+
+function hearts(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*30)+"px";
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+}
+
+setInterval(hearts,300);
+
+</script>
+
+</body>
+</html>
