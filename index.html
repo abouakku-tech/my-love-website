@@ -138,6 +138,22 @@
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
     }
+    @keyframes glow {
+  0% {
+    box-shadow: 0 0 10px pink;
+  }
+  50% {
+    box-shadow: 0 0 35px hotpink;
+  }
+  100% {
+    box-shadow: 0 0 10px pink;
+  }
+}
+
+.photo-frame {
+  animation: glow 2s infinite;
+}
+    
   </style>
 </head>
 <body>
