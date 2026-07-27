@@ -182,6 +182,17 @@
 .photo-frame img.zoom-in {
     transform: scale(1);
 }
+    /* Fade In Animation */
+.card{
+    opacity:0;
+    transform:translateY(60px);
+    transition:all 0.8s ease;
+}
+
+.card.show{
+    opacity:1;
+    transform:translateY(0);
+}
   </style>
 </head>
 <body>
@@ -520,6 +531,22 @@ const photoObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".photo-frame").forEach(frame => {
     photoObserver.observe(frame);
+});
+    // Fade cards on scroll
+const cards = document.querySelectorAll(".card");
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+},{
+    threshold:0.15
+});
+
+cards.forEach(card=>{
+    observer.observe(card);
 });
   </script>
 
