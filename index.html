@@ -169,6 +169,19 @@
     80%{transform:translate(-10px,5px) rotate(-8deg);}
     100%{transform:translate(0,0) rotate(0deg);}
 }
+    /* Premium Photo Zoom Animation */
+.photo-frame {
+    overflow: hidden;
+}
+
+.photo-frame img {
+    transition: transform 1s ease;
+    transform: scale(0.92);
+}
+
+.photo-frame img.zoom-in {
+    transform: scale(1);
+}
   </style>
 </head>
 <body>
@@ -488,6 +501,26 @@
         submitBtn.disabled = false;
       });
     }
+    // Premium Photo Zoom on Scroll
+const photoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const img = entry.target.querySelector("img");
+
+        if (!img) return;
+
+        if (entry.isIntersecting) {
+            img.classList.add("zoom-in");
+        } else {
+            img.classList.remove("zoom-in");
+        }
+    });
+}, {
+    threshold: 0.3
+});
+
+document.querySelectorAll(".photo-frame").forEach(frame => {
+    photoObserver.observe(frame);
+});
   </script>
 
 </body>
