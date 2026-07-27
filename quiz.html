@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Love Quiz 💖</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ffd6e0,#fff5f8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+}
+
+.quiz-box{
+    background:white;
+    padding:25px;
+    width:90%;
+    max-width:500px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    text-align:center;
+}
+
+h1{
+    color:#c9184a;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:12px;
+    background:#ff4d6d;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#c9184a;
+}
+
+#result{
+    font-size:20px;
+    color:#c9184a;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+a{
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<h1>💖 Love Quiz 💖</h1>
+
+<p><b>1. When did I first meet you in real life?</b></p>
+<button onclick="next(true)">July 15, 2026 ❤️</button>
+<button onclick="next(false)">July 18, 2026</button>
+
+<p><b>2. What is my favourite name for you?</b></p>
+<button onclick="next(true)">Izu ❤️</button>
+<button onclick="next(false)">Baby</button>
+
+<p><b>3. Who is my favourite person?</b></p>
+<button onclick="next(true)">You ❤️</button>
+<button onclick="next(false)">Myself</button>
+
+<p><b>4. What is my favourite superhero?</b></p>
+<button onclick="next(true)">Deadpool ❤️</button>
+<button onclick="next(false)">Iron Man</button>
+
+<p><b>5. What makes me happiest?</b></p>
+<button onclick="next(true)">Being with You ❤️</button>
+<button onclick="next(false)">Money</button>
+
+<p><b>6. What is my dream for our future?</b></p>
+<button onclick="next(true)">A happy life together ❤️</button>
+<button onclick="next(false)">Travel alone</button>
+
+<p><b>7. Will you love me forever?</b></p>
+<button onclick="finish()">Yes ❤️</button>
+<button onclick="finish()">Always ❤️</button>
+<button onclick="finish()">Forever ❤️</button>
+<button onclick="finish()">All of the above ❤️</button>
+
+<div id="result"></div>
+
+<br><br>
+
+<a href="index.html">
+<button>🏠 Back to Home</button>
+</a>
+
+</div>
+
+<script>
+let score=0;
+
+function next(correct){
+if(correct) score++;
+}
+
+function finish(){
+score++;
+
+document.getElementById("result").innerHTML=
+"🎉 Congratulations! ❤️<br><br>You scored "+score+"/7 💖";
+}
+</script>
+
+</body>
+</html>
