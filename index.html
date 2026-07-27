@@ -285,6 +285,16 @@ transform:scale(1.3);
 }
 
 }
+@keyframes pop{
+0%{
+transform:scale(.3);
+opacity:0;
+}
+100%{
+transform:scale(1);
+opacity:1;
+}
+}
   </style>
 </head>
 <body>
@@ -669,7 +679,101 @@ themeBtn.innerHTML="🌙 Night";
 }
 
 }
-  </script>
+function showWinPopup(){
 
+document.getElementById("winPopup").style.display="flex";
+
+createConfetti();
+
+}
+
+function closeWinPopup(){
+
+document.getElementById("winPopup").style.display="none";
+
+}
+
+function createConfetti(){
+
+for(let i=0;i<120;i++){
+
+let heart=document.createElement("div");
+
+heart.innerHTML=Math.random()>0.5?"❤️":"🎉";
+
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.top="-20px";
+heart.style.fontSize=(20+Math.random()*15)+"px";
+heart.style.zIndex="999999";
+heart.style.pointerEvents="none";
+
+document.body.appendChild(heart);
+
+heart.animate([
+{transform:"translateY(0) rotate(0deg)"},
+{transform:`translateY(${window.innerHeight+100}px) rotate(${720*Math.random()}deg)`}
+],{
+duration:3000+Math.random()*2000,
+iterations:1
+});
+
+setTimeout(()=>heart.remove(),5000);
+
+}
+
+}
+  </script>
+<!-- Congratulations Popup -->
+<div id="winPopup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+z-index:99999;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+padding:20px;
+">
+
+<div style="
+background:linear-gradient(135deg,#ff4d6d,#ff99c8);
+padding:35px;
+border-radius:25px;
+max-width:360px;
+box-shadow:0 0 30px rgba(255,255,255,.5);
+animation:pop .8s ease;
+">
+
+<h1 style="font-size:38px;">🎉</h1>
+
+<h2>Congratulations My Love ❤️</h2>
+
+<p style="margin:20px 0;font-size:18px;">
+You know me better than anyone.
+</p>
+
+<h3>I Love You Forever Izu 💖</h3>
+
+<button onclick="closeWinPopup()" style="
+margin-top:20px;
+padding:12px 30px;
+border:none;
+border-radius:30px;
+background:white;
+color:#c9184a;
+font-weight:bold;
+cursor:pointer;
+">
+Close ❤️
+</button>
+
+</div>
+</div>
 </body>
 </html>
