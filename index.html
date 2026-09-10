@@ -711,4 +711,527 @@
     <div class="card">
       <h2>✨ Our Special Dates ✨</h2>
       <div class="milestone-list">
-        <div class="milestone-item"><span>🎁</span><div><strong>July 15, 2026</stron
+        <div class="milestone-item"><span>🎁</span><div><strong>July 15, 2026</strong> — Our First Surprise Meet ❤️</div></div>
+        <div class="milestone-item"><span>🌹</span><div><strong>July 18, 2026</strong> — Our Official Meeting 💍</div></div>
+        <div class="milestone-item"><span>💍</span><div><strong>September 21, 2025</strong> — She Said Yes!</div></div>
+        <div class="milestone-item"><span>🎂</span><div><strong>October 21, 2001</strong> — Akku Born</div></div>
+        <div class="milestone-item"><span>🎂</span><div><strong>July 3, 2007</strong> — Izu Born</div></div>
+      </div>
+    </div>
+
+    <!-- FIRST MEET SECTION -->
+    <div class="card">
+      <h2>🎁 Our First Meet 🎁</h2>
+      <div class="photo-frame">
+        <img src="./jpg/meet up pic.jpeg" alt="Our First Meet">
+      </div>
+      <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">
+        July 15, 2026 ❤️
+      </p>
+      <p class="quote">"The unforgettable moment that started it all..."</p>
+    </div>
+
+    <!-- OUR JOURNEY SECTION -->
+    <div class="card">
+      <h2>Our Beautiful Journey</h2>
+      <div class="photo-frame"><img src="./jpg/couple2.jpeg" alt="Our Journey"></div>
+      <p class="quote">"The right person will show you how beautiful love can be."</p>
+    </div>
+
+    <!-- WHY I choose YOU PHOTO CARD -->
+    <div class="card">
+      <h2>Why I choose You ❤️</h2>
+      <div class="photo-frame" style="height: auto;">
+        <img src="./jpg/why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
+      </div>
+      <p class="quote">"And I will keep choosing you, again and again."</p>
+    </div>
+    
+    <!-- REASONS WHY I LOVE YOU SECTION -->
+    <div class="card">
+      <h2>✨ Why I Love You ✨</h2>
+      <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Tap each one to open a special reason! 💖</p>
+      <div class="milestone-list">
+        <div class="milestone-item" style="cursor: pointer; flex-direction: column; align-items: flex-start;" onclick="const d = this.querySelector('.reason-desc'); d.style.display = d.style.display === 'block' ? 'none' : 'block';">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%;"><span>✨</span><div><strong>Your Gorgeous Smile</strong></div></div>
+          <div class="reason-desc" style="display: none; margin-top: 8px; font-size: 0.85rem; color: #800f2f; font-weight: 500;">It instantly brightens up even my absolute worst days.</div>
+        </div>
+        <div class="milestone-item" style="cursor: pointer; flex-direction: column; align-items: flex-start;" onclick="const d = this.querySelector('.reason-desc'); d.style.display = d.style.display === 'block' ? 'none' : 'block';">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%;"><span>🥺</span><div><strong>Your Kind Heart</strong></div></div>
+          <div class="reason-desc" style="display: none; margin-top: 8px; font-size: 0.85rem; color: #800f2f; font-weight: 500;">The way you care for the people around you makes me admire you more every day.</div>
+        </div>
+        <div class="milestone-item" style="cursor: pointer; flex-direction: column; align-items: flex-start;" onclick="const d = this.querySelector('.reason-desc'); d.style.display = d.style.display === 'block' ? 'none' : 'block';">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%;"><span>🏡</span><div><strong>My Safe Place</strong></div></div>
+          <div class="reason-desc" style="display: none; margin-top: 8px; font-size: 0.85rem; color: #800f2f; font-weight: 500;">Being with you feels like home, no matter where we are.</div>
+        </div>
+        <div class="milestone-item" style="cursor: pointer; flex-direction: column; align-items: flex-start;" onclick="const d = this.querySelector('.reason-desc'); d.style.display = d.style.display === 'block' ? 'none' : 'block';">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%;"><span>💫</span><div><strong>Just Being You</strong></div></div>
+          <div class="reason-desc" style="display: none; margin-top: 8px; font-size: 0.85rem; color: #800f2f; font-weight: 500;">You are simply my favorite notification, my best friend, and my whole world.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Video Section -->
+    <div class="card">
+      <h2>✨ Video Memories ✨</h2>
+      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 12px;">A special moment captured in video ❤️</p>
+      <div class="photo-frame video-frame">
+        <video controls loop muted autoplay playsinline>
+          <source src="./video1.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+
+    <!-- Secret Message Board -->
+    <div class="card">
+      <h2>💌 Leave a Secret Message</h2>
+      <p style="font-size: 0.85rem; color: #800f2f; margin-bottom: 15px;">A space for friends & loved ones to write something special!</p>
+      
+      <form id="secret-form" onsubmit="sendEmailNote(event)">
+        <input type="text" id="guest-name" placeholder="Your Name" class="msg-input" required>
+        <textarea id="guest-message" placeholder="Write your message here..." rows="4" class="msg-input" style="resize: vertical;" required></textarea>
+        
+        <button type="submit" class="btn-unlock" id="submit-btn">Send Message 💖</button>
+      </form>
+
+      <p id="status-msg" style="margin-top: 15px; font-weight: 600; color: #c9184a; display: none;"></p>
+    </div>
+
+    <!-- Letter Section -->
+    <div class="card">
+      <h2>A Letter For You</h2>
+      <p style="font-weight: 600; color: #a4133c; margin-bottom: 8px;">My Dearest Izu ❤️</p>
+      <p>You are the most beautiful part of my life. Every smile of yours gives me happiness. Every moment with you becomes a memory I never want to lose.</p>
+      <p style="margin-top: 12px;">No matter what happens, I promise to stand beside you, respect you, care for you and love you forever.</p>
+      <p style="margin-top: 12px; font-weight: 600;">You are my favourite person, my happiness, my peace and my forever.</p>
+
+      <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
+      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
+
+      <div style="text-align: center; margin-top: 25px;">
+        <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
+      </div>
+    </div>
+
+    <!-- Puzzle, Quiz, Secret Links -->
+    <div class="card">
+      <h2>🧩 Surprise For You ❤️</h2>
+      <p>I have a little game just for you. Can you solve our love puzzle?</p>
+
+      <a href="puzzle.html">
+        <button class="btn-heart">🧩 Play Our Love Puzzle ❤️</button>
+      </a>
+
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <a href="puzzle.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">🧩 Puzzle</div>
+        </a>
+        <a href="quiz.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💖 Love Quiz</div>
+        </a>
+        <a href="secret.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💌 Secret Message</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HEART SENDER UI -->
+  <div class="heart-sender" id="heart-sender">
+    <button class="heart-btn" onclick="sendHeart('❤️')" title="Red Heart">❤️</button>
+    <button class="heart-btn" onclick="sendHeart('💛')" title="Yellow Heart">💛</button>
+    <button class="heart-btn" onclick="sendHeart('💙')" title="Blue Heart">💙</button>
+    <button class="heart-btn" onclick="sendHeart('💚')" title="Green Heart">💚</button>
+    <button class="heart-btn" onclick="sendHeart('💜')" title="Purple Heart">💜</button>
+    <button class="heart-btn" onclick="sendHeart('🖤')" title="Black Heart">🖤</button>
+  </div>
+
+  <div class="heart-status" id="heart-status">
+    Hearts Sent: <span id="heart-count">0</span>
+  </div>
+
+  <script>
+    const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
+    const SECRET_PASSCODE = "2103";
+
+    // ===== HEART FEATURE =====
+    let heartCount = 0;
+    const MAX_HEARTS = 999;
+
+    function sendHeart(emoji) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = emoji;
+      
+      const randomLeft = Math.random() * window.innerWidth;
+      heart.style.left = randomLeft + 'px';
+      heart.style.top = window.innerHeight + 'px';
+      
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 3000);
+
+      heartCount++;
+      if (heartCount > MAX_HEARTS) heartCount = 0;
+      
+      const status = document.getElementById('heart-status');
+      const count = document.getElementById('heart-count');
+      status.classList.add('show');
+      count.textContent = heartCount;
+
+      localStorage.setItem('hearts-sent', heartCount);
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+
+      setTimeout(() => {
+        status.classList.remove('show');
+      }, 5000);
+    }
+
+    // Load saved heart count
+    const saved = localStorage.getItem('hearts-sent');
+    if (saved) {
+      heartCount = parseInt(saved);
+    }
+
+    // ===== ANNIVERSARY FUNCTIONS =====
+    function isAnniversary() {
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      return month === 9 && day === 21;
+    }
+
+    const IS_ANNIVERSARY = isAnniversary();
+
+    function createConfetti() {
+      const colors = ['#ff4d6d', '#ff1d3b', '#c9184a', '#800f2f', '#ffb3c1'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animation = `floatUp ${3 + Math.random() * 2}s ease-in forwards`;
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    function showAnniversaryPopup() {
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    function closeAnniversaryPopup() {
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+
+    function createFireworks() {
+      const colors = ['#ff4d6d', '#ff69b4', '#ffb3c1', '#c9184a', '#ff1d3b'];
+      
+      for (let i = 0; i < 8; i++) {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * (window.innerHeight * 0.5);
+
+        for (let j = 0; j < 30; j++) {
+          const particle = document.createElement('div');
+          particle.className = 'firework-particle';
+          particle.style.left = x + 'px';
+          particle.style.top = y + 'px';
+          particle.style.width = '5px';
+          particle.style.height = '5px';
+          particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+          const angle = (j / 30) * Math.PI * 2;
+          const velocity = 5 + Math.random() * 5;
+          const tx = Math.cos(angle) * velocity * 30;
+          const ty = Math.sin(angle) * velocity * 30;
+
+          particle.style.setProperty('--tx', tx + 'px');
+          particle.style.setProperty('--ty', ty + 'px');
+
+          document.body.appendChild(particle);
+          setTimeout(() => particle.remove(), 1000);
+        }
+      }
+    }
+
+    function createHeartRain() {
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart-rain';
+        heart.textContent = '❤️';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.top = '-50px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 4000);
+      }, 200);
+    }
+
+    function createRosePetals() {
+      setInterval(() => {
+        const petal = document.createElement('div');
+        petal.className = 'rose-petal';
+        petal.textContent = '🌹';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.top = '-50px';
+        petal.style.opacity = '0.7';
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), 8000);
+      }, 300);
+    }
+
+    function createSparkles() {
+      setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = '✨';
+        sparkle.style.left = Math.random() * 100 + 'vw';
+        sparkle.style.top = Math.random() * 100 + 'vh';
+        sparkle.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1000);
+      }, 300);
+    }
+
+    function insertAnniversaryCard() {
+      const container = document.querySelector('.container');
+      
+      const card = document.createElement('div');
+      card.className = 'card anniversary-card';
+      card.style.marginTop = '24px';
+      card.style.borderColor = '#ff4d6d';
+      card.innerHTML = `
+        <h2>🎉 1st Anniversary Celebration 🎉</h2>
+        <div class="date">September 21, 2026</div>
+        
+        <div class="slideshow-container">
+          <img src="./jpg/couple1.jpeg" alt="Memory 1" class="slide active">
+          <img src="./jpg/couple2.jpeg" alt="Memory 2" class="slide">
+          <img src="./jpg/meet up pic.jpeg" alt="Memory 3" class="slide">
+          <img src="./jpg/photo4.jpg" alt="Memory 4" class="slide">
+          <img src="./jpg/photo5.jpg" alt="Memory 5" class="slide">
+          <img src="./jpg/photo6.jpg" alt="Memory 6" class="slide">
+          <img src="./jpg/photo7.jpg" alt="Memory 7" class="slide">
+          <img src="./jpg/photo8.jpg" alt="Memory 8" class="slide">
+          <img src="./jpg/photo9.jpg" alt="Memory 9" class="slide">
+          <img src="./jpg/photo10.jpg" alt="Memory 10" class="slide">
+          <div class="slide-counter">
+            <span id="slide-current">1</span> / <span id="slide-total">5</span>
+          </div>
+        </div>
+
+        <p style="margin-top: 20px;">
+          <strong>One Amazing Year Together!</strong>
+        </p>
+        <p>
+          From our first surprise meet on July 15, 2026, to this beautiful moment - every day with you has been a blessing.
+        </p>
+        <p style="font-style: italic; color: #c9184a;">
+          "You are my favorite person, my happiness, my peace, and my forever." 💖
+        </p>
+        <p style="margin-top: 15px; font-weight: 600;">
+          Here's to more memories, more love, and more moments together!
+        </p>
+        <p style="font-size: 1.3rem; margin-top: 15px;">
+          I Love You Forever, Izu ❤️
+        </p>
+      `;
+
+      container.insertBefore(card, container.firstChild);
+
+      let currentSlide = 0;
+      const slides = card.querySelectorAll('.slide');
+      const slideCounter = card.querySelector('#slide-current');
+      const slideTotalCounter = card.querySelector('#slide-total');
+      const totalSlides = slides.length;
+      
+      // Update total count
+      slideTotalCounter.textContent = totalSlides;
+
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % totalSlides;
+        slides[currentSlide].classList.add('active');
+        slideCounter.textContent = currentSlide + 1;
+      }, 5000);
+    }
+
+    function showAchievementBadge() {
+      const badge = document.createElement('div');
+      badge.className = 'achievement-badge';
+      badge.innerHTML = '🏆 1st Anniversary Unlocked! 🎉';
+      document.body.appendChild(badge);
+
+      setTimeout(() => {
+        badge.style.animation = 'badge-bounce 0.8s ease-in reverse forwards';
+        setTimeout(() => badge.remove(), 800);
+      }, 8000);
+    }
+
+    function activateAnniversaryMode() {
+      if (!IS_ANNIVERSARY) return;
+
+      createConfetti();
+      setTimeout(showAnniversaryPopup, 500);
+      setTimeout(createFireworks, 1500);
+      createHeartRain();
+      createRosePetals();
+      createSparkles();
+      setTimeout(insertAnniversaryCard, 1000);
+      showAchievementBadge();
+    }
+
+    // ===== ORIGINAL FUNCTIONS =====
+    function unlockPage() {
+      const input = document.getElementById('passcode-field').value;
+      const errorText = document.getElementById('error-text');
+      const lockScreen = document.getElementById('lock-screen');
+      
+      if (input === SECRET_PASSCODE) {
+        lockScreen.style.display = 'none';
+      } else {
+        errorText.style.display = 'block';
+        setTimeout(() => {
+          errorText.style.display = 'none';
+        }, 2500);
+        document.getElementById('passcode-field').value = '';
+      }
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle-btn');
+      
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = '🎵 Stop Song';
+      } else {
+        audio.pause();
+        btn.textContent = '🎵 Play Song';
+      }
+    }
+
+    function showMessage() {
+      alert('❤️ I Love You Forever Izu 💖\n\nYou know me better than anyone.\n\nI Love You Forever Izu 💖');
+    }
+
+    function sendEmailNote(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('guest-name').value;
+      const message = document.getElementById('guest-message').value;
+      const statusMsg = document.getElementById('status-msg');
+      const submitBtn = document.getElementById('submit-btn');
+
+      const formData = new FormData();
+      formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formData.append('from_name', name);
+      formData.append('message', message);
+      formData.append('subject', `New Love Message from ${name}`);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          statusMsg.style.display = 'block';
+          statusMsg.textContent = '💖 Message sent successfully! Thank you for your love!';
+          statusMsg.style.color = '#27ae60';
+          document.getElementById('guest-name').value = '';
+          document.getElementById('guest-message').value = '';
+        } else {
+          statusMsg.style.display = 'block';
+          statusMsg.textContent = '❌ Failed to send message. Please try again.';
+          statusMsg.style.color = '#c9184a';
+        }
+      })
+      .catch(error => {
+        statusMsg.style.display = 'block';
+        statusMsg.textContent = '❌ Error: ' + error.message;
+        statusMsg.style.color = '#c9184a';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message 💖';
+      });
+    }
+
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('night');
+      if (document.body.classList.contains('night')) {
+        themeBtn.textContent = '☀️ Day';
+        localStorage.setItem('theme', 'night');
+      } else {
+        themeBtn.textContent = '🌙 Night';
+        localStorage.setItem('theme', 'day');
+      }
+    });
+
+    if (localStorage.getItem('theme') === 'night') {
+      document.body.classList.add('night');
+      themeBtn.textContent = '☀️ Day';
+    }
+
+    function updateCountdown() {
+      const targetDate = new Date('2026-09-21').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
+
+      const startDate = new Date('2025-09-21').getTime();
+      const daysTogether = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').textContent = daysTogether;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    window.addEventListener('load', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, index * 100);
+      });
+
+      // Activate anniversary mode
+      activateAnniversaryMode();
+    });
+
+    document.getElementById('passcode-field').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') unlockPage();
+    });
+  </script>
+
+</body>
+</html>
