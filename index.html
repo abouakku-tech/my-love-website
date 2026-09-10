@@ -22,7 +22,22 @@
       padding: 30px 16px 50px 16px;
       position: relative;
       overflow-x: hidden;
+      transition: background 1.2s, color 1.2s;
     }
+
+    body.night {
+      background: linear-gradient(to bottom, #050b2c, #08113d, #13275f);
+    }
+
+    body.night .card {
+      background: rgba(18, 22, 48, 0.88);
+      color: white;
+    }
+
+    body.night h1, body.night h2, body.night p, body.night .quote, body.night .milestone-item {
+      color: white;
+    }
+
     .glow-1, .glow-2 {
       position: fixed;
       width: 380px;
@@ -32,87 +47,101 @@
       z-index: 0;
       pointer-events: none;
     }
+    
     .glow-1 { top: -10%; left: -10%; background: rgba(255, 182, 193, 0.5); }
     .glow-2 { bottom: -10%; right: -10%; background: rgba(255, 105, 180, 0.4); }
+
     .hearts-container {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       overflow: hidden; z-index: 1; pointer-events: none;
     }
-    .heart-float {
-      position: absolute; bottom: -50px;
-      color: rgba(201, 24, 74, 0.25);
-      font-size: 1.5rem;
-      animation: floatUp 8s linear infinite;
-    }
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
-      100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
+
     #lock-screen {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(253, 248, 249, 0.96); backdrop-filter: blur(20px);
       z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px;
     }
+
     .lock-box {
       background: #ffffff; padding: 38px 26px; border-radius: 28px;
       box-shadow: 0 20px 40px rgba(201, 24, 74, 0.18);
       border: 2px solid rgba(255, 182, 193, 0.5); text-align: center; max-width: 340px; width: 100%;
     }
+
     .lock-box h2 { font-family: 'Playfair Display', serif; color: #8b1e3f; font-size: 1.6rem; margin-bottom: 8px; }
     .lock-box p { font-size: 0.88rem; color: #666; margin-bottom: 22px; }
+
     .passcode-input {
       width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #ffccd5;
       text-align: center; font-size: 1.3rem; letter-spacing: 6px; outline: none; margin-bottom: 16px;
       color: #800f2f; font-weight: 700; background: #fffdfd;
     }
+
     .btn-unlock {
       width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; border: none; border-radius: 14px; font-weight: 600; font-size: 1rem; cursor: pointer;
     }
+
     .error-msg { color: #c9184a; font-size: 0.82rem; margin-top: 12px; display: none; font-weight: 600; }
+
     .music-btn {
       position: fixed; top: 18px; right: 18px; z-index: 10;
       background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px);
       border: 1px solid rgba(201, 24, 74, 0.3); padding: 10px 18px; border-radius: 30px;
       font-size: 0.85rem; font-weight: 600; color: #800f2f; cursor: pointer;
     }
+
     .container { width: 100%; max-width: 420px; z-index: 2; display: flex; flex-direction: column; gap: 24px; margin-top: 25px; }
+
     .card {
       background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(18px);
       border-radius: 28px; padding: 28px 22px; box-shadow: 0 15px 35px rgba(139, 30, 63, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.95); text-align: center;
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 0.8s ease;
     }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     h1 { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: #7a1c2b; margin-top: 10px; }
     h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #8b1e3f; margin-bottom: 14px; }
     p { font-size: 0.95rem; line-height: 1.65; color: #4a0e17; }
     .quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: #7a1c2b; margin-top: 12px; }
+
     .counter-box {
       background: linear-gradient(135deg, rgba(255,240,243,0.95), rgba(255,204,213,0.7));
       border-radius: 22px; padding: 20px 16px; margin: 18px 0; border: 1px solid rgba(255, 255, 255, 0.9);
     }
+
     .counter-number { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #a4133c; line-height: 1; }
     .counter-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: #800f2f; font-weight: 600; }
-    
-    /* Countdown Styles */
+
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-top: 15px;
     }
+
     .countdown-box {
       background: linear-gradient(135deg, rgba(255, 240, 243, 0.95), rgba(255, 204, 213, 0.7));
       padding: 12px 6px;
       border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.9);
     }
+
     .countdown-num {
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem;
       font-weight: 700;
       color: #a4133c;
     }
+
     .countdown-unit {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -126,195 +155,336 @@
       background: rgba(255, 255, 255, 0.8); padding: 13px 16px; border-radius: 16px; font-size: 0.88rem;
       display: flex; align-items: center; gap: 12px; border: 1px solid rgba(201, 24, 74, 0.15); color: #590d22;
     }
+
     .photo-frame { width: 100%; border-radius: 22px; overflow: hidden; margin-bottom: 14px; border: 4px solid #ffffff; background-color: #fff0f3; }
     .photo-frame img { width: 100%; height: 290px; object-fit: cover; display: block; }
     .video-frame video { width: 100%; max-height: 380px; display: block; border-radius: 18px; background-color: #000; }
+
+    .butterfly {
+      position: absolute;
+      width: 35px;
+      pointer-events: none;
+      animation: flutter 10s infinite ease-in-out;
+    }
+
+    .butterfly1 { top: 20px; left: 15px; }
+    .butterfly2 { bottom: 20px; right: 15px; animation-delay: 5s; }
+
+    @keyframes flutter {
+      0% { transform: translate(0,0) rotate(0deg); }
+      20% { transform: translate(25px,-15px) rotate(10deg); }
+      40% { transform: translate(45px,10px) rotate(-10deg); }
+      60% { transform: translate(15px,25px) rotate(8deg); }
+      80% { transform: translate(-10px,5px) rotate(-8deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+
     .msg-input {
       width: 100%; padding: 12px 14px; border-radius: 14px; border: 2px solid #ffccd5;
       font-family: inherit; font-size: 0.95rem; outline: none; margin-bottom: 10px; color: #800f2f; background: #fffdfd;
     }
+
     .btn-heart {
       width: 100%; padding: 16px; background: linear-gradient(135deg, #ff4d6d, #c9184a);
       color: #ffffff; font-size: 1rem; font-weight: 600; border: none; border-radius: 50px;
       box-shadow: 0 8px 25px rgba(201, 24, 74, 0.35); cursor: pointer; margin-top: 15px;
     }
-    .photo-frame{
-    position: relative;
-    overflow: hidden;
-}
 
-.butterfly{
-    position:absolute;
-    width:35px;
-    pointer-events:none;
-    animation:flutter 10s infinite ease-in-out;
-}
+    /* ===== THEME BUTTON ===== */
+    #themeBtn {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 999;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 18px;
+      background: white;
+      cursor: pointer;
+      font-size: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
 
-.butterfly1{
-    top:20px;
-    left:15px;
-}
+    body.night #themeBtn {
+      background: #16204d;
+      color: white;
+    }
 
-.butterfly2{
-    bottom:20px;
-    right:15px;
-    animation-delay:5s;
-}
+    /* ===== MOON & STARS ===== */
+    #moon {
+      position: fixed;
+      top: 80px;
+      right: 60px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff8c6;
+      box-shadow: 0 0 30px #fff8c6, 0 0 60px #fff8c6, 0 0 90px #fff8c6;
+      opacity: 0;
+      transition: 1s;
+      z-index: 0;
+    }
 
-@keyframes flutter{
-    0%{transform:translate(0,0) rotate(0deg);}
-    20%{transform:translate(25px,-15px) rotate(10deg);}
-    40%{transform:translate(45px,10px) rotate(-10deg);}
-    60%{transform:translate(15px,25px) rotate(8deg);}
-    80%{transform:translate(-10px,5px) rotate(-8deg);}
-    100%{transform:translate(0,0) rotate(0deg);}
-}
-    /* Premium Photo Zoom Animation */
-.photo-frame {
-    overflow: hidden;
-}
+    body.night #moon {
+      opacity: 1;
+    }
 
-.photo-frame img {
-    transition: transform 1s ease;
-    transform: scale(0.92);
-}
+    .star {
+      position: fixed;
+      color: white;
+      opacity: 0;
+      animation: twinkle 3s infinite;
+      z-index: 0;
+    }
 
-.photo-frame img.zoom-in {
-    transform: scale(1);
-}
-    /* Fade In Animation */
-.card{
-    opacity:0;
-    transform:translateY(60px);
-    transition:all 0.8s ease;
-}
+    body.night .star {
+      opacity: 1;
+    }
 
-.card.show{
-    opacity:1;
-    transform:translateY(0);
-}
-    /* ===== Premium Day & Night ===== */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
 
-body{
-    transition:background 1.2s,color 1.2s;
-}
 
-body.night{
-    background:linear-gradient(to bottom,#050b2c,#08113d,#13275f);
-}
 
-body.night .card{
-    background:rgba(18,22,48,.88);
-    color:white;
-}
+    /* ===== ANNIVERSARY STYLES ===== */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 1000;
+    }
 
-body.night h1,
-body.night h2,
-body.night p,
-body.night .quote,
-body.night .milestone-item{
-    color:white;
-}
+    .anniversary-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 40px 30px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(201, 24, 74, 0.4);
+      z-index: 10000;
+      text-align: center;
+      max-width: 400px;
+      animation: popup-appear 0.6s ease-out;
+      border: 3px solid #ff4d6d;
+      display: none;
+    }
 
-#themeBtn{
-    position:fixed;
-    top:18px;
-    left:18px;
-    z-index:999;
-    border:none;
-    border-radius:30px;
-    padding:10px 18px;
-    background:white;
-    cursor:pointer;
-    font-size:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-}
+    @keyframes popup-appear {
+      0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
 
-body.night #themeBtn{
-    background:#16204d;
-    color:white;
-}
+    .anniversary-popup h1 {
+      font-size: 2.5rem;
+      color: #c9184a;
+      margin-bottom: 10px;
+    }
 
-/* Moon */
+    .anniversary-popup p {
+      font-size: 1rem;
+      color: #800f2f;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
 
-#moon{
-    position:fixed;
-    top:80px;
-    right:60px;
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    background:#fff8c6;
-    box-shadow:
-    0 0 30px #fff8c6,
-    0 0 60px #fff8c6,
-    0 0 90px #fff8c6;
-    opacity:0;
-    transition:1s;
-    z-index:0;
-}
+    .close-popup {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+    }
 
-body.night #moon{
-    opacity:1;
-}
+    .firework-particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: firework-burst 1s ease-out forwards;
+    }
 
-/* Stars */
+    @keyframes firework-burst {
+      to {
+        transform: translate(var(--tx), var(--ty));
+        opacity: 0;
+      }
+    }
 
-.star{
-    position:fixed;
-    color:white;
-    opacity:0;
-    animation:twinkle 3s infinite;
-    z-index:0;
-}
+    .heart-rain {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      z-index: 50;
+      animation: rain-down 4s linear forwards;
+    }
 
-body.night .star{
-    opacity:1;
-}
+    @keyframes rain-down {
+      to { transform: translateY(100vh); opacity: 0; }
+    }
 
-@keyframes twinkle{
+    .rose-petal {
+      position: fixed;
+      font-size: 1.5rem;
+      pointer-events: none;
+      z-index: 50;
+      animation: petal-fall 8s linear infinite;
+    }
 
-0%,100%{
-opacity:.2;
-transform:scale(.8);
-}
+    @keyframes petal-fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
 
-50%{
-opacity:1;
-transform:scale(1.3);
-}
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      animation: sparkle-twinkle 1s ease-in-out forwards;
+    }
 
-}
-@keyframes pop{
-0%{
-transform:scale(.3);
-opacity:0;
-}
-100%{
-transform:scale(1);
-opacity:1;
-}
-}
+    @keyframes sparkle-twinkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    .achievement-badge {
+      position: fixed;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 10px 30px rgba(201, 24, 74, 0.4);
+      z-index: 999;
+      animation: badge-bounce 0.8s ease-out;
+    }
+
+    @keyframes badge-bounce {
+      0% { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+      50% { transform: translateX(-50%) translateY(10px); }
+      100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 4px solid #ffffff;
+      background-color: #fff0f3;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      animation: fade-in 0.8s ease-in;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .slide-counter {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .anniversary-card {
+      background: linear-gradient(135deg, rgba(255, 240, 243, 0.95), rgba(255, 204, 213, 0.8));
+      border-radius: 28px;
+      padding: 30px;
+      border: 3px solid #ff4d6d;
+      box-shadow: 0 15px 40px rgba(201, 24, 74, 0.25);
+      text-align: center;
+      animation: card-slide-in 0.8s ease-out;
+    }
+
+    @keyframes card-slide-in {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .anniversary-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #c9184a;
+      margin-bottom: 15px;
+    }
+
+    .anniversary-card .date {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff4d6d;
+      margin-bottom: 15px;
+    }
+
+    .anniversary-card p {
+      font-size: 1rem;
+      color: #800f2f;
+      line-height: 1.8;
+      margin: 10px 0;
+    }
+
+    #anniversary-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      z-index: 9998;
+      display: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; }
+      100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
   <div class="hearts-container" id="hearts-bg"></div>
-
   <button id="themeBtn">🌙 Night</button>
+  <div id="moon"></div>
 
-<div id="moon"></div>
+  <div class="star" style="top:8%;left:10%;">⭐</div>
+  <div class="star" style="top:18%;left:70%;">⭐</div>
+  <div class="star" style="top:25%;left:45%;">⭐</div>
+  <div class="star" style="top:40%;left:85%;">⭐</div>
+  <div class="star" style="top:55%;left:20%;">⭐</div>
+  <div class="star" style="top:72%;left:60%;">⭐</div>
+  <div class="star" style="top:85%;left:35%;">⭐</div>
+  <div class="star" style="top:15%;left:90%;">⭐</div>
+  <div class="star" style="top:60%;left:8%;">⭐</div>
+  <div class="star" style="top:35%;left:55%;">⭐</div>
 
-<div class="star" style="top:8%;left:10%;">⭐</div>
-<div class="star" style="top:18%;left:70%;">⭐</div>
-<div class="star" style="top:25%;left:45%;">⭐</div>
-<div class="star" style="top:40%;left:85%;">⭐</div>
-<div class="star" style="top:55%;left:20%;">⭐</div>
-<div class="star" style="top:72%;left:60%;">⭐</div>
-<div class="star" style="top:85%;left:35%;">⭐</div>
-<div class="star" style="top:15%;left:90%;">⭐</div>
-<div class="star" style="top:60%;left:8%;">⭐</div>
-<div class="star" style="top:35%;left:55%;">⭐</div>
   <!-- PASSCODE SCREEN -->
   <div id="lock-screen">
     <div class="lock-box">
@@ -325,6 +495,18 @@ opacity:1;
       <p id="error-text" class="error-msg">Incorrect passcode! Try again ❤️</p>
     </div>
   </div>
+
+  <!-- ANNIVERSARY POPUP -->
+  <div id="anniversary-popup" class="anniversary-popup">
+    <h1>🎉 Happy 1st Anniversary! 🎉</h1>
+    <p style="font-size: 1.2rem; color: #c9184a; font-weight: 700;">September 21, 2026</p>
+    <p>My Dearest Izu,</p>
+    <p>One year of unconditional love, laughter, and beautiful memories together.</p>
+    <p style="font-weight: 600;">You are my forever. I love you! ❤️</p>
+    <button class="close-popup" onclick="closeAnniversaryPopup()">💖 Close</button>
+  </div>
+
+  <div id="anniversary-overlay"></div>
 
   <audio id="bg-music" loop preload="auto">
     <source src="./music.mp3" type="audio/mpeg">
@@ -340,10 +522,9 @@ opacity:1;
     <!-- Hero Section -->
     <div class="card">
       <div class="photo-frame">
-    <img src="./couple1.jpeg" alt="Akku & Izu">
-
-    <div class="butterfly butterfly1">🦋</div>
-<div class="butterfly butterfly2">🦋</div>
+        <img src="./jpg/couple1.jpeg" alt="Akku & Izu">
+        <div class="butterfly butterfly1">🦋</div>
+        <div class="butterfly butterfly2">🦋</div>
       </div>
       <h1>Akku & Izu</h1>
       <div class="counter-box">
@@ -395,31 +576,29 @@ opacity:1;
     <div class="card">
       <h2>🎁 Our First Meet 🎁</h2>
       <div class="photo-frame">
-        <img src="./meet up pic.jpeg" alt="Our First Meet">
+        <img src="./jpg/meet up pic.jpeg" alt="Our First Meet">
       </div>
-      <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">
-        July 15, 2026 ❤️
-      </p>
+      <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">July 15, 2026 ❤️</p>
       <p class="quote">"The unforgettable moment that started it all..."</p>
     </div>
 
     <!-- OUR JOURNEY SECTION -->
     <div class="card">
       <h2>Our Beautiful Journey</h2>
-      <div class="photo-frame"><img src="./couple2.jpeg" alt="Our Journey"></div>
+      <div class="photo-frame"><img src="./jpg/couple2.jpeg" alt="Our Journey"></div>
       <p class="quote">"The right person will show you how beautiful love can be."</p>
     </div>
 
-    <!-- WHY I choose YOU PHOTO CARD -->
+    <!-- WHY I CHOOSE YOU PHOTO CARD -->
     <div class="card">
       <h2>Why I choose You ❤️</h2>
       <div class="photo-frame" style="height: auto;">
-        <img src="./why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
+        <img src="./jpg/why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
       </div>
       <p class="quote">"And I will keep choosing you, again and again."</p>
     </div>
     
-<!-- REASONS WHY I LOVE YOU SECTION -->
+    <!-- REASONS WHY I LOVE YOU SECTION -->
     <div class="card">
       <h2>✨ Why I Love You ✨</h2>
       <p style="font-size: 0.88rem; color: #800f2f; margin-bottom: 14px;">Tap each one to open a special reason! 💖</p>
@@ -483,43 +662,182 @@ opacity:1;
       <div style="text-align: center; margin-top: 25px;">
         <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
       </div>
-      <div class="card">
-    <h2>🧩 Surprise For You ❤️</h2>
-    <p>I have a little game just for you. Can you solve our love puzzle?</p>
+    </div>
 
-    <a href="puzzle.html">
+    <!-- Puzzle, Quiz, Secret Links -->
+    <div class="card">
+      <h2>🧩 Surprise For You ❤️</h2>
+      <p>I have a little game just for you. Can you solve our love puzzle?</p>
+
+      <a href="puzzle.html">
         <button class="btn-heart">🧩 Play Our Love Puzzle ❤️</button>
-    </a>
+      </a>
 
-<div class="card">
-    <a href="puzzle.html" style="text-decoration:none;color:inherit;">
-        🧩 Puzzle
-    </a>
-</div>
-
-<div class="card">
-    <a href="quiz.html" style="text-decoration:none;color:inherit;">
-        💖 Love Quiz
-    </a>
-</div>
-
-<div class="card">
-    <a href="secret.html" style="text-decoration:none;color:inherit;">
-        💌 Secret Message
-    </a>
-</div>
-
-</div>
-</div>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <a href="puzzle.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">🧩 Puzzle</div>
+        </a>
+        <a href="quiz.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💖 Love Quiz</div>
+        </a>
+        <a href="secret.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💌 Secret Message</div>
+        </a>
+      </div>
     </div>
 
   </div>
 
+
+
+  <!-- ===== JAVASCRIPT ===== -->
   <script>
     const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
-    const SECRET_PASSCODE = "2103"; 
+    const SECRET_PASSCODE = "2103";
 
+    // ===== MAIN FUNCTIONS =====
     function unlockPage() {
       const input = document.getElementById('passcode-field').value;
       const errorText = document.getElementById('error-text');
-      const lockS
+      const lockScreen = document.getElementById('lock-screen');
+      
+      if (input === SECRET_PASSCODE) {
+        lockScreen.style.display = 'none';
+      } else {
+        errorText.style.display = 'block';
+        setTimeout(() => {
+          errorText.style.display = 'none';
+        }, 2500);
+        document.getElementById('passcode-field').value = '';
+      }
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle-btn');
+      
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = '🎵 Stop Song';
+      } else {
+        audio.pause();
+        btn.textContent = '🎵 Play Song';
+      }
+    }
+
+    function showMessage() {
+      alert('❤️ I Love You Forever Izu 💖\n\nYou know me better than anyone.\n\nI Love You Forever Izu 💖');
+    }
+
+    function closeAnniversaryPopup() {
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+
+    function sendEmailNote(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('guest-name').value;
+      const message = document.getElementById('guest-message').value;
+      const statusMsg = document.getElementById('status-msg');
+      const submitBtn = document.getElementById('submit-btn');
+
+      const formData = new FormData();
+      formData.append('access_key', WEB3FORMS_ACCESS_KEY);
+      formData.append('from_name', name);
+      formData.append('message', message);
+      formData.append('subject', `New Love Message from ${name}`);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          statusMsg.style.display = 'block';
+          statusMsg.textContent = '💖 Message sent successfully! Thank you for your love!';
+          statusMsg.style.color = '#27ae60';
+          document.getElementById('guest-name').value = '';
+          document.getElementById('guest-message').value = '';
+        } else {
+          statusMsg.style.display = 'block';
+          statusMsg.textContent = '❌ Failed to send message. Please try again.';
+          statusMsg.style.color = '#c9184a';
+        }
+      })
+      .catch(error => {
+        statusMsg.style.display = 'block';
+        statusMsg.textContent = '❌ Error: ' + error.message;
+        statusMsg.style.color = '#c9184a';
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message 💖';
+      });
+    }
+
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('night');
+      if (document.body.classList.contains('night')) {
+        themeBtn.textContent = '☀️ Day';
+        localStorage.setItem('theme', 'night');
+      } else {
+        themeBtn.textContent = '🌙 Night';
+        localStorage.setItem('theme', 'day');
+      }
+    });
+
+    if (localStorage.getItem('theme') === 'night') {
+      document.body.classList.add('night');
+      themeBtn.textContent = '☀️ Day';
+    }
+
+    function updateCountdown() {
+      const targetDate = new Date('2026-09-21').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
+
+      const startDate = new Date('2025-09-21').getTime();
+      const daysTogether = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').textContent = daysTogether;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    window.addEventListener('load', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, index * 100);
+      });
+    });
+
+    document.getElementById('passcode-field').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') unlockPage();
+    });
+  </script>
+
+  <!-- ===== LOAD ANNIVERSARY FEATURES ===== -->
+  <script src="./anniversary.js"></script>
+
+</body>
+</html>
