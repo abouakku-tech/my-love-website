@@ -698,12 +698,21 @@
       const month = today.getMonth() + 1;
       const day = today.getDate();
       
-      if (month === 9 && day === 11) { // TEST - Change to 21 for real
+      console.log("🔍 Index.html checking date: " + month + "/" + day);
+      
+      // Only show on September 21
+      if (month === 9 && day === 21) {
+        console.log("✅ Showing anniversary content!");
         document.getElementById('anniversary-message-section').style.display = 'block';
         setTimeout(() => {
           showAnniversaryPopup();
           startAnniversaryPhotoSlideshow();
         }, 1000);
+      } else {
+        console.log("❌ Hiding anniversary content - not Sept 21");
+        document.getElementById('anniversary-message-section').style.display = 'none';
+        document.getElementById('anniversary-popup').style.display = 'none';
+        document.getElementById('anniversary-overlay').style.display = 'none';
       }
     }
 
@@ -764,7 +773,7 @@
   </script>
 
   <!-- Load Anniversary Effects -->
-  <script src="./anniversary.js?v=3"></script>
+  <script src="./anniversary.js?v=4"></script>
 
 </body>
 </html>
