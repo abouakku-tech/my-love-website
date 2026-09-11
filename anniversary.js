@@ -6,7 +6,6 @@ const day = today.getDate();
 
 console.log("📅 Today: " + month + "/" + day);
 
-// Check if it's anniversary (Sept 11 for testing)
 if (month === 9 && day === 21) {
   console.log("✅ ANNIVERSARY MODE ACTIVATED!");
   
