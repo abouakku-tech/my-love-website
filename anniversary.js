@@ -311,15 +311,7 @@ if (IS_ANNIVERSARY) {
     }
   }
   
-  // SHOW ANNIVERSARY POPUP & CARD
-  function showAnniversaryPopup() {
-    const popup = document.getElementById('anniversary-popup');
-    const overlay = document.getElementById('anniversary-overlay');
-    
-    if (popup && overlay) {
-      popup.style.display = 'block';
-      overlay.style.display = 'block';
-      
+  
       // Start photo slideshow
       startPhotoSlideshow();
     }
@@ -377,12 +369,12 @@ if (IS_ANNIVERSARY) {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       runCelebration();
-      // REPEAT EVERY 30 SECONDS
+      // REPEAT EVERY 10 SECONDS
       setInterval(runCelebration, 30000);
     });
   } else {
     runCelebration();
-    // REPEAT EVERY 30 SECONDS
+    // REPEAT EVERY 10 SECONDS
     setInterval(runCelebration, 30000);
   }
 }
