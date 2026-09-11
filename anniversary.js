@@ -91,7 +91,7 @@ if (IS_ANNIVERSARY) {
     }
   }
   
-  // Run on load and repeat every 30 seconds
+  // Run on load and repeat every 10 seconds
   function start() {
     createEffects();
     setInterval(createEffects, 30000);
