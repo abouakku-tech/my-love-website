@@ -4,10 +4,13 @@ const today = new Date();
 const month = today.getMonth() + 1;
 const day = today.getDate();
 
-console.log("📅 Today: " + month + "/" + day);
+console.log("📅 TODAY'S DATE: " + month + "/" + day);
+console.log("🎂 ANNIVERSARY DATE: 9/21");
+console.log("🔍 Checking: month === 9? " + (month === 9) + " | day === 21? " + (day === 21));
 
+// Check if it's anniversary (Sept 21 only)
 if (month === 9 && day === 21) {
-  console.log("✅ ANNIVERSARY MODE ACTIVATED!");
+  console.log("✅ ✅ ✅ ANNIVERSARY MODE ACTIVATED! ✅ ✅ ✅");
   
   // Add CSS
   const style = document.createElement('style');
@@ -69,5 +72,7 @@ if (month === 9 && day === 21) {
   console.log("🔄 Repeating every 10 seconds");
   setInterval(playEffects, 10000);
 } else {
-  console.log("❌ Not anniversary yet. Today: " + month + "/" + day);
+  console.log("❌ ❌ ❌ ANNIVERSARY MODE OFF ❌ ❌ ❌");
+  console.log("Today is " + month + "/" + day + " - NOT September 21");
+  console.log("Effects will show on September 21 only!");
 }
