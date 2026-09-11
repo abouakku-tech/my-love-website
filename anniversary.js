@@ -1,22 +1,21 @@
-// ===== ANNIVERSARY CELEBRATION EFFECTS =====
+// ===== ANNIVERSARY CELEBRATION - REPEATING EFFECTS + CARD =====
 
 function isAnniversary() {
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
-  console.log("Checking date: " + month + "/" + day); // DEBUG
   return month === 9 && day === 11; // TEST MODE - Change to 21 later!
 }
 
 const IS_ANNIVERSARY = isAnniversary();
-console.log("Is Anniversary: " + IS_ANNIVERSARY); // DEBUG
 
 if (IS_ANNIVERSARY) {
-  console.log("ANNIVERSARY MODE ACTIVATED!"); // DEBUG
+  console.log("🎉 ANNIVERSARY MODE ACTIVATED!");
   
   // Add CSS Animations
   const css = document.createElement('style');
   css.textContent = `
+    /* CONFETTI */
     .confetti-piece {
       position: fixed;
       width: 10px;
@@ -37,6 +36,7 @@ if (IS_ANNIVERSARY) {
       }
     }
 
+    /* HEARTS */
     .heart-emoji {
       position: fixed;
       font-size: 3rem;
@@ -55,6 +55,7 @@ if (IS_ANNIVERSARY) {
       }
     }
 
+    /* PETALS */
     .petal-emoji {
       position: fixed;
       font-size: 2.5rem;
@@ -73,6 +74,7 @@ if (IS_ANNIVERSARY) {
       }
     }
 
+    /* SPARKLES */
     .sparkle-emoji {
       position: fixed;
       font-size: 2rem;
@@ -86,6 +88,7 @@ if (IS_ANNIVERSARY) {
       50% { opacity: 1; }
     }
 
+    /* FIREWORKS */
     .fire-emoji {
       position: fixed;
       font-size: 2rem;
@@ -104,6 +107,7 @@ if (IS_ANNIVERSARY) {
       }
     }
 
+    /* BADGE */
     .badge {
       position: fixed;
       bottom: 50px;
@@ -129,12 +133,89 @@ if (IS_ANNIVERSARY) {
         opacity: 1;
       }
     }
+
+    /* ANNIVERSARY CARD POPUP */
+    .anniversary-popup {
+      display: block !important;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #fff5f7, #ffebf0);
+      padding: 40px;
+      border-radius: 28px;
+      text-align: center;
+      z-index: 2000;
+      border: 3px solid #ff4d6d;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 90%;
+      animation: popup-show 0.5s ease-out;
+    }
+
+    @keyframes popup-show {
+      from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    #anniversary-overlay {
+      display: block !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+    }
+
+    .anniversary-popup h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #c9184a;
+      margin-bottom: 15px;
+    }
+
+    .anniversary-popup .date {
+      font-size: 1.2rem;
+      color: #ff4d6d;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .anniversary-popup p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .close-popup {
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .close-popup:hover {
+      opacity: 0.9;
+    }
   `;
   document.head.appendChild(css);
   
   // CONFETTI
   function makeConfetti() {
-    console.log("Making confetti..."); // DEBUG
     const colors = ['#ff4d6d', '#c9184a', '#ff1d3b', '#ffb3c1', '#ff69b4', '#ffeb3b'];
     
     for (let i = 0; i < 100; i++) {
@@ -152,7 +233,6 @@ if (IS_ANNIVERSARY) {
   
   // HEARTS
   function makeHearts() {
-    console.log("Making hearts..."); // DEBUG
     let count = 0;
     const heart_interval = setInterval(() => {
       const heart = document.createElement('div');
@@ -171,7 +251,6 @@ if (IS_ANNIVERSARY) {
   
   // ROSE PETALS
   function makePetals() {
-    console.log("Making petals..."); // DEBUG
     let count = 0;
     const petal_interval = setInterval(() => {
       const petal = document.createElement('div');
@@ -190,7 +269,6 @@ if (IS_ANNIVERSARY) {
   
   // SPARKLES
   function makeSparkles() {
-    console.log("Making sparkles..."); // DEBUG
     for (let i = 0; i < 50; i++) {
       const sparkle = document.createElement('div');
       sparkle.className = 'sparkle-emoji';
@@ -205,7 +283,6 @@ if (IS_ANNIVERSARY) {
   
   // FIREWORKS
   function makeFireworks() {
-    console.log("Making fireworks..."); // DEBUG
     for (let burst = 0; burst < 6; burst++) {
       setTimeout(() => {
         const x = Math.random() * window.innerWidth;
@@ -234,13 +311,50 @@ if (IS_ANNIVERSARY) {
     }
   }
   
+  // SHOW ANNIVERSARY POPUP & CARD
+  function showAnniversaryPopup() {
+    const popup = document.getElementById('anniversary-popup');
+    const overlay = document.getElementById('anniversary-overlay');
+    
+    if (popup && overlay) {
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+      
+      // Start photo slideshow
+      startPhotoSlideshow();
+    }
+  }
+
+  // PHOTO SLIDESHOW
+  function startPhotoSlideshow() {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.anniversary-slide');
+    const slideCount = document.getElementById('anniversary-slide-count');
+    
+    if (slides.length === 0) return;
+    
+    const rotateSlides = () => {
+      // Remove active from all
+      slides.forEach(slide => slide.classList.remove('anniversary-slide-active'));
+      
+      // Add active to current
+      slides[currentSlide].classList.add('anniversary-slide-active');
+      slideCount.textContent = currentSlide + 1;
+      
+      // Move to next
+      currentSlide = (currentSlide + 1) % slides.length;
+    };
+    
+    // Rotate every 5 seconds
+    setInterval(rotateSlides, 5000);
+  }
+  
   // ACHIEVEMENT BADGE
   function makeBadge() {
-    console.log("Making badge..."); // DEBUG
     setTimeout(() => {
       const badge = document.createElement('div');
       badge.className = 'badge';
-      badge.textContent = '🏆 1st Anniversary Unlocked! 🎉';
+      badge.textContent = '🏆 1st Anniversary! 🎉';
       document.body.appendChild(badge);
       
       setTimeout(() => badge.remove(), 10000);
@@ -248,20 +362,27 @@ if (IS_ANNIVERSARY) {
   }
   
   // RUN ALL EFFECTS
-  function startCelebration() {
-    console.log("Starting celebration!"); // DEBUG
+  function runCelebration() {
+    console.log("🎊 Running celebration effects...");
     makeConfetti();
     setTimeout(makeHearts, 300);
     setTimeout(makePetals, 600);
     setTimeout(makeSparkles, 900);
     setTimeout(makeFireworks, 1200);
     makeBadge();
+    showAnniversaryPopup();
   }
   
   // Activate on page load
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startCelebration);
+    document.addEventListener('DOMContentLoaded', () => {
+      runCelebration();
+      // REPEAT EVERY 30 SECONDS
+      setInterval(runCelebration, 30000);
+    });
   } else {
-    startCelebration();
+    runCelebration();
+    // REPEAT EVERY 30 SECONDS
+    setInterval(runCelebration, 30000);
   }
 }
