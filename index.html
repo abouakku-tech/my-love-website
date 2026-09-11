@@ -406,7 +406,17 @@
         opacity: 1;
       }
     }
-
+!-- Lock Screen -->
+  <div class="lock-screen" id="lock-screen">
+    <div class="lock-container">
+      <div class="lock-icon">🔒</div>
+      <h2>Akku & Izu Only</h2>
+      <p>Please enter our secret passcode to enter</p>
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="4">
+      <button class="unlock-btn" onclick="unlockPage()">Unlock Heart 💖</button>
+      <div class="error-text" id="error-text">❌ Wrong passcode. Try again!</div>
+    </div>
+  </div>
     /* Anniversary Features */
     .anniversary-popup {
       display: none;
@@ -435,17 +445,7 @@
         opacity: 1;
       }
     }
-!-- Lock Screen -->
-  <div class="lock-screen" id="lock-screen">
-    <div class="lock-container">
-      <div class="lock-icon">🔒</div>
-      <h2>Akku & Izu Only</h2>
-      <p>Please enter our secret passcode to enter</p>
-      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="4">
-      <button class="unlock-btn" onclick="unlockPage()">Unlock Heart 💖</button>
-      <div class="error-text" id="error-text">❌ Wrong passcode. Try again!</div>
-    </div>
-  </div>
+
 
     .anniversary-popup h1 {
       font-size: 2.5rem;
