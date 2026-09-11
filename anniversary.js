@@ -8,8 +8,8 @@ console.log("📅 TODAY'S DATE: " + month + "/" + day);
 console.log("🎂 ANNIVERSARY DATE: 9/21");
 console.log("🔍 Checking: month === 9? " + (month === 9) + " | day === 21? " + (day === 21));
 
-// Check if it's anniversary (Sept 21 only)
-if (month === 9 && day === 21) {
+// Check if it's anniversary (Sept 11 for TESTING)
+if (month === 9 && day === 11) {
   console.log("✅ ✅ ✅ ANNIVERSARY MODE ACTIVATED! ✅ ✅ ✅");
   
   // Add CSS
