@@ -414,6 +414,18 @@
       .container { max-width: 100%; }
       .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     }
+
+    /* Anniversary Photo Slideshow */
+    .anniversary-photo {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .anniversary-photo-active {
+      display: block;
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -433,6 +445,32 @@
   <audio id="bg-music" loop preload="auto">
     <source src="./music.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- ANNIVERSARY POPUP CARD -->
+  <div id="anniversary-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #fff5f7, #ffebf0); padding: 40px; border-radius: 28px; text-align: center; z-index: 2000; border: 3px solid #ff4d6d; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; animation: popup-show 0.5s ease-out;">
+    <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #c9184a; margin-bottom: 20px;">🎉 Happy 1st Anniversary, My Izu 🎉</h2>
+    <p style="font-size: 1rem; color: #555; line-height: 1.8; margin: 15px 0;">One year of saying YES to forever.</p>
+    <p style="font-size: 1rem; color: #555; line-height: 1.8; margin: 15px 0;">Every moment with you has been so special.<br>My heart always finds its way back to you.</p>
+    <p style="font-size: 1rem; color: #555; line-height: 1.8; margin: 15px 0;">I love you more than words can say.<br>I choose you, again and again.</p>
+    <p style="font-size: 1.1rem; color: #c9184a; font-weight: 700; margin-top: 20px;">Here's to us. 🥹❤️</p>
+    <p style="font-size: 0.95rem; color: #800f2f; font-weight: 600; margin-top: 15px;">— Akku</p>
+    <button onclick="closeAnniversaryPopup()" style="background: linear-gradient(135deg, #ff4d6d, #c9184a); color: white; border: none; padding: 12px 24px; border-radius: 20px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 20px;">💖 Close</button>
+  </div>
+
+  <div id="anniversary-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1999;"></div>
+
+  <style>
+    @keyframes popup-show {
+      from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
 
   <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
   <button class="theme-btn" id="themeBtn">🌙 Night</button>
@@ -520,6 +558,33 @@
       <p class="quote">"And I will keep choosing you, again and again."</p>
     </div>
 
+    <!-- ANNIVERSARY MESSAGE SECTION WITH PHOTOS -->
+    <div class="card" id="anniversary-message-section" style="display: none;">
+      <h2>💝 Our 1st Anniversary 💝</h2>
+      
+      <!-- Photo Slideshow -->
+      <div style="position: relative; width: 100%; max-width: 450px; margin: 20px auto; border-radius: 16px; overflow: hidden; background: #f0f0f0; height: 300px;">
+        <img src="anniversary1.jpg" alt="Memory 1" class="anniversary-photo anniversary-photo-active" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+        <img src="anniversary2.jpg" alt="Memory 2" class="anniversary-photo" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+        <img src="anniversary3.jpg" alt="Memory 3" class="anniversary-photo" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+        <img src="anniversary4.jpg" alt="Memory 4" class="anniversary-photo" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+        <img src="anniversary5.jpg" alt="Memory 5" class="anniversary-photo" style="position: absolute; width: 100%; height: 100%; object-fit: cover; display: none;">
+        <img src="anniversary6.jpg" alt="Memory 6" class="anniversary-photo" style="position: absolute; width: 100%; height: 100%; object-fit: cover; display: none;">
+        
+        <div style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.7); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+          <span id="anniversary-slide-count">1</span> / <span id="anniversary-total-count">4</span>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <p style="margin-top: 25px; font-size: 1rem; line-height: 1.8; color: #555;">
+        Happy Anniversary, my Izu ❤️
+      </p>
+      <p style="font-size: 0.95rem; line-height: 1.8; color: #555;">
+        I still can't believe how one person became such a beautiful part of my life. From the first day you said yes until today, every moment with you has been so special to me. No matter how far we are, my heart always finds its way back to you. I love you more than I can put into words, and I just want to keep choosing you, loving you, and growing with you. Here's to us, my love… and to all the beautiful years waiting for us. 🥹❤️
+      </p>
+    </div>
+
     <!-- Letter Section -->
     <div class="card">
       <h2>A Letter For You</h2>
@@ -597,8 +662,52 @@
     }
 
     function closeAnniversaryPopup() {
-      // Nothing to do - just for compatibility
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
     }
+
+    function showAnniversaryPopup() {
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    function startAnniversaryPhotoSlideshow() {
+      let currentSlide = 0;
+      const photos = document.querySelectorAll('.anniversary-photo');
+      const slideCount = document.getElementById('anniversary-slide-count');
+      const totalCount = document.getElementById('anniversary-total-count');
+      
+      if (photos.length === 0) return;
+      
+      totalCount.textContent = photos.length;
+      
+      setInterval(() => {
+        photos[currentSlide].classList.remove('anniversary-photo-active');
+        currentSlide = (currentSlide + 1) % photos.length;
+        photos[currentSlide].classList.add('anniversary-photo-active');
+        slideCount.textContent = currentSlide + 1;
+      }, 5000);
+    }
+
+    function checkAnniversaryAndShow() {
+      const today = new Date();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      
+      if (month === 9 && day === 11) { // TEST - Change to 21 for real
+        document.getElementById('anniversary-message-section').style.display = 'block';
+        setTimeout(() => {
+          showAnniversaryPopup();
+          startAnniversaryPhotoSlideshow();
+        }, 1000);
+      }
+    }
+
+    checkAnniversaryAndShow();
 
     function updateCountdown() {
       const targetDate = new Date('2026-09-21').getTime();
