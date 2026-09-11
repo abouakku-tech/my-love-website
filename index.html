@@ -1,1282 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Akku & Izu ❤️</title>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:#fff;
-  background:#070912;
-  overflow-x:hidden;
-}
-
-body.day{
-  color:#24151b;
-  background:linear-gradient(135deg,#fff0f5,#ffe5ee,#fff8fb);
-}
-
-/* ================= LOCK SCREEN ================= */
-
-#lockScreen{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:radial-gradient(
-    circle at 50% 35%,
-    #25203b,
-    #090a12 65%
-  );
-}
-
-.lock-box{
-  width:min(420px,100%);
-  padding:35px 25px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:28px;
-  background:rgba(255,255,255,.07);
-  backdrop-filter:blur(18px);
-  box-shadow:0 20px 80px rgba(0,0,0,.45);
-}
-
-.heart-logo{
-  font-size:55px;
-  animation:pulse 1.8s infinite;
-}
-
-.lock-box h1{
-  font-size:28px;
-  margin:10px 0;
-}
-
-.lock-box p{
-  opacity:.75;
-  margin-bottom:20px;
-}
-
-#passcode{
-  width:100%;
-  padding:15px;
-  border:0;
-  outline:0;
-  border-radius:14px;
-  text-align:center;
-  font-size:20px;
-  letter-spacing:5px;
-  background:rgba(255,255,255,.12);
-  color:#fff;
-}
-
-#unlockBtn,
-.btn{
-  display:inline-block;
-  border:0;
-  cursor:pointer;
-  padding:13px 20px;
-  margin-top:14px;
-  border-radius:999px;
-  color:#fff;
-  background:linear-gradient(135deg,#ff4f91,#b95cff);
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 8px 25px rgba(255,79,145,.25);
-}
-
-#error{
-  color:#ff9dbd;
-  margin-top:12px;
-  min-height:20px;
-}
-
-/* ================= BACKGROUND ================= */
-
-#stars{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-}
-
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  border-radius:50%;
-  background:#fff;
-  opacity:.7;
-  animation:twinkle 2.5s infinite;
-}
-
-#moon{
-  position:fixed;
-  right:7%;
-  top:8%;
-  z-index:0;
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background:#fff7cc;
-  box-shadow:
-    0 0 35px #fff2a6,
-    0 0 90px rgba(255,240,150,.2);
-}
-
-body.day #moon{
-  opacity:.35;
-}
-
-/* ================= MAIN ================= */
-
-.container{
-  position:relative;
-  z-index:2;
-  width:min(1050px,92%);
-  margin:auto;
-}
-
-header{
-  text-align:center;
-  padding:85px 0 45px;
-}
-
-header h1{
-  font-size:clamp(42px,9vw,80px);
-  background:linear-gradient(
-    90deg,
-    #ff7cae,
-    #ffd1e1,
-    #c889ff
-  );
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-header p{
-  font-size:18px;
-  opacity:.8;
-  margin-top:8px;
-}
-
-/* ================= BUTTONS ================= */
-
-.topbar{
-  position:fixed;
-  top:15px;
-  right:15px;
-  z-index:100;
-  display:flex;
-  gap:8px;
-}
-
-.icon-btn{
-  width:43px;
-  height:43px;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:50%;
-  background:rgba(0,0,0,.3);
-  color:#fff;
-  cursor:pointer;
-  font-size:18px;
-  backdrop-filter:blur(10px);
-}
-
-body.day .icon-btn{
-  color:#24151b;
-  background:rgba(255,255,255,.55);
-}
-
-/* ================= CARDS ================= */
-
-.card{
-  opacity:0;
-  transform:translateY(35px);
-  transition:
-    opacity .8s ease,
-    transform .8s ease;
-
-  padding:28px;
-  margin:22px 0;
-
-  border:1px solid rgba(255,255,255,.11);
-  border-radius:28px;
-
-  background:rgba(255,255,255,.055);
-
-  backdrop-filter:blur(13px);
-
-  box-shadow:0 18px 55px rgba(0,0,0,.18);
-}
-
-.card.show{
-  opacity:1;
-  transform:none;
-}
-
-body.day .card{
-  background:rgba(255,255,255,.55);
-  border-color:rgba(100,30,60,.1);
-}
-
-.card h2{
-  text-align:center;
-  margin-bottom:18px;
-}
-
-.card p{
-  line-height:1.7;
-  opacity:.9;
-}
-
-/* ================= PHOTOS ================= */
-
-.photo-frame{
-  position:relative;
-  overflow:hidden;
-  border-radius:22px;
-  margin:15px auto;
-  max-width:850px;
-  background:rgba(0,0,0,.25);
-}
-
-.photo-frame img{
-  display:block;
-  width:100%;
-  height:auto;
-  max-height:650px;
-  object-fit:cover;
-  border-radius:22px;
-}
-
-.caption{
-  text-align:center;
-  margin-top:12px;
-  font-weight:700;
-}
-
-.gallery{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
-}
-
-.gallery .photo-frame{
-  width:100%;
-  margin:0;
-}
-
-.gallery img{
-  height:290px;
-  object-fit:cover;
-}
-
-/* ================= COUNTER ================= */
-
-.counter{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  margin-top:20px;
-}
-
-.count-box{
-  text-align:center;
-  padding:18px 8px;
-  border-radius:18px;
-  background:rgba(255,255,255,.07);
-}
-
-.count-box strong{
-  display:block;
-  font-size:28px;
-}
-
-.count-box span{
-  font-size:12px;
-  opacity:.65;
-}
-
-/* ================= REASONS ================= */
-
-.reasons{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(210px,1fr));
-  gap:14px;
-}
-
-.reason{
-  padding:20px;
-  border-radius:18px;
-  background:rgba(255,255,255,.06);
-  line-height:1.55;
-}
-
-/* ================= VIDEO ================= */
-
-video{
-  width:100%;
-  border-radius:22px;
-  display:block;
-}
-
-audio{
-  width:100%;
-  margin-top:12px;
-}
-
-/* ================= LINKS ================= */
-
-.links{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
-  gap:12px;
-  margin-top:15px;
-}
-
-.links a{
-  text-align:center;
-  margin-top:0;
-}
-
-/* ================= LETTER ================= */
-
-.letter{
-  font-family:Georgia,serif;
-  font-size:18px;
-  line-height:1.9;
-  white-space:pre-line;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  text-align:center;
-  padding:50px 0 80px;
-  opacity:.65;
-}
-
-/* ================= FLOATING HEARTS ================= */
-
-.heart{
-  position:fixed;
-  bottom:-30px;
-  z-index:1;
-  pointer-events:none;
-  animation:floatUp linear forwards;
-}
-
-/* ================= ANIMATIONS ================= */
-
-@keyframes floatUp{
-  to{
-    transform:
-      translateY(-110vh)
-      rotate(25deg);
-    opacity:0;
-  }
-}
-
-@keyframes twinkle{
-  50%{
-    opacity:.15;
-    transform:scale(.6);
-  }
-}
-
-@keyframes pulse{
-  50%{
-    transform:scale(1.12);
-  }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:600px){
-
-  .counter{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .card{
-    padding:20px;
-  }
-
-  header{
-    padding-top:85px;
-  }
-
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Akku & Izu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fdf8f9;
+      font-family: 'Montserrat', sans-serif;
+      color: #4a0e17;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 30px 16px 50px 16px;
+      position: relative;
+      overflow-x: hidden;
+      transition: background 1.2s, color 1.2s;
+    }
+
+    body.night {
+      background: linear-gradient(to bottom, #050b2c, #08113d, #13275f);
+    }
+
+    body.night .card {
+      background: rgba(18, 22, 48, 0.88);
+      color: white;
+    }
+
+    body.night h1, body.night h2, body.night p, body.night .quote, body.night .milestone-item {
+      color: white;
+    }
+
+    .glow-1, .glow-2 {
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      filter: blur(100px);
+      border-radius: 50%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .glow-1 {
+      background: rgba(255, 192, 203, 0.4);
+      top: -100px;
+      left: -100px;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .glow-2 {
+      background: rgba(255, 240, 245, 0.3);
+      bottom: -150px;
+      right: -100px;
+      animation: float 25s infinite ease-in-out reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(100px); }
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      z-index: 1;
+      position: relative;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 40px rgba(201, 24, 74, 0.15);
+      text-align: center;
+      animation: fade-in 0.6s ease-out forwards;
+      opacity: 0;
+    }
+
+    .card.show {
+      opacity: 1;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #c9184a;
+      margin: 20px 0 10px 0;
+      font-style: italic;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #c9184a;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+      border: 3px solid #ffb6c1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f9f9f9;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .counter-box {
+      background: linear-gradient(135deg, #ffe5e5, #fff0f5);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 16px 0;
+      border: 2px solid #ffb6c1;
+    }
+
+    .counter-label {
+      font-size: 0.85rem;
+      color: #a4133c;
+      font-weight: 600;
+      margin: 6px 0;
+    }
+
+    .counter-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #c9184a;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .countdown-box {
+      background: linear-gradient(135deg, #fff5f7, #ffebf0);
+      border-radius: 12px;
+      padding: 16px;
+      border: 2px solid #ff69b4;
+    }
+
+    .countdown-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff4d6d;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .countdown-unit {
+      font-size: 0.9rem;
+      color: #a4133c;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .milestone-list {
+      text-align: left;
+    }
+
+    .milestone-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      margin: 10px 0;
+      background: rgba(255, 192, 203, 0.2);
+      border-radius: 12px;
+      border-left: 4px solid #c9184a;
+    }
+
+    .milestone-item span {
+      font-size: 1.5rem;
+      min-width: 30px;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #a4133c;
+      font-weight: 500;
+      font-size: 1.05rem;
+      margin: 16px 0;
+    }
+
+    .btn-heart {
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin: 10px auto;
+      display: block;
+      box-shadow: 0 6px 20px rgba(201, 24, 74, 0.4);
+    }
+
+    .btn-heart:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(201, 24, 74, 0.6);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .theme-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid #ffb6c1;
+      padding: 10px 16px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 200;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    body.night .theme-btn {
+      background: rgba(18, 22, 48, 0.9);
+      border: 1px solid rgba(255, 182, 193, 0.2);
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid #ffb6c1;
+      padding: 10px 16px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 200;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+
+    body.night .music-btn {
+      background: rgba(18, 22, 48, 0.9);
+      border: 1px solid rgba(255, 182, 193, 0.2);
+    }
+
+    .music-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .lock-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #fdf8f9, #fff0f5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lock-container {
+      background: white;
+      border-radius: 28px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(201, 24, 74, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .lock-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    .lock-container h2 {
+      margin-bottom: 12px;
+      font-size: 1.8rem;
+    }
+
+    .lock-container p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .passcode-input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #ffb6c1;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .passcode-input:focus {
+      outline: none;
+      border-color: #ff4d6d;
+      box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.2);
+    }
+
+    .unlock-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .unlock-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201, 24, 74, 0.4);
+    }
+
+    .error-text {
+      color: #d63031;
+      font-weight: 600;
+      margin-top: 12px;
+      display: none;
+      font-size: 0.95rem;
+    }
+
+    .butterfly {
+      position: absolute;
+      font-size: 2rem;
+      animation: butterfly-fly 6s infinite ease-in-out;
+    }
+
+    .butterfly1 {
+      top: 20px;
+      left: 20px;
+      animation-delay: 0s;
+    }
+
+    .butterfly2 {
+      bottom: 20px;
+      right: 20px;
+      animation-delay: 3s;
+    }
+
+    @keyframes butterfly-fly {
+      0% { transform: translateX(0) translateY(0) rotate(0deg); }
+      50% { transform: translateX(20px) translateY(-30px) rotate(25deg); }
+      100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Anniversary Features */
+    .anniversary-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #fff5f7, #ffebf0);
+      padding: 40px;
+      border-radius: 28px;
+      text-align: center;
+      z-index: 2000;
+      border: 3px solid #ff4d6d;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      animation: popup-scale 0.4s ease-out;
+    }
+
+    @keyframes popup-scale {
+      from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .anniversary-popup h1 {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .anniversary-popup p {
+      font-size: 1.05rem;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .close-popup {
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #anniversary-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.5rem; }
+      .card { padding: 20px; }
+      .container { max-width: 100%; }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- ================= LOCK SCREEN ================= -->
-
-<div id="lockScreen">
-
-  <div class="lock-box">
-
-    <div class="heart-logo">
-      ❤️
+  <!-- Lock Screen -->
+  <div class="lock-screen" id="lock-screen">
+    <div class="lock-container">
+      <div class="lock-icon">🔒</div>
+      <h2>Akku & Izu Only</h2>
+      <p>Please enter our secret passcode to enter</p>
+      <input type="password" id="passcode-field" class="passcode-input" placeholder="••••" maxlength="4">
+      <button class="unlock-btn" onclick="unlockPage()">Unlock Heart 💖</button>
+      <div class="error-text" id="error-text">❌ Wrong passcode. Try again!</div>
     </div>
-
-    <h1>Akku & Izu</h1>
-
-    <p>
-      Only for us ✨
-    </p>
-
-    <input
-      id="passcode"
-      type="password"
-      inputmode="numeric"
-      maxlength="6"
-      placeholder="Enter password"
-    >
-
-    <button id="unlockBtn">
-      Unlock ❤️
-    </button>
-
-    <div id="error"></div>
-
   </div>
 
-</div>
-
-
-<!-- ================= BACKGROUND ================= -->
-
-<div id="stars"></div>
-
-<div id="moon"></div>
-
-
-<!-- ================= TOP BUTTONS ================= -->
-
-<div class="topbar">
-
-  <button
-    class="icon-btn"
-    id="themeBtn"
-    title="Change theme">
-    ☀️
-  </button>
-
-  <button
-    class="icon-btn"
-    id="musicBtn"
-    title="Play music">
-    🎵
-  </button>
-
-</div>
-
-
-<!-- ================= MAIN ================= -->
-
-<main class="container">
-
-
-<!-- HEADER -->
-
-<header>
-
-  <h1>
-    Akku & Izu
-  </h1>
-
-  <p>
-    Two hearts. One story. Forever to go. ❤️
-  </p>
-
-</header>
-
-
-<!-- ================= COUNTER ================= -->
-
-<section class="card">
-
-  <h2>
-    Since She Said YES! 💕
-  </h2>
-
-  <p style="text-align:center">
-
-    Every day with you is another page
-    of my favourite story.
-
-  </p>
-
-  <div class="counter">
-
-    <div class="count-box">
-      <strong id="days">0</strong>
-      <span>DAYS</span>
-    </div>
-
-    <div class="count-box">
-      <strong id="hours">0</strong>
-      <span>HOURS</span>
-    </div>
-
-    <div class="count-box">
-      <strong id="minutes">0</strong>
-      <span>MINUTES</span>
-    </div>
-
-    <div class="count-box">
-      <strong id="seconds">0</strong>
-      <span>SECONDS</span>
-    </div>
-
+  <!-- Anniversary Popup -->
+  <div id="anniversary-popup" class="anniversary-popup">
+    <h1>🎉 Happy 1st Anniversary! 🎉</h1>
+    <p style="font-size: 1.2rem; color: #c9184a; font-weight: 700;">September 21, 2026</p>
+    <p>My Dearest Izu,</p>
+    <p>One year of unconditional love, laughter, and beautiful memories together.</p>
+    <p style="font-weight: 600;">You are my forever. I love you! ❤️</p>
+    <button class="close-popup" onclick="closeAnniversaryPopup()">💖 Close</button>
   </div>
 
-</section>
+  <div id="anniversary-overlay"></div>
 
-
-<!-- ================= MEMORIES ================= -->
-
-<section class="card">
-
-  <h2>
-    Our Memories 📸
-  </h2>
-
-  <div class="gallery">
-
-
-    <!-- COUPLE 1 -->
-
-    <div class="photo-frame">
-
-      <img
-        src="./couple1.jpeg"
-        alt="Akku and Izu"
-        loading="lazy"
-      >
-
-      <div class="caption">
-        Our little world ❤️
-      </div>
-
-    </div>
-
-
-    <!-- FIRST MEET -->
-
-    <div class="photo-frame">
-
-      <img
-        src="./meet up pic.jpeg"
-        alt="Our First Meet"
-        loading="lazy"
-      >
-
-      <div class="caption">
-        Our First Surprise Meet 🥹
-      </div>
-
-    </div>
-
-
-    <!-- COUPLE 2 -->
-
-    <div class="photo-frame">
-
-      <img
-        src="./couple2.jpeg"
-        alt="Our Journey"
-        loading="lazy"
-      >
-
-      <div class="caption">
-        Us, always. ♾️
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= WHY I LOVE YOU ================= -->
-
-<section class="card">
-
-  <h2>
-    Why I Love You ❤️
-  </h2>
-
-
-  <div class="photo-frame">
-
-    <img
-      src="./why I love you for pituce.jpg"
-      alt="Why I Love You"
-      loading="lazy"
-    >
-
-  </div>
-
-
-  <div class="reasons">
-
-
-    <div class="reason">
-      ❤️ You make ordinary moments
-      feel special.
-    </div>
-
-
-    <div class="reason">
-      🥹 You understand the parts of me
-      I don't always explain.
-    </div>
-
-
-    <div class="reason">
-      ✨ You make me smile even
-      from far away.
-    </div>
-
-
-    <div class="reason">
-      🫶 You are my comfort,
-      my happiness and my favourite person.
-    </div>
-
-
-    <div class="reason">
-      🌙 Even distance cannot make you
-      feel far from my heart.
-    </div>
-
-
-    <div class="reason">
-      ♾️ I don't just want memories
-      with you. I want a future with you.
-    </div>
-
-
-  </div>
-
-</section>
-
-
-<!-- ================= VIDEO ================= -->
-
-<section class="card">
-
-  <h2>
-    Our Story 🎬
-  </h2>
-
-
-  <video
-    controls
-    playsinline
-    preload="metadata"
-  >
-
-    <source
-      src="./video1.mp4"
-      type="video/mp4"
-    >
-
-    Your browser does not support video.
-
-  </video>
-
-
-  <audio
-    id="loveMusic"
-    loop
-    preload="metadata"
-  >
-
-    <source
-      src="./music.mp3"
-      type="audio/mpeg"
-    >
-
+  <audio id="bg-music" loop preload="auto">
+    <source src="./music.mp3" type="audio/mpeg">
   </audio>
 
+  <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">🎵 Play Song</button>
+  <button class="theme-btn" id="themeBtn">🌙 Night</button>
 
-  <p
-    style="
-      text-align:center;
-      margin-top:12px;
-    "
-  >
-    Tap 🎵 above to play our music.
-  </p>
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
 
-</section>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="card">
+      <div class="photo-frame">
+        <img src="couple1.jpeg" alt="Akku & Izu">
+        <div class="butterfly butterfly1">🦋</div>
+        <div class="butterfly butterfly2">🦋</div>
+      </div>
+      <h1>Akku & Izu</h1>
+      <div class="counter-box">
+        <div class="counter-label">Days Together</div>
+        <div class="counter-number" id="days-count">0</div>
+        <div class="counter-label">Since She Said YES! 💍</div>
+      </div>
+      <p>Every love story is beautiful, but ours is my favourite. Thank you for making my life brighter every single day.</p>
+    </div>
 
+    <!-- 1 YEAR ANNIVERSARY COUNTDOWN -->
+    <div class="card">
+      <h2>⏳ Countdown to Our 1st Anniversary ⏳</h2>
+      <p style="font-size: 0.88rem; color: #800f2f; font-weight: 600;">September 21, 2026 ❤️</p>
+      
+      <div class="countdown-grid">
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-days">00</div>
+          <div class="countdown-unit">Days</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-hours">00</div>
+          <div class="countdown-unit">Hours</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-mins">00</div>
+          <div class="countdown-unit">Mins</div>
+        </div>
+        <div class="countdown-box">
+          <div class="countdown-num" id="cd-secs">00</div>
+          <div class="countdown-unit">Secs</div>
+        </div>
+      </div>
+    </div>
 
-<!-- ================= LETTER ================= -->
+    <!-- Milestones Section -->
+    <div class="card">
+      <h2>✨ Our Special Dates ✨</h2>
+      <div class="milestone-list">
+        <div class="milestone-item"><span>🎁</span><div><strong>July 15, 2026</strong> — Our First Surprise Meet ❤️</div></div>
+        <div class="milestone-item"><span>🌹</span><div><strong>July 18, 2026</strong> — Our Official Meeting 💍</div></div>
+        <div class="milestone-item"><span>💍</span><div><strong>September 21, 2025</strong> — She Said Yes!</div></div>
+        <div class="milestone-item"><span>🎂</span><div><strong>October 21, 2001</strong> — Akku Born</div></div>
+        <div class="milestone-item"><span>🎂</span><div><strong>July 3, 2007</strong> — Izu Born</div></div>
+      </div>
+    </div>
 
-<section class="card">
+    <!-- FIRST MEET SECTION -->
+    <div class="card">
+      <h2>🎁 Our First Meet 🎁</h2>
+      <div class="photo-frame">
+        <img src="meet up pic.jpeg" alt="Our First Meet">
+      </div>
+      <p style="font-size: 0.9rem; color: #800f2f; font-weight: 600; margin-bottom: 6px;">July 15, 2026 ❤️</p>
+      <p class="quote">"The unforgettable moment that started it all..."</p>
+    </div>
 
-  <h2>
-    A Letter For You 💌
-  </h2>
+    <!-- OUR JOURNEY SECTION -->
+    <div class="card">
+      <h2>Our Beautiful Journey</h2>
+      <div class="photo-frame"><img src="couple2.jpeg" alt="Our Journey"></div>
+      <p class="quote">"The right person will show you how beautiful love can be."</p>
+    </div>
 
+    <!-- WHY I CHOOSE YOU PHOTO CARD -->
+    <div class="card">
+      <h2>Why I choose You ❤️</h2>
+      <div class="photo-frame" style="height: auto;">
+        <img src="why I love you for pituce.jpg" alt="Why I Choose You" style="height: auto; max-height: 520px; object-fit: contain;">
+      </div>
+      <p class="quote">"And I will keep choosing you, again and again."</p>
+    </div>
 
-  <div class="letter">
+    <!-- Letter Section -->
+    <div class="card">
+      <h2>A Letter For You</h2>
+      <p style="font-weight: 600; color: #a4133c; margin-bottom: 8px;">My Dearest Izu ❤️</p>
+      <p>You are the most beautiful part of my life. Every smile of yours gives me happiness. Every moment with you becomes a memory I never want to lose.</p>
+      <p style="margin-top: 12px;">No matter what happens, I promise to stand beside you, respect you, care for you and love you forever.</p>
+      <p style="margin-top: 12px; font-weight: 600;">You are my favourite person, my happiness, my peace and my forever.</p>
+      <p style="font-weight: 700; color: #c9184a; margin-top: 16px; font-size: 1.05rem;">❤️ I Love You ❤️</p>
+      <button class="btn-heart" onclick="showMessage()">💖 Open My Heart 💖</button>
 
-I don't know how many times I'll say it,
-but I'll never get tired of saying it...
+      <div style="text-align: center; margin-top: 25px;">
+        <img src="https://hits.sh/abouakku-tech.github.io/my-love-website.svg?color=c9184a&label=%E2%9D%A4%EF%B8%8F+Love+Views&labelColor=ffccd5" alt="Views Counter">
+      </div>
+    </div>
 
-I LOVE YOU, IZUUU. ❤️
+    <!-- Puzzle, Quiz, Secret Links -->
+    <div class="card">
+      <h2>🧩 Surprise For You ❤️</h2>
+      <p>I have a little game just for you. Can you solve our love puzzle?</p>
 
-Thank you for being part of my life.
+      <a href="puzzle.html">
+        <button class="btn-heart">🧩 Play Our Love Puzzle ❤️</button>
+      </a>
 
-Thank you for every smile,
-every call,
-every little moment
-and every memory.
-
-Distance may be between us,
-but my heart has always chosen you.
-
-No matter how many days pass,
-I still want the same person beside me —
-
-YOU. 🫶
-
-Let's keep choosing each other.
-
-Today,
-tomorrow
-and every day after that.
-
-Forever yours,
-
-Akku ❤️
-
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+        <a href="puzzle.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">🧩 Puzzle</div>
+        </a>
+        <a href="quiz.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💖 Love Quiz</div>
+        </a>
+        <a href="secret.html" style="text-decoration:none;color:inherit;">
+          <div class="card" style="padding: 12px;">💌 Secret Message</div>
+        </a>
+      </div>
+    </div>
   </div>
 
-</section>
-
-
-<!-- ================= SECRET LINKS ================= -->
-
-<section class="card">
-
-  <h2>
-    Our Little Secrets 🔐
-  </h2>
-
-
-  <p style="text-align:center">
-
-    There are still a few things
-    waiting for you...
-
-  </p>
-
-
-  <div class="links">
-
-
-    <a
-      class="btn"
-      href="./puzzle.html"
-    >
-      🧩 Our Puzzle
-    </a>
-
-
-    <a
-      class="btn"
-      href="./quiz.html"
-    >
-      💗 Love Quiz
-    </a>
-
-
-    <a
-      class="btn"
-      href="./secret.html"
-    >
-      🔐 Secret Note
-    </a>
-
-
-  </div>
-
-</section>
-
-
-<!-- ================= FINAL MESSAGE ================= -->
-
-<section class="card">
-
-  <h2>
-    One More Thing… 🥺❤️
-  </h2>
-
-
-  <p
-    style="
-      text-align:center;
-      font-size:20px;
-    "
-  >
-
-    If I had to choose you again,
-
-    <br>
-
-    I'd choose you without thinking twice.
-
-  </p>
-
-
-  <p
-    style="
-      text-align:center;
-      margin-top:15px;
-      font-size:25px;
-    "
-  >
-
-    Izuuu, you're my favourite. ❤️♾️
-
-  </p>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  Made with love by Akku ❤️
-
-  <br>
-
-  <span>
-    Akku & Izu — our little universe 🌙
-  </span>
-
-</footer>
-
-
-</main>
-
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-/* =========================
-   PASSWORD
-   ========================= */
-
-const SECRET_PASSCODE = "2001";
-
-const lockScreen =
-  document.getElementById("lockScreen");
-
-const passcode =
-  document.getElementById("passcode");
-
-const unlockBtn =
-  document.getElementById("unlockBtn");
-
-const error =
-  document.getElementById("error");
-
-
-function unlock(){
-
-  if(passcode.value === SECRET_PASSCODE){
-
-    lockScreen.style.opacity = "0";
-
-    lockScreen.style.transition =
-      "opacity .5s ease";
-
-
-    setTimeout(() => {
-
-      lockScreen.style.display = "none";
-
-      sessionStorage.setItem(
-        "loveUnlocked",
-        "yes"
-      );
-
-    },500);
-
-  }
-
-  else{
-
-    error.textContent =
-      "Wrong password ❤️ Try again.";
-
-    passcode.value = "";
-
-  }
-
-}
-
-
-unlockBtn.addEventListener(
-  "click",
-  unlock
-);
-
-
-passcode.addEventListener(
-  "keydown",
-  e => {
-
-    if(e.key === "Enter"){
-      unlock();
-    }
-
-  }
-);
-
-
-if(
-  sessionStorage.getItem(
-    "loveUnlocked"
-  ) === "yes"
-){
-
-  lockScreen.style.display = "none";
-
-}
-
-
-/* =========================
-   STARS
-   ========================= */
-
-const stars =
-  document.getElementById("stars");
-
-
-for(let i=0;i<100;i++){
-
-  const s =
-    document.createElement("span");
-
-  s.className = "star";
-
-  s.style.left =
-    Math.random()*100 + "%";
-
-  s.style.top =
-    Math.random()*100 + "%";
-
-  s.style.animationDelay =
-    Math.random()*3 + "s";
-
-  stars.appendChild(s);
-
-}
-
-
-/* =========================
-   FLOATING HEARTS
-   ========================= */
-
-function createHeart(){
-
-  const h =
-    document.createElement("div");
-
-  h.className = "heart";
-
-
-  h.textContent =
-    [
-      "❤️",
-      "💗",
-      "💕",
-      "💖",
-      "✨"
-    ][
-      Math.floor(
-        Math.random()*5
-      )
-    ];
-
-
-  h.style.left =
-    Math.random()*100 + "%";
-
-
-  h.style.fontSize =
-    12 + Math.random()*18 + "px";
-
-
-  h.style.animationDuration =
-    5 + Math.random()*5 + "s";
-
-
-  document.body.appendChild(h);
-
-
-  setTimeout(
-    () => h.remove(),
-    10000
-  );
-
-}
-
-
-setInterval(
-  createHeart,
-  900
-);
-
-
-/* =========================
-   CARD ANIMATION
-   ========================= */
-
-window.addEventListener(
-  "load",
-  () => {
-
-    document
-      .querySelectorAll(".card")
-      .forEach(
-        (card,i) => {
-
-          setTimeout(
-            () => {
-              card.classList.add("show");
-            },
-            i*180
-          );
-
-        }
-      );
-
-  }
-);
-
-
-/* =========================
-   DAY / NIGHT
-   ========================= */
-
-const themeBtn =
-  document.getElementById(
-    "themeBtn"
-  );
-
-
-if(
-  localStorage.getItem(
-    "loveTheme"
-  ) === "day"
-){
-
-  document.body.classList.add(
-    "day"
-  );
-
-  themeBtn.textContent = "🌙";
-
-}
-
-
-themeBtn.addEventListener(
-  "click",
-  () => {
-
-    document.body.classList.toggle(
-      "day"
-    );
-
-
-    const day =
-      document.body.classList.contains(
-        "day"
-      );
-
-
-    localStorage.setItem(
-      "loveTheme",
-      day ? "day" : "night"
-    );
-
-
-    themeBtn.textContent =
-      day ? "🌙" : "☀️";
-
-  }
-);
-
-
-/* =========================
-   MUSIC
-   ========================= */
-
-const music =
-  document.getElementById(
-    "loveMusic"
-  );
-
-
-const musicBtn =
-  document.getElementById(
-    "musicBtn"
-  );
-
-
-musicBtn.addEventListener(
-  "click",
-  async () => {
-
-    try{
-
-      if(music.paused){
-
-        await music.play();
-
-        musicBtn.textContent =
-          "⏸️";
-
+  <!-- JAVASCRIPT -->
+  <script>
+    const WEB3FORMS_ACCESS_KEY = "0af2de6f-cf53-44b7-aa13-2fc2afe47111";
+    const SECRET_PASSCODE = "2103";
+
+    function unlockPage() {
+      const input = document.getElementById('passcode-field').value;
+      const errorText = document.getElementById('error-text');
+      const lockScreen = document.getElementById('lock-screen');
+      
+      if (input === SECRET_PASSCODE) {
+        lockScreen.style.display = 'none';
+      } else {
+        errorText.style.display = 'block';
+        setTimeout(() => {
+          errorText.style.display = 'none';
+        }, 2500);
+        document.getElementById('passcode-field').value = '';
       }
+    }
 
-      else{
-
-        music.pause();
-
-        musicBtn.textContent =
-          "🎵";
-
+    function toggleMusic() {
+      const audio = document.getElementById('bg-music');
+      const btn = document.getElementById('music-toggle-btn');
+      
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = '🎵 Stop Song';
+      } else {
+        audio.pause();
+        btn.textContent = '🎵 Play Song';
       }
-
     }
 
-    catch(e){
-
-      musicBtn.textContent =
-        "🎵";
-
+    function showMessage() {
+      alert('❤️ I Love You Forever Izu 💖\n\nYou know me better than anyone.\n\nI Love You Forever Izu 💖');
     }
 
-  }
-);
+    function closeAnniversaryPopup() {
+      const popup = document.getElementById('anniversary-popup');
+      const overlay = document.getElementById('anniversary-overlay');
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    }
 
+    function updateCountdown() {
+      const targetDate = new Date('2026-09-21').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-/* =========================
-   RELATIONSHIP COUNTER
-   SEPTEMBER 21, 2025
-   ========================= */
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-const startDate =
-  new Date(
-    "2025-09-21T00:00:00"
-  );
+      document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('cd-mins').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('cd-secs').textContent = String(seconds).padStart(2, '0');
 
+      const startDate = new Date('2025-09-21').getTime();
+      const daysTogether = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+      document.getElementById('days-count').textContent = daysTogether;
+    }
 
-function updateCounter(){
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('night');
+      if (document.body.classList.contains('night')) {
+        themeBtn.textContent = '☀️ Day';
+        localStorage.setItem('theme', 'night');
+      } else {
+        themeBtn.textContent = '🌙 Night';
+        localStorage.setItem('theme', 'day');
+      }
+    });
 
-  const now =
-    new Date();
+    if (localStorage.getItem('theme') === 'night') {
+      document.body.classList.add('night');
+      themeBtn.textContent = '☀️ Day';
+    }
 
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-  const diff =
-    Math.max(
-      0,
-      now - startDate
-    );
+    window.addEventListener('load', () => {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, index * 100);
+      });
+    });
 
+    document.getElementById('passcode-field').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') unlockPage();
+    });
+  </script>
 
-  const total =
-    Math.floor(
-      diff / 1000
-    );
-
-
-  const days =
-    Math.floor(
-      total / 86400
-    );
-
-
-  const hours =
-    Math.floor(
-      (total % 86400) / 3600
-    );
-
-
-  const minutes =
-    Math.floor(
-      (total % 3600) / 60
-    );
-
-
-  const seconds =
-    total % 60;
-
-
-  document.getElementById(
-    "days"
-  ).textContent = days;
-
-
-  document.getElementById(
-    "hours"
-  ).textContent = hours;
-
-
-  document.getElementById(
-    "minutes"
-  ).textContent = minutes;
-
-
-  document.getElementById(
-    "seconds"
-  ).textContent = seconds;
-
-}
-
-
-updateCounter();
-
-
-setInterval(
-  updateCounter,
-  1000
-);
-
-</script>
+  <!-- Load Anniversary Features -->
+  <script src="./anniversary.js"></script>
 
 </body>
 </html>
