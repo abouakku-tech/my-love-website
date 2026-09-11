@@ -4,8 +4,7 @@ function isAnniversary() {
   const today = new Date();
   const month = today.getMonth() + 1;
   const day = today.getDate();
-  return month === 9 && day === 11; // TEST - Change to 21 later
-}
+  return month === 9 && day === 11
 
 const IS_ANNIVERSARY = isAnniversary();
 
