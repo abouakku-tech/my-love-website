@@ -683,6 +683,29 @@
       
       <p style="color: #a4133c; font-weight: 600; font-size: 0.95rem; margin-top: 10px;">❤️ Our Special Moment ❤️</p>
     </div>
+
+    <!-- BUCKET LIST SECTION -->
+    <div class="card" style="background: linear-gradient(135deg, #ffd6e0 0%, #fff5f7 100%); border: 2px solid #c9184a;">
+      <h2 style="color: #a4133c;">🌟 Our Bucket List 🌟</h2>
+      <p style="color: #666; margin-bottom: 20px;">Dreams we want to achieve together ❤️</p>
+      
+      <!-- Input Section -->
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+        <input type="text" id="bucketInput" placeholder="Write your dream here... 💭" style="flex: 1; min-width: 200px; padding: 12px 15px; border: 2px solid #c9184a; border-radius: 8px; font-size: 1rem; font-family: 'Montserrat', sans-serif;">
+        <button onclick="addBucketItem()" style="padding: 12px 25px; background: #c9184a; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: all 0.3s ease;">
+          ➕ Add Dream
+        </button>
+      </div>
+      
+      <!-- Bucket List Display -->
+      <div id="bucketList" style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Items will appear here -->
+      </div>
+      
+      <p style="color: #999; font-size: 0.85rem; margin-top: 20px; text-align: center;">💕 Every dream with you is special 💕</p>
+    </div>
+
+    <!-- Puzzle, Quiz, Secret Links -->
     <div class="card">
       <h2>🧩 Surprise For You ❤️</h2>
       <p>I have a little game just for you. Can you solve our love puzzle?</p>
@@ -836,6 +859,66 @@
       document.body.classList.add('night');
       themeBtn.textContent = '☀️ Day';
     }
+
+    // BUCKET LIST FUNCTIONS
+    function loadBucketList() {
+      const bucketList = document.getElementById('bucketList');
+      const items = JSON.parse(localStorage.getItem('bucketItems')) || [];
+      
+      bucketList.innerHTML = '';
+      
+      items.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.style.cssText = `
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px;
+          background: white;
+          border-radius: 8px;
+          border-left: 4px solid #c9184a;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        `;
+        
+        itemDiv.innerHTML = `
+          <span style="color: #333; font-size: 1rem;">${item}</span>
+          <button onclick="deleteBucketItem(${index})" style="padding: 6px 12px; background: #ff6b9d; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">❌ Delete</button>
+        `;
+        
+        bucketList.appendChild(itemDiv);
+      });
+      
+      if (items.length === 0) {
+        bucketList.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Write your dreams together! 💕</p>';
+      }
+    }
+
+    function addBucketItem() {
+      const input = document.getElementById('bucketInput');
+      const text = input.value.trim();
+      
+      if (text === '') {
+        alert('💭 Please write your dream first!');
+        return;
+      }
+      
+      const items = JSON.parse(localStorage.getItem('bucketItems')) || [];
+      items.push(text);
+      localStorage.setItem('bucketItems', JSON.stringify(items));
+      
+      input.value = '';
+      loadBucketList();
+    }
+
+    function deleteBucketItem(index) {
+      const items = JSON.parse(localStorage.getItem('bucketItems')) || [];
+      items.splice(index, 1);
+      localStorage.setItem('bucketItems', JSON.stringify(items));
+      loadBucketList();
+    }
+
+    // Load bucket list on page load
+    loadBucketList();
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
