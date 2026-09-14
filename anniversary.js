@@ -6,73 +6,122 @@ const day = today.getDate();
 
 console.log("📅 TODAY'S DATE: " + month + "/" + day);
 console.log("🎂 ANNIVERSARY DATE: 9/21");
-console.log("🔍 Checking: month === 9? " + (month === 9) + " | day === 21? " + (day === 21));
+console.log("🔍 Checking: month === 9? " + (month === 9) + " | day === 14? " + (day === 14));
 
-// Check if it's anniversary (Sept 11 for TESTING)
+// Check if it's anniversary (Sept 14 for TESTING)
 if (month === 9 && day === 14) {
   console.log("✅ ✅ ✅ ANNIVERSARY MODE ACTIVATED! ✅ ✅ ✅");
   
-  // Add CSS
+  // Add CSS with better styling
   const style = document.createElement('style');
   style.textContent = `
-    @keyframes fall-right {
-      0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-      100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+    @keyframes fall-down {
+      0% { 
+        opacity: 1; 
+        transform: translateY(-100px) translateX(0px) rotate(0deg);
+      }
+      100% { 
+        opacity: 0; 
+        transform: translateY(100vh) translateX(100px) rotate(360deg);
+      }
     }
-    @keyframes fall-left {
-      0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-      100% { opacity: 0; transform: translateY(100vh) rotate(-360deg); }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
     }
-    .ann-flower { position: fixed; font-size: 2.5rem; pointer-events: none; z-index: 100; }
-    .ann-heart { position: fixed; font-size: 3rem; pointer-events: none; z-index: 100; }
+    
+    .ann-emoji {
+      position: fixed !important;
+      pointer-events: none !important;
+      z-index: 9999 !important;
+      will-change: transform;
+    }
+    
+    .ann-flower {
+      font-size: 2.5rem;
+      animation: fall-down 8s ease-in forwards !important;
+    }
+    
+    .ann-heart {
+      font-size: 3rem;
+      animation: fall-down 7s ease-in forwards !important;
+    }
+    
+    .ann-sparkle {
+      font-size: 1.5rem;
+      animation: sparkle 2s ease-in-out infinite, fall-down 6s ease-in forwards !important;
+    }
   `;
   document.head.appendChild(style);
+  console.log("✅ CSS styles added");
   
   // Arrays
   const flowers = ['🌹', '🌸', '🌺', '🌻', '🌷', '🌼'];
   const hearts = ['❤️', '💕', '💖', '💗', '💝', '💓', '💞', '💘'];
+  const sparkles = ['✨', '💫', '⭐', '🌟'];
   
-  function playEffects() {
-    console.log("▶️ Playing effects!");
-    let timing = 0;
+  function createEmoji(emoji, className) {
+    const el = document.createElement('div');
+    el.className = 'ann-emoji ' + className;
+    el.textContent = emoji;
+    el.style.left = Math.random() * 100 + '%';
+    el.style.top = '-100px';
+    el.style.opacity = '1';
     
-    // Create 12 flowers
-    for (let i = 0; i < 12; i++) {
-      setTimeout(() => {
-        const f = document.createElement('div');
-        f.className = 'ann-flower';
-        f.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-        f.style.left = Math.random() * 100 + '%';
-        f.style.top = '-50px';
-        f.style.animation = (i % 2 === 0 ? 'fall-right' : 'fall-left') + ' 7s ease-in forwards';
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 7500);
-      }, timing);
-      timing += 350;
-    }
+    document.body.appendChild(el);
+    console.log("✨ Created " + className + ": " + emoji);
     
-    // Create 14 hearts
-    for (let i = 0; i < 14; i++) {
-      setTimeout(() => {
-        const h = document.createElement('div');
-        h.className = 'ann-heart';
-        h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        h.style.left = Math.random() * 100 + '%';
-        h.style.top = '-50px';
-        h.style.animation = (i % 2 === 0 ? 'fall-right' : 'fall-left') + ' 6s ease-in forwards';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 6500);
-      }, timing);
-      timing += 280;
-    }
+    setTimeout(() => {
+      if (el.parentNode) {
+        el.remove();
+      }
+    }, 8500);
   }
   
-  // Start
-  playEffects();
-  console.log("🔄 Repeating every 10 seconds");
-  setInterval(playEffects, 10000);
+  function playEffects() {
+    console.log("▶️ Playing effects now!");
+    let delay = 0;
+    
+    // Create flowers one by one
+    flowers.forEach((flower, i) => {
+      setTimeout(() => {
+        createEmoji(flower, 'ann-flower');
+      }, delay);
+      delay += 400;
+    });
+    
+    // Create hearts one by one
+    hearts.forEach((heart, i) => {
+      setTimeout(() => {
+        createEmoji(heart, 'ann-heart');
+      }, delay);
+      delay += 350;
+    });
+    
+    // Create sparkles
+    sparkles.forEach((sparkle, i) => {
+      setTimeout(() => {
+        createEmoji(sparkle, 'ann-sparkle');
+      }, delay);
+      delay += 300;
+    });
+  }
+  
+  // Wait for page to fully load, then start
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log("📄 Page loaded, starting effects!");
+      playEffects();
+      setInterval(playEffects, 10000);
+    });
+  } else {
+    console.log("📄 Page already loaded, starting effects!");
+    playEffects();
+    setInterval(playEffects, 10000);
+  }
+  
 } else {
   console.log("❌ ❌ ❌ ANNIVERSARY MODE OFF ❌ ❌ ❌");
-  console.log("Today is " + month + "/" + day + " - NOT September 21");
-  console.log("Effects will show on September 21 only!");
+  console.log("Today is " + month + "/" + day + " - NOT the test date");
 }
