@@ -1,127 +1,117 @@
-// ===== ANNIVERSARY EFFECTS =====
+// ===== ANNIVERSARY EFFECTS - ALWAYS ON =====
 
-const today = new Date();
-const month = today.getMonth() + 1;
-const day = today.getDate();
+console.log("🎉 ANNIVERSARY EFFECTS LOADED AND ACTIVE!");
 
-console.log("📅 TODAY'S DATE: " + month + "/" + day);
-console.log("🎂 ANNIVERSARY DATE: 9/21");
-console.log("🔍 Checking: month === 9? " + (month === 9) + " | day === 14? " + (day === 14));
+// Create styles for falling elements
+const styleSheet = document.createElement('style');
+styleSheet.innerHTML = `
+  @keyframes fallAnimation {
+    0% {
+      opacity: 1;
+      transform: translateY(-50px) translateX(0px) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100vh) translateX(100px) rotate(360deg);
+    }
+  }
 
-// Check if it's anniversary (Sept 14 for TESTING)
-if (month === 9 && day === 14) {
-  console.log("✅ ✅ ✅ ANNIVERSARY MODE ACTIVATED! ✅ ✅ ✅");
-  
-  // Add CSS with better styling
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes fall-down {
-      0% { 
-        opacity: 1; 
-        transform: translateY(-100px) translateX(0px) rotate(0deg);
-      }
-      100% { 
-        opacity: 0; 
-        transform: translateY(100vh) translateX(100px) rotate(360deg);
-      }
-    }
-    
-    @keyframes sparkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-    
-    .ann-emoji {
-      position: fixed !important;
-      pointer-events: none !important;
-      z-index: 9999 !important;
-      will-change: transform;
-    }
-    
-    .ann-flower {
-      font-size: 2.5rem;
-      animation: fall-down 8s ease-in forwards !important;
-    }
-    
-    .ann-heart {
-      font-size: 3rem;
-      animation: fall-down 7s ease-in forwards !important;
-    }
-    
-    .ann-sparkle {
-      font-size: 1.5rem;
-      animation: sparkle 2s ease-in-out infinite, fall-down 6s ease-in forwards !important;
-    }
-  `;
-  document.head.appendChild(style);
-  console.log("✅ CSS styles added");
-  
-  // Arrays
-  const flowers = ['🌹', '🌸', '🌺', '🌻', '🌷', '🌼'];
-  const hearts = ['❤️', '💕', '💖', '💗', '💝', '💓', '💞', '💘'];
-  const sparkles = ['✨', '💫', '⭐', '🌟'];
-  
-  function createEmoji(emoji, className) {
-    const el = document.createElement('div');
-    el.className = 'ann-emoji ' + className;
-    el.textContent = emoji;
-    el.style.left = Math.random() * 100 + '%';
-    el.style.top = '-100px';
-    el.style.opacity = '1';
-    
-    document.body.appendChild(el);
-    console.log("✨ Created " + className + ": " + emoji);
-    
-    setTimeout(() => {
-      if (el.parentNode) {
-        el.remove();
-      }
-    }, 8500);
+  @keyframes sparkleAnimation {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
   }
-  
-  function playEffects() {
-    console.log("▶️ Playing effects now!");
-    let delay = 0;
-    
-    // Create flowers one by one
-    flowers.forEach((flower, i) => {
-      setTimeout(() => {
-        createEmoji(flower, 'ann-flower');
-      }, delay);
-      delay += 400;
-    });
-    
-    // Create hearts one by one
-    hearts.forEach((heart, i) => {
-      setTimeout(() => {
-        createEmoji(heart, 'ann-heart');
-      }, delay);
-      delay += 350;
-    });
-    
-    // Create sparkles
-    sparkles.forEach((sparkle, i) => {
-      setTimeout(() => {
-        createEmoji(sparkle, 'ann-sparkle');
-      }, delay);
-      delay += 300;
-    });
+
+  .anniversary-emoji {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
   }
-  
-  // Wait for page to fully load, then start
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log("📄 Page loaded, starting effects!");
-      playEffects();
-      setInterval(playEffects, 10000);
-    });
-  } else {
-    console.log("📄 Page already loaded, starting effects!");
-    playEffects();
-    setInterval(playEffects, 10000);
+
+  .anniversary-flower {
+    font-size: 3rem;
+    animation: fallAnimation 8s linear forwards;
   }
+
+  .anniversary-heart {
+    font-size: 3.5rem;
+    animation: fallAnimation 7s linear forwards;
+  }
+
+  .anniversary-sparkle {
+    font-size: 2rem;
+    animation: sparkleAnimation 2s ease-in-out infinite, fallAnimation 6s linear forwards;
+  }
+`;
+
+document.head.appendChild(styleSheet);
+console.log("✅ Styles added!");
+
+// Emoji arrays
+const flowers = ['🌹', '🌸', '🌺', '🌻', '🌷', '🌼'];
+const hearts = ['❤️', '💕', '💖', '💗', '💝', '💓', '💞', '💘'];
+const sparkles = ['✨', '💫', '⭐', '🌟'];
+
+// Function to create falling emoji
+function createFallingEmoji(emoji, className) {
+  const element = document.createElement('div');
+  element.className = 'anniversary-emoji ' + className;
+  element.textContent = emoji;
+  element.style.left = Math.random() * 100 + '%';
+  element.style.top = '-100px';
   
-} else {
-  console.log("❌ ❌ ❌ ANNIVERSARY MODE OFF ❌ ❌ ❌");
-  console.log("Today is " + month + "/" + day + " - NOT the test date");
+  document.body.appendChild(element);
+  console.log("✨ Created: " + emoji);
+  
+  // Remove after animation
+  setTimeout(() => {
+    element.remove();
+  }, 8500);
 }
+
+// Main effects function
+function startAnniversaryEffects() {
+  console.log("🎊 STARTING ANNIVERSARY EFFECTS!");
+  
+  let delayTime = 0;
+  
+  // Create flowers one by one
+  for (let i = 0; i < flowers.length; i++) {
+    setTimeout(() => {
+      createFallingEmoji(flowers[i], 'anniversary-flower');
+    }, delayTime);
+    delayTime += 400;
+  }
+  
+  // Create hearts one by one
+  for (let i = 0; i < hearts.length; i++) {
+    setTimeout(() => {
+      createFallingEmoji(hearts[i], 'anniversary-heart');
+    }, delayTime);
+    delayTime += 350;
+  }
+  
+  // Create sparkles one by one
+  for (let i = 0; i < sparkles.length; i++) {
+    setTimeout(() => {
+      createFallingEmoji(sparkles[i], 'anniversary-sparkle');
+    }, delayTime);
+    delayTime += 300;
+  }
+}
+
+// Start effects when page is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("📄 Page loaded - starting effects!");
+    startAnniversaryEffects();
+    // Repeat every 10 seconds
+    setInterval(startAnniversaryEffects, 10000);
+  });
+} else {
+  console.log("📄 Page already loaded - starting effects!");
+  startAnniversaryEffects();
+  // Repeat every 10 seconds
+  setInterval(startAnniversaryEffects, 10000);
+}
+
+console.log("✅ ANNIVERSARY EFFECTS SETUP COMPLETE!");
